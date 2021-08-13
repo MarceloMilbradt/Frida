@@ -20,7 +20,6 @@ export default {
   box-shadow: 0 2px 7px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   width: 100%;
- 
 }
 @media (max-width: 800px) {
   .menuitem {
@@ -29,13 +28,12 @@ export default {
     box-shadow: 0 2px 7px -1px rgba(0, 0, 0, 0.2),
       0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     width: unset;
-
   }
 }
 a.link {
-    text-decoration: none;
-    display: block;
-    color: #333;
-    padding: 20px;
+  text-decoration: none;
+  display: block;
+  color: #333;
+  padding: 20px;
 }
 </style>

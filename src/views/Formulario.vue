@@ -1,7 +1,4 @@
 <template>
-  <div>
-    <Menu :items="items"></Menu>
-  </div>
   <div v-bind:key="question.id" v-for="question in questions">
     <Question
       v-bind:alternatives="question.alternatives"
@@ -13,12 +10,10 @@
 
 <script>
 import Question from "../components/Question";
-import Menu from "../components/Menu";
 export default {
   name: "App",
   components: {
-    Question,
-    Menu
+    Question
   },
   methods: {
     changeAwnser(q_id, awnser) {
@@ -37,7 +32,7 @@ export default {
       ],
       questions: [
         {
-          text: "Questão 1",
+          text: " Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio dolore consequatur voluptas. Fugit qui aut dolorum esse consectetur sapiente ducimus consequuntur fugiat minima, harum nam autem ad temporibus atque omnis.",
           id: 1,
         },
         {

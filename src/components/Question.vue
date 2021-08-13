@@ -1,14 +1,18 @@
 <template>
-  <h3>{{ question.text }}</h3>
-  <el-radio-group
-    class="radio-group"
-    v-model="val"
-    @change="(val) => $emit('radio-change', question.id, val)"
-  >
-    <div v-bind:key="alternative.value" v-for="alternative in alternatives">
-      <el-radio :label="alternative.value">{{ alternative.text }}</el-radio>
-    </div>
-  </el-radio-group>
+  <el-card class="box-card">
+    <template #header>
+      <h3>{{ question.text }}</h3>
+    </template>
+    <el-radio-group
+      class="radio-group"
+      v-model="val"
+      @change="(val) => $emit('radio-change', question.id, val)"
+    >
+      <div v-bind:key="alternative.value" v-for="alternative in alternatives">
+        <el-radio :label="alternative.value">{{ alternative.text }}</el-radio>
+      </div>
+    </el-radio-group>
+  </el-card>
 </template>
 
 <script>
@@ -59,5 +63,22 @@ export default {
 h3 {
   font-size: 1em;
   text-align: left;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.box-card {
+  margin: 20px 0 20px 0;
 }
 </style>
