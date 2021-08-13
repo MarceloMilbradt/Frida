@@ -5,7 +5,7 @@ import Home from '../views/Home'
 const routes = [
     {
         path: '/',
-        name: 'Home',
+        name: '',
         component: Home,
         icon: 'el-icon-s-home'
     },
