@@ -7,7 +7,8 @@
           :index="rule.path"
           v-for="(rule, index) in $router.options.routes"
         >
-          <i :class="rule.icon"></i>{{rule.name}}
+          <i :class="rule.icon"></i
+          ><span class="menu-item-name">{{ rule.name }}</span>
         </el-menu-item>
       </el-menu>
     </el-header>
@@ -43,6 +44,11 @@ export default {
   min-height: calc( 95vh - 20px); */
 }
 .el-menu-item.is-active i {
-  color:var(--el-color-primary)
+  color: var(--el-color-primary);
+}
+@media (max-width: 800px) {
+  .menu-item-name {
+    display: none;
+  }
 }
 </style>
