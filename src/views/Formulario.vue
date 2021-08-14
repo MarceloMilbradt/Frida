@@ -1,4 +1,5 @@
 <template>
+  <el-form ref="form" :model="questions">
   <div v-bind:key="question.id" v-for="question in questions">
     <Question
       v-bind:alternatives="question.alternatives"
@@ -6,6 +7,7 @@
       @radio-change="changeAwnser"
     />
   </div>
+  </el-form>
 </template>
 
 <script>

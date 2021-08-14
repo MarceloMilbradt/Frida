@@ -11,6 +11,7 @@
     "@element-plus/icons": "0.0.11",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.70",
+    "maska": "^1.4.5",
     "vue": "^3.0.0",
     "vue-router": "^4.0.11"
   },
