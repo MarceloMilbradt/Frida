@@ -1,10 +1,10 @@
 <template>
-  <el-tabs v-model="tab" style="margin-top: 20px" tab-position="left">
-    <el-tab-pane name="vitima" label="VÍtima">
-      <FormPessoa @btn-click-next="changeTab('agressor')" :hideBtn="[true,false]" :text="'Dados da Vitima'" />
+  <el-tabs  v-model="tab" style="margin-top: 20px" tab-position="left">
+    <el-tab-pane  label="VÍtima">
+      <FormPessoa @btn-click-next="changeTab(+1)" :hideBtn="[true,false]" :text="'Dados da Vitima'" />
     </el-tab-pane>
-    <el-tab-pane name="agressor" label="Agressor">
-      <FormPessoa :hideBtn="[false,true]" @btn-click-prev="changeTab('vitima')"  :text="'Dados do Agressor'" />
+    <el-tab-pane  label="Agressor">
+      <FormPessoa :hideBtn="[false,true]" @btn-click-prev="changeTab(-1)"  :text="'Dados do Agressor'" />
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -17,12 +17,12 @@ export default {
   },
   data(){
       return{
-          tab:'vitima'
+          tab: '0'
       }
   },
   methods:{
       changeTab(tab){
-          this.tab = tab;
+          this.tab = `${+this.tab + tab}`;
       }
   }
 };

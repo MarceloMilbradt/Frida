@@ -1,33 +1,33 @@
 <template>
   <el-config-provider :locale="locale">
-  <el-container>
-    <el-header>
-      <el-menu :router="true" :default-active="$route.path" mode="horizontal">
-        <el-menu-item
-          :key="index"
-          :index="rule.path"
-          v-for="(rule, index) in $router.options.routes"
-        >
-          <i :class="rule.icon"></i
-          ><span class="menu-item-name">{{ rule.name }}</span>
-        </el-menu-item>
-      </el-menu>
-    </el-header>
-    <el-main class="main">
-      <router-view></router-view>
-    </el-main>
-  </el-container>
+    <el-container>
+      <el-header>
+        <el-menu :router="true" :default-active="$route.path" mode="horizontal">
+          <el-menu-item
+            :key="index"
+            :index="rule.path"
+            v-for="(rule, index) in $router.options.routes"
+          >
+            <i :class="rule.icon"></i
+            ><span class="menu-item-name">{{ rule.name }}</span>
+          </el-menu-item>
+        </el-menu>
+      </el-header>
+      <el-main class="main">
+        <router-view></router-view>
+      </el-main>
+    </el-container>
   </el-config-provider>
 </template>
 
 <script>
-import locale from 'element-plus/lib/locale/lang/pt-br'
+import locale from "element-plus/lib/locale/lang/pt-br";
 export default {
   name: "App",
   data() {
     return {
       locale: locale,
-    }
+    };
   },
 };
 </script>
@@ -59,15 +59,18 @@ export default {
   .menu-item-name {
     display: none;
   }
-
+  #app {
+    padding-left: 5px;
+    padding-top: 0px;
+    padding-right: 5px;
+  }
 }
 </style>
 <style scoped>
-
 .main {
-    min-width: 80vw;
-    margin: 0 auto;
-    max-width: 80vw;
+  min-width: 80vw;
+  margin: 0 auto;
+  max-width: 80vw;
 }
 @media (max-width: 800px) {
   .menu-item-name {
@@ -75,9 +78,8 @@ export default {
   }
   .main {
     min-width: unset;
-    margin: 0 auto;
+    margin: 0;
     max-width: unset;
   }
-
 }
 </style>

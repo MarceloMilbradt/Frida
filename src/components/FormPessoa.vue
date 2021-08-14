@@ -4,7 +4,7 @@
       <el-header style="text-align: left" height="20px">{{ text }}</el-header>
       <el-divider></el-divider>
       <el-main>
-        <el-form :label-position="'right'" label-width="80px" ref="form">
+        <el-form :label-position="'right'" label-width="60px" ref="form">
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
               <el-form-item label="Nome">
@@ -12,12 +12,13 @@
               </el-form-item>
             </el-col>
 
-            <el-col :span="6" :xs="6" :sm="6" :md="6" :lg="6" :xl="6">
-              <el-form-item label-width="150px" label="Data de nascimento">
+            <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
+              <el-form-item class="input-data-nascimento" label-width="150px" label="Data de nascimento">
                 <el-input
                   type="date"
                   v-model="form.datanascimento"
                   :max="maxDate"
+                  placeholder="Data de nascimento"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -79,7 +80,13 @@
         </el-form>
       </el-main>
       <el-footer>
-          <FormFooter @btn-click-next="$emit('btn-click-next')" @btn-click-prev="$emit('btn-click-prev')" :hide="hideBtn" :type="typeBtn" :text="textBtn"/>
+        <FormFooter
+          @btn-click-next="$emit('btn-click-next')"
+          @btn-click-prev="$emit('btn-click-prev')"
+          :hide="hideBtn"
+          :type="typeBtn"
+          :text="textBtn"
+        />
       </el-footer>
     </el-container>
   </el-card>
@@ -94,15 +101,15 @@ export default {
     text: String,
     hideBtn: {
       type: Array,
-      default:() => [false,false],
+      default: () => [false, false],
     },
     typeBtn: {
       type: Array,
-      default:() => ["default","primary"],
+      default: () => ["default", "primary"],
     },
     textBtn: {
       type: Array,
-      default:() => ["Voltar","Avançar"],
+      default: () => ["Voltar", "Avançar"],
     },
   },
   data() {
@@ -126,5 +133,13 @@ export default {
 <style scoped>
 .box-card {
   margin: 0px 0 20px 0;
+}
+@media (max-width: 650px) {
+  .input-data-nascimento {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 }
 </style>
