@@ -1,29 +1,24 @@
 <template>
   <el-config-provider :locale="locale">
-    <el-container>
-      <el-header>
-        <el-menu :router="true" :default-active="$route.path" mode="horizontal">
-          <el-menu-item
-            :key="index"
-            :index="rule.path"
-            v-for="(rule, index) in $router.options.routes"
-          >
-            <i :class="rule.icon"></i
-            ><span class="menu-item-name">{{ rule.name }}</span>
-          </el-menu-item>
-        </el-menu>
-      </el-header>
-      <el-main class="main">
-        <router-view></router-view>
-      </el-main>
-    </el-container>
+    <Header/>
+    <el-main class="main">
+      <router-view></router-view>
+    </el-main>
+    <Footer/>
   </el-config-provider>
 </template>
 
 <script>
+import Header from './components/Header'
+import Footer from './components/Footer'
 import locale from "element-plus/lib/locale/lang/pt-br";
+
 export default {
   name: "App",
+  components: {
+    Header,
+    Footer,
+  },
   data() {
     return {
       locale: locale,
