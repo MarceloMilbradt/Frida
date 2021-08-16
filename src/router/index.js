@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import Formulario from '../views/Formulario'
 import Home from '../views/Home'
 import Denuncia from '../views/Denuncia'
+import Info from '../views/Info'
 
 const routes = [
     {
@@ -9,6 +10,12 @@ const routes = [
         name: '',
         component: Home,
         icon: 'el-icon-s-home'
+    },
+    {
+        path: '/Info',
+        name: 'Informações',
+        component: Info,
+        icon: 'el-icon-question'
     },
     {
         path: '/Avaliacao',
@@ -22,6 +29,7 @@ const routes = [
         component: Denuncia,
         icon: 'el-icon-warning-outline'
     },
+
 
 ]
 

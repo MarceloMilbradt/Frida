@@ -37,7 +37,7 @@
               <el-form-item label="Telefone">
                 <el-input
                   v-maska="['(##) ####-####', '(##) #####-####']"
-                  maxlength="14"
+                  
                   v-model="form.telefone"
                 ></el-input>
               </el-form-item>
