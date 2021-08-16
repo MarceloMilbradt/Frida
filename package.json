@@ -14,7 +14,8 @@
     "firebase": "^8.9.1",
     "maska": "^1.4.5",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.11"
+    "vue-router": "^4.0.11",
+    "vue-sweetalert2": "^5.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

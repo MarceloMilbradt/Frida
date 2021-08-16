@@ -1,28 +1,45 @@
 <template>
-  <h3>Formulário de Avaliação de Risco em Violência Doméstica e Familiar contra a Mulher</h3>
+  <h3>
+    Formulário de Avaliação de Risco em Violência Doméstica e Familiar contra a
+    Mulher
+  </h3>
   <el-form ref="form" :model="questions">
-  <div v-bind:key="question.id" v-for="question in questions">
-    <Question
-      v-bind:alternatives="question.alternatives"
-      v-bind:question="question"
-      @radio-change="changeAwnser"
-    />
-  </div>
+    <div v-bind:key="question.id" v-for="question in questions">
+      <Question
+        v-bind:alternatives="question.alternatives"
+        v-bind:question="question"
+        @radio-change="changeAnswer"
+      />
+    </div>
   </el-form>
+  <Button @click="onClick" />
 </template>
 
 <script>
 import Question from "../components/Question";
+import Button from "../components/Button";
+import * as controller from "../controller/ctlFormulario";
+
 export default {
   name: "App",
   components: {
-    Question
+    Question,
+    Button,
   },
   methods: {
-    changeAwnser(q_id, awnser) {
+    changeAnswer(q_id, answer) {
       this.questions = this.questions.map((q) =>
-        q.id == q_id ? { ...q, awnser } : q
+        q.id == q_id ? { ...q, answer } : q
       );
+    },
+    onClick() {
+      var data = {};
+      this.questions.map((q) => {
+        data["questao_" + q.id] = q.answer || 0;
+      });
+
+      console.log("todos as questoes", data);
+      controller.incluir(data);
     },
   },
   data() {
@@ -43,18 +60,21 @@ export default {
           id: 2,
         },
         {
-          text: "Questão 3 - A senhora/você tem filhos(as) com o(a) agressor(a)? (caso não tenham filhos em comum, registre não se aplica)." +
-          " Em caso afirmativo, estão vivendo algum conflito com relação à guarda dos filhos, visitas ou pagamento de pensão pelo agressor?",
+          text:
+            "Questão 3 - A senhora/você tem filhos(as) com o(a) agressor(a)? (caso não tenham filhos em comum, registre não se aplica)." +
+            " Em caso afirmativo, estão vivendo algum conflito com relação à guarda dos filhos, visitas ou pagamento de pensão pelo agressor?",
           id: 3,
         },
         {
-          text: "Questão 4 - O(A) agressor(a) persegue a senhora/você, demonstra ciúmes excessivo, tenta controlar sua vida e as coisas que você faz? " +
-          " (aonde você vai, com quem conversa, o tipo de roupa que usa, etc.)",
+          text:
+            "Questão 4 - O(A) agressor(a) persegue a senhora/você, demonstra ciúmes excessivo, tenta controlar sua vida e as coisas que você faz? " +
+            " (aonde você vai, com quem conversa, o tipo de roupa que usa, etc.)",
           id: 4,
         },
         {
-          text: "Questão 5 - A senhora/você se separou recentemente do(a) agressor(a), tentou ou tem intenção de se separar?" +
-          "\n Especifique: Separou □ Tentou □ Manifestou intenção □",
+          text:
+            "Questão 5 - A senhora/você se separou recentemente do(a) agressor(a), tentou ou tem intenção de se separar?" +
+            "\n Especifique: Separou □ Tentou □ Manifestou intenção □",
           /*outrasAlternativas: [
             {
               value: 1,
@@ -72,13 +92,15 @@ export default {
           id: 5,
         },
         {
-          text: "Questão 6 - O(A) agressor(a) também é violento com outras pessoas (familiares, amigos, colegas etc.)" +
-          "\n Especifique: Crianças □ Outros familiares □ Outras pessoas □",
+          text:
+            "Questão 6 - O(A) agressor(a) também é violento com outras pessoas (familiares, amigos, colegas etc.)" +
+            "\n Especifique: Crianças □ Outros familiares □ Outras pessoas □",
           id: 6,
         },
         {
-          text: "Questão 7 - A senhora/ você possui algum animal doméstico? (caso não tenha animal doméstico, registre não se aplica)" +
-          "\n Em caso afirmativo, o(a) agressor(a) maltrata ou agride o animal?",
+          text:
+            "Questão 7 - A senhora/ você possui algum animal doméstico? (caso não tenha animal doméstico, registre não se aplica)" +
+            "\n Em caso afirmativo, o(a) agressor(a) maltrata ou agride o animal?",
           id: 7,
         },
         {
@@ -94,8 +116,9 @@ export default {
           id: 10,
         },
         {
-          text: "Questão 11 - O(A) agressor(a) já usou, ameaçou usar arma de fogo contra a senhora/você ou tem fácil acesso a uma arma?" +
-          "\n Especifique: Usou □ Ameaçou usar □ Tem fácil acesso □",
+          text:
+            "Questão 11 - O(A) agressor(a) já usou, ameaçou usar arma de fogo contra a senhora/você ou tem fácil acesso a uma arma?" +
+            "\n Especifique: Usou □ Ameaçou usar □ Tem fácil acesso □",
           id: 11,
         },
         {
@@ -103,8 +126,9 @@ export default {
           id: 12,
         },
         {
-          text: "Questão 13 - A senhora/você necessitou de atendimento médico e/ou internação após algumas dessas agressões?" + 
-          "\n Especifique: Atendimento médico □ Internação",
+          text:
+            "Questão 13 - A senhora/você necessitou de atendimento médico e/ou internação após algumas dessas agressões?" +
+            "\n Especifique: Atendimento médico □ Internação",
           id: 13,
         },
         {
@@ -116,8 +140,9 @@ export default {
           id: 15,
         },
         {
-          text: "Questão 16 - A senhora/você já teve ou tem medida protetiva de urgência? (caso não tenha tido medidas protetivas de urgência antes, registre não se aplica)." +
-          " O(A) agressor(a) já descumpriu medida protetiva de afastamento ou proibição de contato?",
+          text:
+            "Questão 16 - A senhora/você já teve ou tem medida protetiva de urgência? (caso não tenha tido medidas protetivas de urgência antes, registre não se aplica)." +
+            " O(A) agressor(a) já descumpriu medida protetiva de afastamento ou proibição de contato?",
           id: 16,
         },
         {

@@ -19,14 +19,16 @@ const db = firebase.firestore()
 const auth = firebase.auth()
 
 //collection references
-const usuariosCollection = db.collection('usuarios')
-const vitimaCollection = db.collection('vitima')
-const agressorCollection = db.collection('agressor')
+const usuario = db.collection('usuario')
+const avaliacao = db.collection('avaliacao')
+const vitima = db.collection('vitima')
+const agressor = db.collection('agressor')
 
 export {
     db,
     auth,
-    usuariosCollection,
-    vitimaCollection,
-    agressorCollection
+    usuario,
+    avaliacao,
+    vitima,
+    agressor
 }

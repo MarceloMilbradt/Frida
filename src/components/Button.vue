@@ -1,9 +1,15 @@
 <template>
-  <header>
-    <button class="btn" @click="onClick" v-bind:style="{ background: color }">
-      {{ text }}
-    </button>
-  </header>
+  <el-footer>
+    <div>
+      <el-button
+        :type="'primary'"
+        @click="onClick"
+        v-bind:style="{ background: color }"
+      >
+        {{ text }}
+      </el-button>
+    </div>
+  </el-footer>
 </template>
 
 <script>
@@ -12,7 +18,7 @@ export default {
   props: {
     text: {
       type: String,
-      default: "Add Task",
+      default: "Salvar",
     },
     color: {
       type: String,
@@ -20,9 +26,9 @@ export default {
     },
   },
   methods: {
-      onClick() {
-          this.$emit('btn-click')
-      }
+    onClick() {
+      this.$emit("btn-click");
+    },
   },
 };
 </script>
