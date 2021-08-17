@@ -116,7 +116,7 @@ export default {
   margin-top: 10px;
 }
 </style>
-<style>
+<style scoped>
 .el-button--primary {
   background: rgb(0, 124, 137);
   border-color: rgb(0, 124, 137);

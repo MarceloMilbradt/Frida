@@ -13,12 +13,13 @@
         >
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
-              <Nome prop="nome" v-model="form.nome" />
+              <TextField prop="nome" label="nome" v-model="form.nome" />
             </el-col>
 
             <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-              <DataNascimento
+              <DateField
                 prop="datanascimento"
+                label="Data de Nascimento"
                 v-model="form.datanascimento"
               />
             </el-col>
@@ -26,28 +27,28 @@
 
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <CPF v-model="form.CPF" />
+              <TextField v-model="form.CPF" label="CPF" v-maska="'###.###.###-##'" maxlength="9"/>
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <Telefone v-model="form.telefone" />
+              <TextField v-model="form.telefone"  label="Telefone" v-maska="['(##) ####-####', '(##) #####-####']"/>
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
             <el-col :span="14" :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
-              <Logradouro v-model="form.logradouro" />
+              <TextField label="Rua"  v-model="form.logradouro" />
             </el-col>
             <el-col :span="10" :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
-              <Bairro v-model="form.bairro" />
+              <TextField label="Bairro" v-model="form.bairro" />
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <Numero v-model="form.numero" />
+              <TextField label="Numero" v-model="form.numero" />
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <CEP v-model="form.cep" />
+              <TextField label="CEP" v-maska="'#####-###'" v-model="form.cep" />
             </el-col>
           </el-row>
           <el-row :gutter="20"> <slot></slot> </el-row>
@@ -68,25 +69,14 @@
 
 <script>
 import FormFooter from "./FormFooter.vue";
-import CEP from "./CepInput.vue";
-import CPF from "./CpfInput.vue";
-import Numero from "./NumeroInput.vue";
-import Bairro from "./BairroInput.vue";
-import Logradouro from "./LogradouroInput.vue";
-import Telefone from "./TelefoneInput.vue";
-import DataNascimento from "./NascimentoInput.vue";
-import Nome from "./NomeInput.vue";
+import TextField from "./TextField.vue";
+import DateField from "./DateField.vue";
+
 export default {
   components: {
     FormFooter,
-    CEP,
-    Numero,
-    Bairro,
-    Logradouro,
-    Telefone,
-    CPF,
-    DataNascimento,
-    Nome,
+    TextField,
+    DateField
   },
   name: "FormPessoa",
   props: {
