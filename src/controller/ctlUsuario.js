@@ -1,4 +1,4 @@
-import * as db from "../firebase";
+import * as db from "./firebase";
 const Swal = require('sweetalert2')
 
 var listarTodos = function listarTodos() {
@@ -7,12 +7,24 @@ var listarTodos = function listarTodos() {
             id: doc.id,
             ...doc.data(),
         }));
-        console.log("All data in 'usuário' collection", data);
+        console.log("Todos Usuarios = ", data);
     });
 }
 
+var bucarPorId = function bucarPorId(id) {
+    db.usuario
+        .doc(id).get()
+        .then((doc) => {
+            if (!doc.exists) return;
+            console.log("Dados do Usuário Selecionado = ", doc.data());
+        })
+        .catch((error) => {
+            console.error("Erro ao buscar Usuário", error);
+            Swal.fire("Erro!", "A código do Usuário fornecido não existe!", "error");
+        });
+}
+
 var incluir = function incluir(dados) {
-    //dados = { nome: "Mr.", sobrenome: "Bubbles", idade: 51 };
     db.usuario
         .add(dados)
         .then((ref) => {
@@ -25,7 +37,6 @@ var incluir = function incluir(dados) {
 }
 
 var alterar = function alterar(id, dados) {
-    //dados = { idade: 23 };
     db.usuario
         .doc(id)
         .update(dados)
@@ -53,6 +64,7 @@ var excluir = function excluir(id) {
 
 export {
     listarTodos,
+    bucarPorId,
     incluir,
     alterar,
     excluir

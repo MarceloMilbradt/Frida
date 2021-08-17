@@ -1,4 +1,4 @@
-import * as db from "../firebase";
+import * as db from "./firebase";
 const Swal = require('sweetalert2')
 
 var listarTodos = function listarTodos() {
@@ -7,19 +7,32 @@ var listarTodos = function listarTodos() {
             id: doc.id,
             ...doc.data(),
         }));
-        console.log("All data in 'avaliação' collection", data);
+        console.log("Todas Avaliações = ", data);
     });
+}
+
+var bucarPorId = function bucarPorId(id) {
+    db.avaliacao
+        .doc(id).get()
+        .then((doc) => {
+            if (!doc.exists) return;
+            console.log("Dados da Avaliação Selecionada = ", doc.data());
+        })
+        .catch((error) => {
+            console.error("Erro ao buscar Avaliação", error);
+            Swal.fire("Erro!", "A código da Avaliação fornecido não existe!", "error");
+        });
 }
 
 var incluir = function incluir(dados) {
     db.avaliacao
         .add(dados)
         .then((ref) => {
-            Swal.fire("Salvo!", "O avaliação foi salvo com sucesso!", "success");
+            Swal.fire("Salvo!", "A avaliação foi salvo com sucesso!", "success");
         })
         .catch((error) => {
             console.error("Erro ao incluir avaliação", error);
-            Swal.fire("Erro!", "Houve um problema ao tentar incluir o avaliação!", "error");
+            Swal.fire("Erro!", "Houve um problema ao tentar incluir a avaliação!", "error");
         });
 }
 
@@ -28,11 +41,11 @@ var alterar = function alterar(id, dados) {
         .doc(id)
         .update(dados)
         .then(() => {
-            Swal.fire("Atualizado!", "O avaliação foi atualizado com sucesso!", "success");
+            Swal.fire("Atualizado!", "A avaliação foi atualizada com sucesso!", "success");
         })
         .catch((error) => {
             console.error("Erro ao alterar avaliação", error);
-            Swal.fire("Erro!", "Houve um problema ao tentar alterar o avaliação!", "error");
+            Swal.fire("Erro!", "Houve um problema ao tentar alterar a avaliação!", "error");
         });
 }
 
@@ -41,16 +54,17 @@ var excluir = function excluir(id) {
         .doc(id)
         .delete()
         .then(() => {
-            Swal.fire("Deletado!", "Seu avaliação foi deletado com sucesso!", "success");
+            Swal.fire("Deletado!", "Sua avaliação foi deletada com sucesso!", "success");
         })
         .catch((error) => {
             console.error("Erro ao excluir avaliação", error);
-            Swal.fire("Erro!", "Houve um problema ao tentar excluir o avaliação!", "error");
+            Swal.fire("Erro!", "Houve um problema ao tentar excluir a avaliação!", "error");
         });
 }
 
 export {
     listarTodos,
+    bucarPorId,
     incluir,
     alterar,
     excluir

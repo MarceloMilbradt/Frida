@@ -38,7 +38,6 @@ export default {
         data["questao_" + q.id] = q.answer || 0;
       });
 
-      console.log("todos as questoes", data);
       controller.incluir(data);
     },
   },
