@@ -14,5 +14,7 @@
 </template>
 
 <style  scoped>
-
+  ul li:last-child{
+    float: right;
+  }
 </style>

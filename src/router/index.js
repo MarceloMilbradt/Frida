@@ -34,7 +34,7 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login,
-        icon: 'el-icon-question'
+        icon: 'el-icon-unlock'
     },
 
 ]

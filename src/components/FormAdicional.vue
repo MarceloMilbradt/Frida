@@ -10,9 +10,8 @@
           :label-position="'right'"
           label-width="60px"
           ref="form"
-          v-show="!anonimo"
         >
-          <el-row>
+          <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
               <TextField prop="nome" label="nome" v-model="form.nome" />
             </el-col>
@@ -26,7 +25,7 @@
             </el-col>
           </el-row>
 
-          <el-row>
+          <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
               <TextField
                 v-model="form.CPF"
@@ -44,7 +43,7 @@
             </el-col>
           </el-row>
 
-          <el-row>
+          <el-row :gutter="20">
             <el-col :span="14" :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
               <TextField label="Rua" v-model="form.logradouro" />
             </el-col>
@@ -53,7 +52,7 @@
             </el-col>
           </el-row>
 
-          <el-row>
+          <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
               <TextField label="Numero" v-model="form.numero" />
             </el-col>
@@ -61,9 +60,8 @@
               <TextField label="CEP" v-maska="'#####-###'" v-model="form.cep" />
             </el-col>
           </el-row>
+          <el-row :gutter="20"> <slot></slot> </el-row>
         </el-form>
-        <div class="box-card" v-show="anonimo">Denuncia Anonima</div>
-        <el-row> <slot></slot> </el-row>
       </el-main>
       <el-footer>
         <FormFooter
@@ -99,11 +97,11 @@ export default {
     },
     typeBtn: {
       type: Array,
-      default: () => ["default", "primary"],
+      default: () => ["default", "success"],
     },
     textBtn: {
       type: Array,
-      default: () => ["Voltar", "Avançar"],
+      default: () => ["Voltar", "Salvar"],
     },
   },
   data() {

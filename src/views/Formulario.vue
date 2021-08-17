@@ -12,19 +12,17 @@
       />
     </div>
   </el-form>
-  <Button @click="onClick" />
+  <el-button @click="onClick" type="success">Salvar</el-button>
 </template>
 
 <script>
 import Question from "../components/Question";
-import Button from "../components/Button";
 import * as controller from "../controller/ctlFormulario";
 
 export default {
   name: "App",
   components: {
     Question,
-    Button,
   },
   methods: {
     changeAnswer(q_id, answer) {

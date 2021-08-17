@@ -25,25 +25,33 @@
 
     <el-tab-pane label="Agressor">
       <FormPessoa
-        :hideBtn="[false, true]"
+        @btn-click-next="changeTab(+1)"
         @btn-click-prev="changeTab(-1)"
         :text="'Dados do Agressor'"
         ref="formAgressor"
       />
     </el-tab-pane>
+
+    <el-tab-pane label="Adicionais">
+      <FormAdicional
+        @btn-click-prev="changeTab(-1)"
+        @btn-click-next="onClickSaveSubmit"
+        :text="'Informacoes Adicionais'"
+        ref="formAdicional"
+      />
+    </el-tab-pane>
   </el-tabs>
-  <Button @click="onClick" />
 </template>
 
 <script>
 import FormPessoa from "../components/FormPessoa.vue";
-import Button from "../components/Button";
+import FormAdicional from "../components/FormAdicional.vue";
 import * as controller from "../controller/ctlDenuncia";
 
 export default {
   components: {
     FormPessoa,
-    Button,
+    FormAdicional
   },
   data() {
     return {
@@ -56,10 +64,11 @@ export default {
     changeTab(tab) {
       this.tab = `${+this.tab + tab}`;
     },
-    onClick() {
+    onClickSaveSubmit() {
       var formVitima = this.$refs.formVitima.$data.form;
       var formAgressor = this.$refs.formAgressor.$data.form;
       var formTerceiro = null;
+      var formAdicional = null;
       if (this.terceiro) formTerceiro = this.$refs.formTerceiro.$data.form;
 
       controller.incluir(formVitima, formAgressor, formTerceiro);
