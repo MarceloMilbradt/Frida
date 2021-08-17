@@ -1,8 +1,9 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Formulario from '../views/Formulario'
 import Home from '../views/Home'
 import Denuncia from '../views/Denuncia'
 import Info from '../views/Info'
+import Login from '../views/Login'
 
 const routes = [
     {
@@ -29,7 +30,12 @@ const routes = [
         component: Denuncia,
         icon: 'el-icon-warning-outline'
     },
-
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        icon: 'el-icon-question'
+    },
 
 ]
 

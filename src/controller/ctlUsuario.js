@@ -1,6 +1,23 @@
 import * as db from "./firebase";
 const Swal = require('sweetalert2')
 
+var validaLogin = async function validaLogin(login, senha) {
+    var isValido = false;
+    try {
+        var retorno = await db.usuario
+            .where("login", "==", login)
+            .where("senha", "==", senha)
+            .get();
+        if (retorno.size > 0) isValido = true;
+
+        console.log("isvalido", isValido)
+        return isValido;
+    }
+    catch (err) {
+        console.log('Error getting documents', err);
+    }
+}
+
 var listarTodos = function listarTodos() {
     db.usuario.get().then((snapshot) => {
         const data = snapshot.docs.map((doc) => ({
@@ -63,6 +80,7 @@ var excluir = function excluir(id) {
 }
 
 export {
+    validaLogin,
     listarTodos,
     bucarPorId,
     incluir,
