@@ -4,79 +4,53 @@
       <el-header style="text-align: left" height="20px">{{ text }}</el-header>
       <el-divider></el-divider>
       <el-main>
-        <el-form :label-position="'right'" label-width="60px" ref="form">
+        <el-form
+          :rules="rules"
+          :model="form"
+          :label-position="'right'"
+          label-width="60px"
+          ref="form"
+        >
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
-              <el-form-item label="Nome">
-                <el-input v-model="form.nome" maxlength="200"></el-input>
-              </el-form-item>
+              <Nome prop="nome" v-model="form.nome" />
             </el-col>
 
             <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-              <el-form-item class="input-data-nascimento" label-width="150px" label="Data de nascimento">
-                <el-input
-                  type="date"
-                  v-model="form.datanascimento"
-                  :max="maxDate"
-                  placeholder="Data de nascimento"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <el-form-item label="CPF">
-                <el-input
-                  v-maska="'###.###.###-##'"
-                  maxlength="14"
-                  v-model="form.CPF"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <el-form-item label="Telefone">
-                <el-input
-                  v-maska="['(##) ####-####', '(##) #####-####']"
-                  
-                  v-model="form.telefone"
-                ></el-input>
-              </el-form-item>
+              <DataNascimento
+                prop="datanascimento"
+                v-model="form.datanascimento"
+              />
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
-              <el-form-item label="Rua">
-                <el-input maxlength="200" v-model="form.logradouro"></el-input>
-              </el-form-item>
+            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
+              <CPF v-model="form.CPF" />
             </el-col>
-            <el-col :span="15" :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
-              <el-form-item label="Bairro">
-                <el-input maxlength="200" v-model="form.bairro"></el-input>
-              </el-form-item>
+            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
+              <Telefone v-model="form.telefone" />
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col :span="14" :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
+              <Logradouro v-model="form.logradouro" />
+            </el-col>
+            <el-col :span="10" :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
+              <Bairro v-model="form.bairro" />
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <el-form-item label="Numero">
-                <el-input
-                  maxlength="200"
-                  v-model="form.numero"
-                  v-maska="'#*'"
-                ></el-input>
-              </el-form-item>
+              <Numero v-model="form.numero" />
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <el-form-item label="CEP">
-                <el-input
-                  maxlength="200"
-                  v-model="form.cep"
-                  v-maska="'#####-###'"
-                ></el-input>
-              </el-form-item>
+              <CEP v-model="form.cep" />
             </el-col>
           </el-row>
+          <el-row :gutter="20"> <slot></slot> </el-row>
         </el-form>
       </el-main>
       <el-footer>
@@ -94,11 +68,30 @@
 
 <script>
 import FormFooter from "./FormFooter.vue";
+import CEP from "./CepInput.vue";
+import CPF from "./CpfInput.vue";
+import Numero from "./NumeroInput.vue";
+import Bairro from "./BairroInput.vue";
+import Logradouro from "./LogradouroInput.vue";
+import Telefone from "./TelefoneInput.vue";
+import DataNascimento from "./NascimentoInput.vue";
+import Nome from "./NomeInput.vue";
 export default {
-  components: { FormFooter },
+  components: {
+    FormFooter,
+    CEP,
+    Numero,
+    Bairro,
+    Logradouro,
+    Telefone,
+    CPF,
+    DataNascimento,
+    Nome,
+  },
   name: "FormPessoa",
   props: {
     text: String,
+    anonimo: Boolean,
     hideBtn: {
       type: Array,
       default: () => [false, false],
@@ -124,8 +117,28 @@ export default {
         telefone: "",
         datanascimento: null,
       },
-      maxDate: new Date().toISOString("YYYY-MM-DD").split("T")[0],
     };
+  },
+  computed: {
+    rules() {
+      return {
+        nome: [
+          {
+            required: !this.anonimo,
+            message: "Obrigatório",
+            trigger: "blur",
+          },
+        ],
+        datanascimento: [
+          {
+            type: "date",
+            required: !this.anonimo,
+            message: "Obrigatório",
+            trigger: "blur",
+          },
+        ],
+      };
+    },
   },
 };
 </script>
@@ -133,13 +146,5 @@ export default {
 <style scoped>
 .box-card {
   margin: 0px 0 20px 0;
-}
-@media (max-width: 650px) {
-  .input-data-nascimento {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-  }
 }
 </style>
