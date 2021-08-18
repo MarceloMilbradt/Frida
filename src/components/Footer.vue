@@ -4,12 +4,12 @@
   </footer>
   <el-affix position="bottom" :offset="60" class="btn-panic">
     <el-popover
-      placement="top-start"
+      placement="left"
       title="Pânico"
       :width="200"
-      trigger="hover"
+      trigger="manual"
+      :visible="visible"
       content="Clique para trocar de página!"
-      :hide-after="200"
     >
       <template #reference
         ><el-button
@@ -28,15 +28,23 @@
 <script>
 export default {
   name: "Footer",
+  data() {
+    return {
+      visible: false,
+    };
+  },
   methods: {
     redirect() {
-      const urls = [
-        "https://www.amazon.com.br/",
-        "https://www.google.com/",
-      ];
+      const urls = ["https://www.amazon.com.br/", "https://www.google.com/"];
       let i = Math.floor(Math.random() * urls.length);
       window.location.href = urls[i];
     },
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      setTimeout(()=>this.visible=true,1000)
+      setTimeout(()=>this.visible=false,6000)
+    });
   },
 };
 </script>
