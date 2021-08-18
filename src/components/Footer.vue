@@ -31,9 +31,10 @@ export default {
   methods: {
     redirect() {
       const urls = [
+        "https://www.amazon.com.br/",
         "https://www.google.com/",
       ];
-      let i = Math.floor(Math.random() * urls.length) + 1;
+      let i = Math.floor(Math.random() * urls.length);
       window.location.href = urls[i];
     },
   },
