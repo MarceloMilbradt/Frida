@@ -1,31 +1,53 @@
 import * as db from "./firebase";
 const Swal = require('sweetalert2')
 
-var validaLogin = async function validaLogin(login, senha) {
-    var isValido = false;
-    try {
-        var retorno = await db.usuario
-            .where("login", "==", login)
-            .where("senha", "==", senha)
-            .get();
-        if (retorno.size > 0) isValido = true;
+var validaLogin = function validaLogin(login, senha) {
+    db.usuario
+        .where("login", "==", login)
+        .where("senha", "==", senha)
+        .limit(1).get()
+        .then((snapshot) => {
+            if (snapshot.size > 0) {
+                var data = snapshot.docs[0].data();
+                localStorage.setItem('nome', data.nome);
+                //console.log('Nome Storage', localStorage.getItem('nome'))
 
-        console.log("isvalido", isValido)
-        return isValido;
-    }
-    catch (err) {
-        console.log('Error getting documents', err);
-    }
+                mensagemLoginSucesso();
+            } else {
+                Swal.fire("Erro!", "Usuário ou senha inválido", "error");
+            }
+        });
+}
+
+function mensagemLoginSucesso() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: 'success',
+        title: 'Logado com sucesso!'
+    })
 }
 
 var listarTodos = function listarTodos() {
-    db.usuario.get().then((snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-        }));
-        console.log("Todos Usuarios = ", data);
-    });
+    db.usuario
+        .orderBy("nome", "asc").get()
+        .then((snapshot) => {
+            const data = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            console.log("Todos Usuarios = ", data);
+        });
 }
 
 var bucarPorId = function bucarPorId(id) {

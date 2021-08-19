@@ -9,17 +9,17 @@
         ref="form"
         @submit.prevent="login"
       >
-        <el-form-item prop="username">
+        <el-form-item prop="usuario">
           <el-input
-            v-model="model.username"
-            placeholder="Username"
+            v-model="model.usuario"
+            placeholder="Usuário"
             prefix-icon="fas fa-user"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="password">
+        <el-form-item prop="senha">
           <el-input
-            v-model="model.password"
-            placeholder="Password"
+            v-model="model.senha"
+            placeholder="Senha"
             type="password"
             prefix-icon="fas fa-lock"
           ></el-input>
@@ -34,8 +34,9 @@
             >Login</el-button
           >
         </el-form-item>
-        <a class="forgot-password" href="https://oxfordinformatics.com/"
-          >Forgot password ?</a
+
+        <a class="novo-usuario" href="https://oxfordinformatics.com/"
+          >Criar novo usuário</a
         >
       </el-form>
     </el-card>
@@ -50,28 +51,28 @@ export default {
   data() {
     return {
       model: {
-        username: "",
-        password: "",
+        usuario: "",
+        senha: "",
       },
       loading: false,
       rules: {
-        username: [
+        usuario: [
           {
             required: true,
-            message: "Username is required",
+            message: "Usuário é obrigatório",
             trigger: "blur",
           },
           {
-            min: 4,
-            message: "Username length should be at least 5 characters",
+            min: 5,
+            message: "O usuário precisa ter pelomenos 5 caracteres",
             trigger: "blur",
           },
         ],
-        password: [
-          { required: true, message: "Password is required", trigger: "blur" },
+        senha: [
+          { required: true, message: "Senha é obrigatório", trigger: "blur" },
           {
             min: 5,
-            message: "Password length should be at least 5 characters",
+            message: "A senha precisa ter pelomenos 5 caracteres",
             trigger: "blur",
           },
         ],
@@ -81,15 +82,10 @@ export default {
   methods: {
     async login() {
       let valid = await this.$refs.form.validate();
-      if (!valid) {
-        return;
-      }
+      if (!valid) return;
+
       this.loading = true;
-      if (controller.validaLogin(this.model.username, this.model.password)) {
-        this.$message.success("Login successfull");
-      } else {
-        this.$message.error("Username or password is invalid");
-      }
+      controller.validaLogin(this.model.usuario, this.model.senha);
       this.loading = false;
     },
   },
@@ -112,7 +108,7 @@ export default {
 .login-form {
   width: 290px;
 }
-.forgot-password {
+.novo-usuario {
   margin-top: 10px;
 }
 </style>
