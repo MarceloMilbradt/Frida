@@ -4,6 +4,7 @@ import Home from '../views/Home'
 import Denuncia from '../views/Denuncia'
 import Info from '../views/Info'
 import Login from '../views/Login'
+import ListarUsuario from '../views/ListarUsuario'
 
 const routes = [
     {
@@ -29,6 +30,12 @@ const routes = [
         name: 'Denuncia',
         component: Denuncia,
         icon: 'el-icon-warning-outline'
+    },
+    {
+        path: '/ListarUsuario',
+        name: 'Usuários',
+        component: ListarUsuario,
+        icon: 'el-icon-user'
     },
     {
         path: '/login',

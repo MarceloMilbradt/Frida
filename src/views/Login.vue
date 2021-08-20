@@ -34,10 +34,8 @@
             >Login</el-button
           >
         </el-form-item>
-
-        <a class="novo-usuario" href="https://oxfordinformatics.com/"
-          >Criar novo usuário</a
-        >
+        <!-- <a class="novo-usuario" href="Register">Criar novo usuário</a> -->
+        <router-link class="link" to="Register">Criar novo usuário</router-link>
       </el-form>
     </el-card>
   </div>
