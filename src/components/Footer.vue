@@ -53,23 +53,23 @@ a {
   color: #333;
 }
 footer {
-  margin-top: 30px;
+  margin-top: 1.875em;
   text-align: center;
 }
 .btn-panic {
   float: right;
-  margin-right: 20px;
+  margin-right: 1.250em;
 }
 .icon {
-  font-size: 40px;
+  font-size: 2.500em;
 }
 @media (max-width: 800px) {
   .btn-panic {
     float: right;
-    margin-right: 15px;
+    margin-right: 0.938em;
   }
   .icon {
-    font-size: 25px;
+    font-size: 1.563em;
   }
 }
 </style>

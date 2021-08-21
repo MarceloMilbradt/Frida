@@ -1,6 +1,6 @@
 <template>
-  <el-form-item :label="label">
-    <el-input :maxlength="maxlength" v-model="value"></el-input>
+  <el-form-item :label="label" >
+    <el-input :maxlength="maxlength" v-model="value" size="large"></el-input>
   </el-form-item>
 </template>
 
@@ -29,5 +29,6 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 </style>

@@ -101,13 +101,13 @@ export default {
 
 .login-button {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 2.500em;
 }
 .login-form {
-  width: 290px;
+  width: 18.125em;
 }
 .novo-usuario {
-  margin-top: 10px;
+  margin-top: 0.625em;
 }
 </style>
 <style scoped>
@@ -118,30 +118,30 @@ export default {
 .login .el-input__prefix {
   background: rgb(238, 237, 234);
   left: 0;
-  height: calc(100% - 2px);
-  left: 1px;
-  top: 1px;
-  border-radius: 3px;
+  height: calc(100% - 0.125em);
+  left: 0.063em;
+  top: 0.063em;
+  border-radius: 0.188em;
 }
 .login .el-input input {
-  padding-left: 35px;
+  padding-left: 2.188em;
 }
 .login .el-card {
   padding-top: 0;
-  padding-bottom: 30px;
+  padding-bottom: 1.875em;
 }
 h2 {
   font-family: "Open Sans";
-  letter-spacing: 1px;
+  letter-spacing: 0.063em;
   font-family: Roboto, sans-serif;
-  padding-bottom: 20px;
+  padding-bottom: 1.250em;
 }
 a {
   color: rgb(0, 124, 137);
   text-decoration: none;
 }
 .login .el-card {
-  width: 340px;
+  width: 21.250em;
   display: flex;
   justify-content: center;
 }

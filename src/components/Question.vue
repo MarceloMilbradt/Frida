@@ -58,7 +58,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 0.625em;
 }
 h3 {
   font-size: 1em;
@@ -71,14 +71,14 @@ h3 {
 }
 
 .text {
-  font-size: 14px;
+  font-size: 0.875em;
 }
 
 .item {
-  margin-bottom: 18px;
+  margin-bottom: 1.125em;
 }
 
 .box-card {
-  margin: 20px 0 20px 0;
+  margin: 1.250em 0 1.250em 0;
 }
 </style>

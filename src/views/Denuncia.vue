@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="tab" style="margin-top: 20px" tab-position="left">
+  <el-tabs v-model="tab" style="margin-top: 1.250em" tab-position="left">
     <el-tab-pane label="Vítima">
       <FormPessoa
         @btn-click-next="changeTab(+1)"

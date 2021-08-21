@@ -28,20 +28,22 @@ export default {
 </script>
 
 <style>
+
 body{
   margin: 0;
 }
 #app {
+
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 0px;
-  padding-bottom: 25px;
-  padding-left: 15px;
-  padding-top: 0px;
-  padding-right: 15px;
+  margin-top: 0em;
+  padding-bottom: 1.563em;
+  padding-left: 0.938em;
+  padding-top: 0em;
+  padding-right: 0.938em;
   background-color: white;
   /* box-shadow: 0 2px 7px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
@@ -58,9 +60,9 @@ body{
     display: none;
   }
   #app {
-    padding-left: 5px;
-    padding-top: 0px;
-    padding-right: 5px;
+    padding-left: 0.313em;
+    padding-top: 0em;
+    padding-right: 0.313em;
   }
 }
 </style>
@@ -75,7 +77,7 @@ body{
     display: none;
   }
   .main {
-    min-width: unset;
+    min-width: 100%;
     margin: 0;
     max-width: unset;
   }

@@ -5,6 +5,7 @@
       v-for="item in items"
       :to="item.to"
       :text="item.text"
+      :big="item.big"
     ></MenuItem>
   </div>
 </template>
@@ -39,7 +40,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 15px;
+  gap: 0.938em;
 }
 
 @media (max-width: 800px) {
@@ -47,8 +48,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
-    padding: 10px;
+    gap: 0.938em;
+    padding: 0.625em;
   }
 }
 </style>

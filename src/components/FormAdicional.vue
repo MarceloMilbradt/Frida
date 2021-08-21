@@ -1,14 +1,14 @@
 <template>
   <el-card class="box-card">
     <el-container>
-      <el-header style="text-align: left" height="20px">{{ text }}</el-header>
+      <el-header style="text-align: left" height="1.250em">{{ text }}</el-header>
       <el-divider></el-divider>
       <el-main>
         <el-form
           :rules="rules"
           :model="form"
           :label-position="'right'"
-          label-width="60px"
+          label-width="3.750em"
           ref="form"
         >
           <el-row :gutter="20">
@@ -144,6 +144,6 @@ export default {
 
 <style scoped>
 .box-card {
-  margin: 0px 0 20px 0;
+  margin: 0 0 1.250em 0;
 }
 </style>

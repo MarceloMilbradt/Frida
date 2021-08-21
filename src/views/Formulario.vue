@@ -162,11 +162,11 @@ export default {
 
 <style>
 .el-radio__inner::after {
-  width: 8px;
-  height: 8px;
+  width: 0.500em;
+  height: 0.500em;
 }
 .el-radio__inner {
-  width: 18px;
-  height: 18px;
+  width: 1.125em;
+  height: 1.125em;
 }
 </style>

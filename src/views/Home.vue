@@ -1,4 +1,5 @@
 <template>
+  <Menu :items="menuAjuda" />
   <Menu :items="menus" />
 </template>
 
@@ -11,6 +12,13 @@ export default {
   },
   data() {
     return {
+      menuAjuda:[
+        {
+          to: "/Ajuda",
+          text: "ME AJUDA!",
+          big:true,
+        },
+      ],
       menus: [
         {
           to: "/Avaliacao",

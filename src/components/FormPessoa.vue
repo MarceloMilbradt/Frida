@@ -1,20 +1,20 @@
 <template>
   <el-card class="box-card">
     <el-container>
-      <el-header style="text-align: left" height="20px">{{ text }}</el-header>
+      <el-header style="text-align: left" height="1.250em">{{ text }}</el-header>
       <el-divider></el-divider>
       <el-main>
         <el-form
           :rules="rules"
           :model="form"
           :label-position="'right'"
-          label-width="60px"
+          label-width="3.750em"
           ref="form"
           v-show="!anonimo"
         >
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
-              <TextField prop="nome" label="nome" v-model="form.nome" />
+              <TextField prop="nome" label="Nome" v-model="form.nome" />
             </el-col>
 
             <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
@@ -67,7 +67,7 @@
       </el-main>
       <el-footer>
         <FormFooter
-          @btn-click-next="$emit('btn-click-next')"
+          @btn-click-next="$emit('btn-click-next', form)"
           @btn-click-prev="$emit('btn-click-prev')"
           :hide="hideBtn"
           :type="typeBtn"
@@ -146,6 +146,6 @@ export default {
 
 <style scoped>
 .box-card {
-  margin: 0px 0 20px 0;
+  margin: 0 0 1.250em 0;
 }
 </style>

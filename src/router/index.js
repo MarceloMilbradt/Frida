@@ -4,6 +4,7 @@ import Home from '../views/Home'
 import Denuncia from '../views/Denuncia'
 import Info from '../views/Info'
 import Login from '../views/Login'
+import Ajuda from '../views/Ajuda'
 import ListarUsuario from '../views/ListarUsuario'
 
 const routes = [
@@ -12,6 +13,12 @@ const routes = [
         name: '',
         component: Home,
         icon: 'el-icon-s-home'
+    },
+    {
+        path: '/Ajuda',
+        name: 'Ajuda',
+        component: Ajuda,
+        icon: 'el-icon-warning-outline'
     },
     {
         path: '/Info',
