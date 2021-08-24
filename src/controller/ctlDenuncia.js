@@ -25,13 +25,26 @@ var bucarPorId = function bucarPorId(id) {
 }
 
 var incluir = function incluir(vitima, agressor, terceiro = null) {
-    var batch = db.firebase.firestore().batch();
 
+    var batch = db.firebase.firestore().batch();
     batch.set(db.vitima.doc(), vitima);
     batch.set(db.agressor.doc(), agressor);
     if (terceiro) batch.set(db.denunciaTerceiro.doc(), terceiro);
 
     batch.commit()
+        .then(() => {
+            Swal.fire("Salvo!", "A Denúncia foi salvo com sucesso!", "success");
+        })
+        .catch((error) => {
+            console.error("Erro ao incluir Denúncia", error);
+            Swal.fire("Erro!", "Houve um problema ao tentar incluir a Denúncia!", "error");
+        });
+}
+
+
+var incluirDenuncia = function incluirDenuncia (vitima, agressor, terceiro = null) {
+
+    db.denuncia.add({vitima,agressor,terceiro})
         .then(() => {
             Swal.fire("Salvo!", "A Denúncia foi salvo com sucesso!", "success");
         })
@@ -72,5 +85,6 @@ export {
     bucarPorId,
     incluir,
     alterar,
-    excluir
+    excluir,
+    incluirDenuncia
 }

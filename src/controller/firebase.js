@@ -24,6 +24,7 @@ const avaliacao = db.collection('avaliacao')
 const vitima = db.collection('vitima')
 const agressor = db.collection('agressor')
 const denunciaTerceiro = db.collection('denunciaTerceiro')
+const denuncia = db.collection('denuncia')
 
 export {
     firebase,
@@ -33,5 +34,6 @@ export {
     avaliacao,
     vitima,
     agressor,
-    denunciaTerceiro
+    denunciaTerceiro,
+    denuncia
 }

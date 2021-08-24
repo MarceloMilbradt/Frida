@@ -1,14 +1,15 @@
 <template>
   <el-card class="box-card">
     <el-container>
-      <el-header style="text-align: left" height="1.250em">{{ text }}</el-header>
+      <el-header style="text-align: left" height="1.250em">{{
+        text
+      }}</el-header>
       <el-divider></el-divider>
       <el-main>
         <el-form
           :rules="rules"
           :model="form"
-          :label-position="'right'"
-          label-width="3.750em"
+          :label-position="'top'"
           ref="form"
           v-show="!anonimo"
         >
@@ -29,10 +30,26 @@
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
               <TextField
+                v-model="form.trabalho.profissao"
+                label="Profissão"
+              />
+            </el-col>
+            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
+              <TextField
+                v-model="form.trabalho.local"
+                label="Local de trabalho"
+              />
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
+              <TextField
                 v-model="form.CPF"
                 label="CPF"
+                prop="CPF" 
                 v-maska="'###.###.###-##'"
-                maxlength="9"
+                maxlength="14"
               />
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
@@ -46,19 +63,24 @@
 
           <el-row :gutter="20">
             <el-col :span="14" :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
-              <TextField label="Rua" v-model="form.logradouro" />
+              <TextField label="Rua" v-model="form.endereco.logradouro" />
             </el-col>
             <el-col :span="10" :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
-              <TextField label="Bairro" v-model="form.bairro" />
+              <TextField label="Bairro" v-model="form.endereco.bairro" />
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <TextField label="Numero" v-model="form.numero" />
+              <TextField label="Numero" v-model="form.endereco.numero" />
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <TextField label="CEP" v-maska="'#####-###'" v-model="form.cep" />
+              <TextField
+                label="CEP"
+                maxlength="9"
+                v-maska="'#####-###'"
+                v-model="form.endereco.cep"
+              />
             </el-col>
           </el-row>
         </el-form>
@@ -111,11 +133,17 @@ export default {
       form: {
         name: "",
         CPF: "",
-        logradouro: "",
-        bairro: "",
-        numero: "",
-        cep: "",
+        endereco: {
+          logradouro: "",
+          bairro: "",
+          numero: "",
+          cep: "",
+        },
         telefone: "",
+        trabalho:{
+          profissao: "",
+          local: "",
+        },
         datanascimento: null,
       },
     };
@@ -126,15 +154,14 @@ export default {
         nome: [
           {
             required: !this.anonimo,
-            message: "Obrigatório",
+            message: "Infome ao menos um nome ou apelido",
             trigger: "blur",
           },
         ],
-        datanascimento: [
+        CPF: [
           {
-            type: "date",
-            required: !this.anonimo,
-            message: "Obrigatório",
+            min: 14,
+            message: "Informe o CPF completo",
             trigger: "blur",
           },
         ],
@@ -146,6 +173,6 @@ export default {
 
 <style scoped>
 .box-card {
-  margin: 0 0 1.250em 0;
+  margin: 0 0 1.25em 0;
 }
 </style>

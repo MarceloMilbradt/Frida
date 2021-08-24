@@ -1,7 +1,6 @@
 <template>
   <el-form-item
     class="input-date"
-    label-width="150px"
     :label="label"
   >
     <el-input
@@ -36,12 +35,5 @@ export default {
 </script>
 
 <style scoped>
-@media (max-width: 650px) {
-  .input-date {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-}
+
 </style>

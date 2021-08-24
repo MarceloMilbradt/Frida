@@ -7,8 +7,7 @@
         <el-form
           :rules="rules"
           :model="form"
-          :label-position="'right'"
-          label-width="3.750em"
+          :label-position="'top'"
           ref="form"
         >
           <el-row :gutter="20">
