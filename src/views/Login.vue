@@ -34,8 +34,10 @@
             >Login</el-button
           >
         </el-form-item>
-        <!-- <a class="novo-usuario" href="Register">Criar novo usuário</a> -->
-        <router-link class="link" to="Register">Criar novo usuário</router-link>
+        <!-- <a class="novo-usuario" href="CadastrarUsuario">Criar novo usuário</a> -->
+        <router-link class="link" to="CadastrarUsuario"
+          >Criar novo usuário</router-link
+        >
       </el-form>
     </el-card>
   </div>
@@ -101,7 +103,7 @@ export default {
 
 .login-button {
   width: 100%;
-  margin-top: 2.500em;
+  margin-top: 2.5em;
 }
 .login-form {
   width: 18.125em;
@@ -134,14 +136,14 @@ h2 {
   font-family: "Open Sans";
   letter-spacing: 0.063em;
   font-family: Roboto, sans-serif;
-  padding-bottom: 1.250em;
+  padding-bottom: 1.25em;
 }
 a {
   color: rgb(0, 124, 137);
   text-decoration: none;
 }
 .login .el-card {
-  width: 21.250em;
+  width: 21.25em;
   display: flex;
   justify-content: center;
 }
