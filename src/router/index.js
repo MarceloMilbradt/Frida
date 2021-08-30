@@ -6,6 +6,7 @@ import Info from '../views/Info'
 import Login from '../views/Login'
 import Ajuda from '../views/Ajuda'
 import ListarUsuario from '../views/ListarUsuario'
+import CadastrarUsuario from '../views/CadastrarUsuario'
 
 const routes = [
     {
@@ -42,6 +43,12 @@ const routes = [
         path: '/ListarUsuario',
         name: 'Usuários',
         component: ListarUsuario,
+        icon: 'el-icon-user'
+    },
+    {
+        path: '/CadastrarUsuario',
+        name: 'Cad. Usuários',
+        component: CadastrarUsuario,
         icon: 'el-icon-user'
     },
     {
