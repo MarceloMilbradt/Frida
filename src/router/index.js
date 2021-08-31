@@ -11,9 +11,10 @@ import CadastrarUsuario from '../views/CadastrarUsuario'
 const routes = [
     {
         path: '/',
-        name: '',
+        name: 'Home',
         component: Home,
-        icon: 'el-icon-s-home'
+        icon: 'el-icon-s-home',
+        hiddenH:true,
     },
     {
         path: '/Ajuda',

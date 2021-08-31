@@ -99,6 +99,7 @@ export default {
         nome: "",
         endereco: "",
         contato: "",
+        data: new Date().toISOString(),
         coords: {
           latitude: "",
           longitude: "",

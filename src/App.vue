@@ -1,16 +1,22 @@
 <template>
   <el-config-provider :locale="locale">
-    <Header/>
-    <el-main class="main">
-      <router-view></router-view>
-    </el-main>
-    <Footer/>
+    <el-container>
+      <el-aside v-if="$router.options.routes.length > 5" width="65px" ><Header :vertical="true"  /></el-aside>
+      <el-container>
+        <el-header v-if="$router.options.routes.length <= 5"><Header /></el-header>
+        <el-main>
+          <el-main class="main">
+            <router-view></router-view> </el-main
+        ></el-main>
+        <el-footer> <Footer /> </el-footer>
+      </el-container>
+    </el-container>
   </el-config-provider>
 </template>
 
 <script>
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import locale from "element-plus/lib/locale/lang/pt-br";
 
 export default {
@@ -28,12 +34,10 @@ export default {
 </script>
 
 <style>
-
-body{
+body {
   margin: 0;
 }
 #app {
-
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

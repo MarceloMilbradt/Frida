@@ -1,20 +1,58 @@
 <template>
-  <el-header>
-    <el-menu  :router="true" :default-active="$route.path" mode="horizontal">
-      <el-menu-item
-        :key="index"
-        :index="rule.path"
-        v-for="(rule, index) in $router.options.routes"
+  <el-menu
+    :router="true"
+    :class="vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'"
+    :collapse="vertical && isCollapse"
+    :default-active="$route.path"
+    :mode="vertical ? 'vertical' : 'horizontal'"
+  >
+  <el-menu-item v-if="vertical" @click="toggleExpand">
+    <i class="el-icon-menu"></i>
+    </el-menu-item>
+    <el-menu-item
+      :key="index"
+      :index="rule.path"
+      v-for="(rule, index) in $router.options.routes"
+    >
+      <i :class="rule.icon"></i>
+      <template v-if="rule.name && !(rule.hiddenH && !vertical)" #title>
+        <span class="menu-item-name">{{ rule.name }}</span>
+      </template
       >
-        <i :class="rule.icon"></i
-        ><span class="menu-item-name">{{ rule.name }}</span>
-      </el-menu-item>
-    </el-menu>
-  </el-header>
+    </el-menu-item>
+  </el-menu>
 </template>
-
-<style  scoped>
-  ul li:last-child{
-    float: right;
+<script>
+export default {
+  name: "Header",
+  props: {
+    vertical: Boolean,
+  },
+  data() {
+    return {
+      isCollapse: true,
+    };
+  },
+  methods:{
+    toggleExpand(){
+      this.isCollapse = !this.isCollapse
+    }
   }
+};
+</script>
+<style  scoped>
+.el-menu-vertical ul li:last-child {
+  float: right;
+}
+.el-menu-full-height{
+    height: 100%;
+}
+.el-menu-vertical{
+  text-align: center;
+  position: fixed;
+}
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
+}
 </style>
