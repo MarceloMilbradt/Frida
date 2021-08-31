@@ -4,6 +4,7 @@
 
 <script>
 import FormAjuda from "../components/FormAjuda.vue";
+import * as controller from "../controller/ctlAjuda";
 
 export default {
   components: {
@@ -11,11 +12,10 @@ export default {
   },
   methods: {
     onClickSaveSubmit(form) {
-
+      controller.incluir(form)
     },
   },
 };
 </script>
-
 <style>
 </style>

@@ -64,7 +64,7 @@
             <el-col :span="24">
               <el-button
                 icon="el-icon-check"
-                @click="$emit('clickSubmit',form)"
+                @click="$emit('clickSubmit', form)"
                 type="primary"
                 plain
               >
@@ -81,6 +81,8 @@
 <script>
 import TextField from "./TextField.vue";
 import { CircleCheck } from "@element-plus/icons";
+import * as geolocation from "../controller/MapBoxs";
+
 export default {
   components: {
     TextField,
@@ -97,8 +99,10 @@ export default {
         nome: "",
         endereco: "",
         contato: "",
-        latitude: "",
-        longitude: "",
+        coords: {
+          latitude: "",
+          longitude: "",
+        },
       },
       geo: false,
     };
@@ -117,8 +121,11 @@ export default {
     },
   },
   methods: {
-    setGeo({ latitude, longitude }) {
-      this.form = { ...this.form, latitude, longitude };
+    async setGeo({ latitude, longitude }) {
+      console.log(latitude, longitude)
+      const ends = await geolocation.getLocation(latitude,longitude)
+      const endereco = ends?.place_name ?? ''
+      this.form = { ...this.form, endereco, coords: { latitude, longitude } };
       this.geo = true;
     },
     getGeo() {
@@ -130,17 +137,6 @@ export default {
         }
       );
     },
-  },
-  mounted: function () {
-    this.$nextTick(function () {
-      navigator.geolocation.getCurrentPosition(
-        (geo) => this.setGeo(geo.coords),
-        console.log,
-        {
-          enableHighAccuracy: true,
-        }
-      );
-    });
   },
 };
 </script>

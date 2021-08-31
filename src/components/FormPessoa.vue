@@ -29,10 +29,16 @@
 
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField
-                v-model="form.trabalho.profissao"
-                label="Profissão"
-              />
+              <TextField v-model="form.filiacao.mae" label="Mãe" />
+            </el-col>
+            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
+              <TextField v-model="form.filiacao.pai" label="Pai" />
+            </el-col>
+          </el-row>
+
+          <el-row :gutter="20">
+            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
+              <TextField v-model="form.trabalho.profissao" label="Profissão" />
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
               <TextField
@@ -47,7 +53,7 @@
               <TextField
                 v-model="form.CPF"
                 label="CPF"
-                prop="CPF" 
+                prop="CPF"
                 v-maska="'###.###.###-##'"
                 maxlength="14"
               />
@@ -56,6 +62,7 @@
               <TextField
                 v-model="form.telefone"
                 label="Telefone"
+                prop="telefone"
                 v-maska="['(##) ####-####', '(##) #####-####']"
               />
             </el-col>
@@ -78,6 +85,7 @@
               <TextField
                 label="CEP"
                 maxlength="9"
+                prop="CEP"
                 v-maska="'#####-###'"
                 v-model="form.endereco.cep"
               />
@@ -140,9 +148,13 @@ export default {
           cep: "",
         },
         telefone: "",
-        trabalho:{
+        trabalho: {
           profissao: "",
           local: "",
+        },
+        filiacao: {
+          mae: "",
+          pai: "",
         },
         datanascimento: null,
       },
