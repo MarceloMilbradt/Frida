@@ -1,13 +1,12 @@
 <template>
   <el-config-provider :locale="locale">
-    <el-container>
-      <el-aside v-if="$router.options.routes.length > 5" width="65px" ><Header :vertical="true"  /></el-aside>
+    <el-container v-loading="!$store.getters.getInited">
+      <el-aside v-if="$store.getters.getLogged" width="65px"
+        ><Header :vertical="true"
+      /></el-aside>
       <el-container>
-        <el-header v-if="$router.options.routes.length <= 5"><Header /></el-header>
-        <el-main>
-          <el-main class="main">
-            <router-view></router-view> </el-main
-        ></el-main>
+        <el-header v-if="!$store.getters.getLogged"><Header /></el-header>
+        <el-main class="main"> <router-view></router-view> </el-main>
         <el-footer> <Footer /> </el-footer>
       </el-container>
     </el-container>
@@ -60,9 +59,6 @@ body {
 }
 
 @media (max-width: 800px) {
-  .menu-item-name {
-    display: none;
-  }
   #app {
     padding-left: 0.313em;
     padding-top: 0em;
@@ -77,9 +73,6 @@ body {
   max-width: 80vw;
 }
 @media (max-width: 800px) {
-  .menu-item-name {
-    display: none;
-  }
   .main {
     min-width: 100%;
     margin: 0;

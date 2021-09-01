@@ -9,6 +9,15 @@
         ref="form"
         @submit.prevent="login"
       >
+        <el-alert
+          title="Falha no login"
+          type="error"
+          description="Usuario ou senhas incorretos!"
+          show-icon
+          v-if="fail"
+        >
+        
+        </el-alert>
         <el-form-item prop="usuario">
           <el-input
             v-model="model.usuario"
@@ -35,9 +44,9 @@
           >
         </el-form-item>
         <!-- <a class="novo-usuario" href="CadastrarUsuario">Criar novo usuário</a> -->
-        <router-link class="link" to="CadastrarUsuario"
+        <!-- <router-link class="link" to="CadastrarUsuario"
           >Criar novo usuário</router-link
-        >
+        > -->
       </el-form>
     </el-card>
   </div>
@@ -45,11 +54,11 @@
 
 <script>
 import * as controller from "../controller/ctlUsuario";
-
 export default {
   name: "login",
   data() {
     return {
+      fail: false,
       model: {
         usuario: "",
         senha: "",
@@ -81,12 +90,20 @@ export default {
   },
   methods: {
     async login() {
+      this.fail = false;
       let valid = await this.$refs.form.validate();
       if (!valid) return;
 
       this.loading = true;
-      controller.validaLogin(this.model.usuario, this.model.senha);
+
+      await this.$store.dispatch("login", {
+        email: this.model.usuario,
+        password: this.model.senha,
+      });
+
       this.loading = false;
+
+      this.fail = !this.$store.getters.getLogged;
     },
   },
 };
@@ -146,5 +163,9 @@ a {
   width: 21.25em;
   display: flex;
   justify-content: center;
+}
+.el-alert {
+  margin-bottom:  1.063em;
+  text-align: left;
 }
 </style>
