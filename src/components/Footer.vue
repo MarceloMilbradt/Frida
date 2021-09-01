@@ -2,7 +2,7 @@
   <footer>
     <p>Copyright &copy; 2021</p>
   </footer>
-  <el-affix position="bottom" :offset="60" class="btn-panic">
+  <el-affix v-if="!$store.getters.getLogged" position="bottom" :offset="60" class="btn-panic">
     <el-popover
       placement="left"
       title="Pânico"
