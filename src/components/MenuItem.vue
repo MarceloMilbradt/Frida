@@ -1,6 +1,6 @@
 <template>
   <div class="menuitem">
-    <router-link :class="'link ' + (big ? 'big' : '')" :to="to">{{
+    <router-link :class="'link ' + (big ? 'big' : '') + (red ? ' red' : '')" :to="to">{{
       text
     }}</router-link>
   </div>
@@ -12,6 +12,7 @@ export default {
   props: {
     text: String,
     big: Boolean,
+    red: Boolean,
     to: String,
   },
 };
@@ -46,6 +47,11 @@ a.link {
 a.link.big {
   height: 1em;
   font-size: 2rem;
+}
+a.link.big.red {
+background-color: red;
+color: White;
+font-family: cursive;
 }
 @media (max-width: 800px) {
   a.link.big {

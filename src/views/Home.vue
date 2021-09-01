@@ -17,6 +17,7 @@ export default {
           to: "/Ajuda",
           text: "ME AJUDA!",
           big:true,
+          red:true,
         },
       ],
       menus: [

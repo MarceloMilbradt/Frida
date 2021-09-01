@@ -6,6 +6,7 @@
       :to="item.to"
       :text="item.text"
       :big="item.big"
+      :red="item.red"
     ></MenuItem>
   </div>
 </template>
