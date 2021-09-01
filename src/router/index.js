@@ -4,7 +4,7 @@ import Home from '../views/Home'
 import Denuncia from '../views/Denuncia'
 import Info from '../views/Info'
 import Login from '../views/Login'
-import Logout from '../views/Logout'
+//import Logout from '../views/Logout'
 import Ajuda from '../views/Ajuda'
 import ListarUsuario from '../views/ListarUsuario'
 import CadastrarUsuario from '../views/CadastrarUsuario'
@@ -53,7 +53,7 @@ const routes = [
         name: 'Denuncia',
         component: Denuncia,
         meta: { 
-            requiresAuth: false,
+            requiresAuth: true,
             icon: 'el-icon-warning-outline',
         }
 
@@ -85,15 +85,15 @@ const routes = [
             icon: 'el-icon-unlock',
         }
     },
-    {
-        path: '/Logout',
-        name: 'Logout',
-        component: Logout,
-        meta: { 
-            requiresAuth: true,
-            icon: 'el-icon-unlock',
-        }
-    },
+    // {
+    //     path: '/Logout',
+    //     name: 'Logout',
+    //     component: Logout,
+    //     meta: { 
+    //         requiresAuth: true,
+    //         icon: 'el-icon-unlock',
+    //     }
+    // },
 
 ]
 
@@ -101,5 +101,6 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
+
 
 export default router

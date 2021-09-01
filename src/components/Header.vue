@@ -8,9 +8,11 @@
     :default-active="$route.path"
     :mode="vertical ? 'vertical' : 'horizontal'"
   >
-    <el-menu-item v-if="vertical" @click="toggleExpand">
-      <i class="el-icon-menu"></i>
-    </el-menu-item>
+      <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand">
+        <i
+          :class="!isCollapse ? 'el-icon-arrow-left ' : 'el-icon-arrow-right'"
+        ></i>
+      </el-menu-item>
     <el-menu-item
       :key="index"
       :index="rule.path"
@@ -22,6 +24,14 @@
         <span class="menu-item-name">{{ rule.name }}</span>
       </template>
     </el-menu-item>
+
+    <el-menu-item v-if="$store.getters.getLogged" @click="logout">
+      <i class="el-icon-unlock"></i>
+      <template #title>
+        <span class="menu-item-name">Sair</span>
+      </template>
+    </el-menu-item>
+    
   </el-menu>
 </template>
 <script>
@@ -42,6 +52,9 @@ export default {
     collapse() {
       this.isCollapse = true;
     },
+    logout() {
+      this.$store.dispatch("logout");
+    },
   },
   computed: {
     routes() {
@@ -53,7 +66,16 @@ export default {
 };
 </script>
 <style  scoped>
-.el-menu-vertical ul li:last-child {
+@media (max-width: 800px) {
+  .el-menu-horizontal .menu-item-name {
+    display: none;
+  }
+}
+.rotate-icon i {
+  transition: all 0.5s;
+}
+
+.el-menu-vertical .right {
   float: right;
 }
 .el-menu-full-height {

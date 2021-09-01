@@ -54,7 +54,11 @@ const store = createStore({
             return state.user
         },
         getLogged(state) {
+            let usr = getCurrentUser()
+            if(usr && !!usr !=state.logged)
+                state.dispatch('setUser', usr)
             return state.logged
+
         },
         getInited(state) {
             return state.isInited

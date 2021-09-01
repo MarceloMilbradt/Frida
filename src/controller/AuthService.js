@@ -1,5 +1,6 @@
-import { auth } from './firebase'
+import { firebase } from './firebase'
 
+const auth = firebase.auth()
 const createCredentials = async (email, password) => {
     const user = await auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
