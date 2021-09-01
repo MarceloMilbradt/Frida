@@ -1,1 +1,3 @@
 # Frida
+
+`$ npm run serve`
