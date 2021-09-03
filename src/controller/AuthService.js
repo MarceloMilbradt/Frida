@@ -1,20 +1,40 @@
 import { firebase } from './firebase'
+const Swal = require('sweetalert2')
 
 const auth = firebase.auth()
 const createCredentials = async (email, password) => {
     const user = await auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            // Signed in
             var user = userCredential.user;
-            // ...
+            Swal.fire("Salvo!", "O usuário foi salvo com sucesso!", "success");
             return user
         })
         .catch((error) => {
+            console.error("Erro ao criar Usuário", error);
+            Swal.fire("Erro!", error.message, "error");
             var errorCode = error.code;
             var errorMessage = error.message;
-            // ..
         });
     return user
+}
+
+function mensagemLoginSucesso() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: 'success',
+        title: 'Logado com sucesso!'
+    })
 }
 
 const login = async (email, password) => {
@@ -23,6 +43,7 @@ const login = async (email, password) => {
             // Signed in
             var user = userCredential.user;
             // ...
+            mensagemLoginSucesso();
             return user
         })
         .catch((error) => {

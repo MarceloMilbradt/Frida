@@ -13,10 +13,7 @@
       >
         <el-row :gutter="20">
           <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-            <TextField v-model="model.nome" label="Nome" />
-          </el-col>
-          <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-            <TextField v-model="model.usuario" label="Usuário" />
+            <TextField v-model="model.email" label="Email" />
           </el-col>
         </el-row>
         <el-row :gutter="20">
@@ -41,7 +38,7 @@
 
 <script>
 import TextField from "../components/TextField.vue";
-import * as controller from "../controller/ctlUsuario";
+import { createCredentials } from "../controller/AuthService";
 
 export default {
   name: "login",
@@ -51,29 +48,28 @@ export default {
   data() {
     return {
       model: {
-        nome: "",
-        usuario: "",
+        email: "",
         senha: "",
       },
       loading: false,
       rules: {
-        usuario: [
+        email: [
           {
             required: true,
-            message: "Usuário é obrigatório",
+            message: "Email é obrigatório",
             trigger: "blur",
           },
           {
             min: 5,
-            message: "O usuário precisa ter pelomenos 5 caracteres",
+            message: "O Email precisa ter pelomenos 5 caracteres",
             trigger: "blur",
           },
         ],
         senha: [
           { required: true, message: "Senha é obrigatório", trigger: "blur" },
           {
-            min: 5,
-            message: "A senha precisa ter pelomenos 5 caracteres",
+            min: 6,
+            message: "A senha precisa ter pelomenos 6 caracteres",
             trigger: "blur",
           },
         ],
@@ -85,7 +81,10 @@ export default {
       let valid = await this.$refs.form.validate();
       if (!valid) return;
 
-      controller.incluir(this.model);
+      createCredentials(this.model.email, this.model.senha).then(() => {
+        this.model.email = "";
+        this.model.senha = "";
+      });
     },
   },
 };
