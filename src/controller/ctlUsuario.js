@@ -1,4 +1,5 @@
 import * as db from "./firebase";
+import {createCredentials} from './AuthService'
 const Swal = require('sweetalert2')
 
 var validaLogin = function validaLogin(login, senha) {
@@ -55,6 +56,7 @@ var bucarPorId = function bucarPorId(id) {
         .doc(id).get()
         .then((doc) => {
             if (!doc.exists) return;
+
             console.log("Dados do Usuário Selecionado = ", doc.data());
         })
         .catch((error) => {
@@ -67,6 +69,7 @@ var incluir = function incluir(dados) {
     db.usuario
         .add(dados)
         .then((ref) => {
+            createCredentials(dados.email)
             Swal.fire("Salvo!", "O usuário foi salvo com sucesso!", "success");
         })
         .catch((error) => {

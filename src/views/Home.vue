@@ -1,6 +1,6 @@
 <template>
-  <Menu :items="menuAjuda" />
-  <Menu :items="menus" />
+  <Menu v-if="!$store.getters.getLogged" :items="menuAjuda" />
+  <Menu v-if="!$store.getters.getLogged" :items="menus" />
 </template>
 
 <script>

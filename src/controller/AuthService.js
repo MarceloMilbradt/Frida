@@ -1,9 +1,19 @@
 import { firebase } from './firebase'
 const Swal = require('sweetalert2')
 
+const generatePassword = () => {
+    var length = 32,
+        charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+        retVal = "";
+    for (var i = 0, n = charset.length; i < length; ++i) {
+        retVal += charset.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+}
+
 const auth = firebase.auth()
-const createCredentials = async (email, password) => {
-    const user = await auth.createUserWithEmailAndPassword(email, password)
+const createCredentials = async (email) => {
+    const user = await auth.createUserWithEmailAndPassword(email, generatePassword())
         .then((userCredential) => {
             var user = userCredential.user;
             Swal.fire("Salvo!", "O usuário foi salvo com sucesso!", "success");
