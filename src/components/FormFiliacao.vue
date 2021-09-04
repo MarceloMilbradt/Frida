@@ -1,9 +1,12 @@
 <template>
   <el-row :gutter="20">
-    <el-col :sm="24" :lg="12">
+    <el-col :sm="24" :lg="16">
       <TextField v-model="filiacao.mae" label="Mãe" />
     </el-col>
-    <el-col :sm="24" :lg="12">
+  </el-row>
+
+  <el-row :gutter="20">
+    <el-col :sm="24" :lg="16">
       <TextField v-model="filiacao.pai" label="Pai" />
     </el-col>
   </el-row>

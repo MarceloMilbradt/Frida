@@ -12,12 +12,12 @@ export default {
   },
   data() {
     return {
-      menuAjuda:[
+      menuAjuda: [
         {
           to: "/Ajuda",
           text: "ME AJUDA!",
-          big:true,
-          red:true,
+          big: true,
+          red: true,
         },
       ],
       menus: [

@@ -1,10 +1,6 @@
 <template>
-  <FormPessoa :emailField="true" ref="usr" v-model="form" text="Usuario">
-    <FormFooter
-      @btn-click-prev="onClick"
-      :hide="[true,false]"
-      :text="['','Salvar']"
-    />
+  <FormPessoa :emailField="true" ref="user" :text="'Usuario'" @form-validate="setValid" v-model="usuario">
+    <FormFooter @btn-click-next="onClick" @btn-click-prev="changeTab(-1)" :hide="[true, false]" :text="['', 'Salvar']" />
   </FormPessoa>
 </template>
 
@@ -14,15 +10,14 @@ import FormFooter from "../components/FormFooter.vue";
 import * as controller from "../controller/ctlUsuario";
 
 export default {
-  name: "login",
+  name: "CadastroUser",
   components: {
     FormPessoa,
-    FormFooter
+    FormFooter,
   },
   data() {
     return {
-      email: "",
-      form: {
+      usuario: {
         endereco: {},
         trabalho: false,
         filiacao: {},
@@ -31,16 +26,17 @@ export default {
     };
   },
   methods: {
+    setValid(valid) {
+      this.usuario.valid = valid;
+    },
     async onClick() {
-      let valid = await this.$refs.usr.validate();
-      let data = this.$refs.usr.$data.form;
-      if (!valid) return;
-
+      this.usuario.valid = await this.$refs.user.validate()
+      if (!this.usuario.valid) return;
       // createCredentials(this.model.email, this.model.senha).then(() => {
       //   this.model.email = "";
       //   this.model.senha = "";
       // });
-      controller.incluir(data);
+      controller.incluir(this.usuario);
     },
   },
 };

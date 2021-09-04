@@ -1,13 +1,7 @@
 <template>
-  <el-button
-    :type="value ? 'danger' : 'success'"
-    @click="btnChangeValue"
-    :icon="value ? 'el-icon-close' : 'el-icon-plus'"
-    size="mini"
-    style="margin: 0 0 0 0.938em"
-    plain
-    ><slot></slot
-  ></el-button>
+  <el-button :type="value ? 'danger' : 'success'" @click="btnChangeValue" :icon="value ? 'el-icon-close' : 'el-icon-plus'" size="mini" style="margin: 0 0 0 0.938em" plain>
+    <slot></slot>
+  </el-button>
 </template>
 
 <script>

@@ -5,11 +5,7 @@
   </h3>
   <el-form ref="form" :model="questions">
     <div v-bind:key="question.id" v-for="question in questions">
-      <Question
-        v-bind:alternatives="question.alternatives"
-        v-bind:question="question"
-        @radio-change="changeAnswer"
-      />
+      <Question v-bind:alternatives="question.alternatives" v-bind:question="question" @radio-change="changeAnswer" />
     </div>
   </el-form>
   <el-button @click="onClick" type="success">Salvar</el-button>

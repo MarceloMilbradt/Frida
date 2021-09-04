@@ -1,27 +1,26 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :sm="24" :md="14">
+      <el-col :sm="24" :md="16">
         <TextField label="Rua" v-model="endereco.logradouro" />
-      </el-col>
-      <el-col :sm="24" :md="10">
-        <TextField label="Bairro" v-model="endereco.bairro" />
       </el-col>
     </el-row>
 
     <el-row :gutter="20">
-      <el-col :sm="24" :md="8">
+      <el-col :sm="24" :md="10">
+        <TextField label="Bairro" v-model="endereco.bairro" />
+      </el-col>
+      <el-col :sm="24" :md="6">
         <TextField label="Numero" v-model="endereco.numero" />
       </el-col>
-      <el-col :sm="24" :md="8">
-        <TextField
-          label="CEP"
-          maxlength="9"
-          prop="CEP"
-          v-maska="'#####-###'"
-          v-model="endereco.cep"
-        />
+    </el-row>
+
+    <el-row :gutter="20">
+
+      <el-col :sm="24" :md="10">
+        <TextField label="CEP" maxlength="9" prop="CEP" v-maska="'#####-###'" v-model="endereco.cep" />
       </el-col>
+
     </el-row>
   </div>
 </template>
@@ -39,9 +38,7 @@ export default {
   props: {
     modelValue: {
       type: Object,
-      default: () => ({
-        
-      }),
+      default: () => ({}),
     },
   },
   computed: {

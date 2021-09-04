@@ -3,11 +3,7 @@
     <template #header>
       <h3>{{ question.text }}</h3>
     </template>
-    <el-radio-group
-      class="radio-group"
-      v-model="val"
-      @change="(val) => $emit('radio-change', question.id, val)"
-    >
+    <el-radio-group class="radio-group" v-model="val" @change="(val) => $emit('radio-change', question.id, val)">
       <div v-bind:key="alternative.value" v-for="alternative in alternatives">
         <el-radio :label="alternative.value">{{ alternative.text }}</el-radio>
       </div>
@@ -79,6 +75,6 @@ h3 {
 }
 
 .box-card {
-  margin: 1.250em 0 1.250em 0;
+  margin: 1.25em 0 1.25em 0;
 }
 </style>

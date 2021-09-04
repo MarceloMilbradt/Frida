@@ -13,10 +13,24 @@ const generatePassword = () => {
 
 const auth = firebase.auth()
 const createCredentials = async (email) => {
-    const user = await auth.createUserWithEmailAndPassword(email, generatePassword())
+
+    var config = {
+        apiKey: "AIzaSyCD7ZDoslb0BvgZYNI-G6hxez8VSpzchI8",
+        authDomain: "frida-f6343.firebaseapp.com",
+        databaseURL: "https://frida-f6343-default-rtdb.firebaseio.com",
+        projectId: "frida-f6343",
+        storageBucket: "frida-f6343.appspot.com",
+        messagingSenderId: "127916459378",
+        appId: "1:127916459378:web:546f32e5936d4e7b1e09eb",
+    };
+
+    var secondaryApp = firebase.initializeApp(config, "Secondary");
+    
+    const user = await secondaryApp.auth().createUserWithEmailAndPassword(email, generatePassword())
         .then((userCredential) => {
+            secondaryApp.auth().sendPasswordResetEmail(email)
+            secondaryApp.auth().signOut();
             var user = userCredential.user;
-            Swal.fire("Salvo!", "O usuário foi salvo com sucesso!", "success");
             return user
         })
         .catch((error) => {
@@ -60,7 +74,6 @@ const login = async (email, password) => {
             var errorCode = error.code;
             var errorMessage = error.message;
         });
-    console.log(user)
     return user
 }
 

@@ -49,9 +49,9 @@ a.link.big {
   font-size: 2rem;
 }
 a.link.big.red {
-background-color: red;
-color: White;
-font-family: cursive;
+  background-color: red;
+  color: White;
+  font-family: cursive;
 }
 @media (max-width: 800px) {
   a.link.big {

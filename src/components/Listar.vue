@@ -1,14 +1,11 @@
 
 <template>
-  <el-table
-    :data="
+  <el-table :data="
       this.usuarios.filter(
         (data) =>
           !search || data.nome.toLowerCase().includes(search.toLowerCase())
       )
-    "
-    style="width: 100%"
-  >
+    " style="width: 100%">
     <el-table-column label="Login" prop="login"> </el-table-column>
     <el-table-column label="Nome" prop="nome"> </el-table-column>
     <el-table-column align="right">
@@ -16,15 +13,8 @@
         <el-input v-model="search" size="mini" placeholder="Pesquisar..." />
       </template>
       <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-          >Edit</el-button
-        >
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-          >Delete</el-button
-        >
+        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
       </template>
     </el-table-column>
   </el-table>

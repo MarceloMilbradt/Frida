@@ -1,13 +1,7 @@
 <template>
   <div class="menu">
-    <MenuItem
-      v-bind:key="item.to"
-      v-for="item in items"
-      :to="item.to"
-      :text="item.text"
-      :big="item.big"
-      :red="item.red"
-    ></MenuItem>
+    <MenuItem v-bind:key="item.to" v-for="item in items" :to="item.to" :text="item.text" :big="item.big" :red="item.red">
+    </MenuItem>
   </div>
 </template>
 

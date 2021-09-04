@@ -1,48 +1,26 @@
 <template>
   <div>
-    <TextField
-      prop="nome"
-      label="Nome"
-      v-model="pessoa.nome"
-      :rules="rules.nome"
-    />
-
     <el-row :gutter="20">
-      <el-col :sm="24" :md="13">
-        <TextField
-          :rules="rules.cpf"
-          v-model="pessoa.CPF"
-          label="CPF"
-          prop="CPF"
-          v-maska="'###.###.###-##'"
-          maxlength="14"
-        />
+      <el-col :sm="24" :md="16">
+        <TextField prop="nome" label="Nome" v-model="pessoa.nome" :rules="rules.nome" />
+      </el-col>
+
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :sm="24" :md="10">
+        <TextField :rules="rules.cpf" v-model="pessoa.CPF" label="CPF" prop="CPF" v-maska="'###.###.###-##'" maxlength="14" />
       </el-col>
 
       <el-col :sm="24" :md="6">
-        <DateField
-          prop="datanascimento"
-          label="Data de Nascimento"
-          v-model="pessoa.datanascimento"
-        />
+        <DateField prop="datanascimento" label="Data de Nascimento" v-model="pessoa.datanascimento" />
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col v-if="emailField" :sm="24" :lg="12">
-        <TextField
-          label="Email"
-          prop="email"
-          :rules="rules.email"
-          v-model="pessoa.email"
-        />
+      <el-col v-if="emailField" :sm="24" :lg="16">
+        <TextField label="Email" prop="email" :rules="rules.email" v-model="pessoa.email" />
       </el-col>
-      <el-col :sm="24" :lg="emailField ? 12 : 24">
-        <TextField
-          v-model="pessoa.telefone"
-          label="Telefone"
-          prop="telefone"
-          v-maska="['(##) ####-####', '(##) #####-####']"
-        />
+      <el-col :sm="24" :lg="10">
+        <TextField v-model="pessoa.telefone" label="Telefone" prop="telefone" v-maska="['(##) ####-####', '(##) #####-####']" />
       </el-col>
     </el-row>
   </div>
@@ -80,7 +58,7 @@ export default {
       return {
         nome: [
           {
-            required:true,
+            required: true,
             message: "Infome ao menos um nome ou apelido",
             trigger: "blur",
           },

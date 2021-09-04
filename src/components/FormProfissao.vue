@@ -1,12 +1,16 @@
 <template>
   <el-row :gutter="20">
-    <el-col :sm="24" :lg="12">
+    <el-col :sm="24" :lg="16">
       <TextField v-model="trabalho.profissao" label="Profissão" />
     </el-col>
-    <el-col :sm="24" :lg="12">
+  </el-row>
+
+  <el-row :gutter="20">
+    <el-col :sm="24" :lg="16">
       <TextField v-model="trabalho.local" label="Local de trabalho" />
     </el-col>
   </el-row>
+
 </template>
 
 <script>

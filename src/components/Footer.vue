@@ -3,23 +3,10 @@
     <p>Copyright &copy; 2021</p>
   </footer>
   <el-affix v-if="!$store.getters.getLogged" position="bottom" :offset="60" class="btn-panic">
-    <el-popover
-      placement="left"
-      title="Pânico"
-      :width="200"
-      trigger="manual"
-      :visible="visible"
-      content="Clique para trocar de página!"
-    >
-      <template #reference
-        ><el-button
-          type="danger"
-          icon="el-icon-warning-outline"
-          class="icon"
-          round
-          @click="redirect"
-        ></el-button
-      ></template>
+    <el-popover placement="left" title="Pânico" :width="200" trigger="manual" :visible="visible" content="Clique para trocar de página!">
+      <template #reference>
+        <el-button type="danger" icon="el-icon-warning-outline" class="icon" round @click="redirect"></el-button>
+      </template>
     </el-popover>
   </el-affix>
 </template>
@@ -42,8 +29,8 @@ export default {
   },
   mounted: function () {
     this.$nextTick(function () {
-      setTimeout(()=>this.visible=true,1000)
-      setTimeout(()=>this.visible=false,6000)
+      setTimeout(() => (this.visible = true), 1000);
+      setTimeout(() => (this.visible = false), 6000);
     });
   },
 };
@@ -58,10 +45,10 @@ footer {
 }
 .btn-panic {
   float: right;
-  margin-right: 1.250em;
+  margin-right: 1.25em;
 }
 .icon {
-  font-size: 2.500em;
+  font-size: 2.5em;
 }
 @media (max-width: 800px) {
   .btn-panic {
