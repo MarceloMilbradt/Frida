@@ -42,6 +42,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   gap: 0.938em;
+  margin-bottom: 2rem;
 }
 
 @media (max-width: 800px) {

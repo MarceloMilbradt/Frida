@@ -67,6 +67,9 @@ body {
 }
 </style>
 <style scoped>
+.el-header {
+  margin-bottom: 2rem;
+}
 .main {
   min-width: 80vw;
   margin: 0 auto;
@@ -78,5 +81,15 @@ body {
     margin: 0;
     max-width: unset;
   }
+}
+.el-footer{
+  position: static;
+  bottom: 0;
+  text-align: center;
+  width: calc(100vw - 30px);
+}
+html body{
+  margin: 0;
+  padding: 0;
 }
 </style>

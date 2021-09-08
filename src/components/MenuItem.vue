@@ -1,8 +1,10 @@
 <template>
   <div class="menuitem">
-    <router-link :class="'link ' + (big ? 'big' : '') + (red ? ' red' : '')" :to="to">{{
-      text
-    }}</router-link>
+    <router-link
+      :class="'link ' + (big ? 'big' : '') + (red ? ' red' : '')"
+      :to="to"
+      >{{ text }}</router-link
+    >
   </div>
 </template>
 
@@ -26,7 +28,11 @@ export default {
     0 0.063em 0.188em 0 rgba(0, 0, 0, 0.12);
   width: 100%;
   color: var(--el-text-color-primary);
-  margin-bottom: 50px;
+  border-radius: 4px;
+}
+.menuitem:hover {
+  top: -1px;
+  position: relative;
 }
 @media (max-width: 800px) {
   .menuitem {
@@ -43,15 +49,16 @@ a.link {
   display: block;
   color: #333;
   padding: 1.25em;
+  border-radius: 4px;
 }
 a.link.big {
   height: 1em;
   font-size: 2rem;
 }
 a.link.big.red {
-background-color: red;
-color: White;
-font-family: cursive;
+  background-color: red;
+  color: White;
+  font-family: cursive;
 }
 @media (max-width: 800px) {
   a.link.big {
