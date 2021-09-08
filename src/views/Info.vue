@@ -3,7 +3,7 @@
   <el-collapse v-model="activeNames">
     <el-collapse-item name="1">
       <template #title>
-        <b>violência doméstica</b>
+        <b>Violência Doméstica</b>
       </template>
       <p>
         A violência doméstica contra a mulher é uma grave violação aos direitos

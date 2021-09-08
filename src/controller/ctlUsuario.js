@@ -1,5 +1,5 @@
 import * as db from "./firebase";
-import {createCredentials} from './AuthService'
+import { createCredentials } from './AuthService'
 const Swal = require('sweetalert2')
 
 var validaLogin = function validaLogin(login, senha) {
@@ -39,25 +39,24 @@ function mensagemLoginSucesso() {
     })
 }
 
-var listarTodos = function listarTodos() {
-    db.usuario
+var listarTodos = async function listarTodos() {
+    return await db.usuario
         .orderBy("nome", "asc").get()
         .then((snapshot) => {
             const data = snapshot.docs.map((doc) => ({
                 id: doc.id,
                 ...doc.data(),
             }));
-            console.log("Todos Usuarios = ", data);
+            return data;
         });
 }
 
-var bucarPorId = function bucarPorId(id) {
-    db.usuario
+var bucarPorId = async function bucarPorId(id) {
+    return await db.usuario
         .doc(id).get()
         .then((doc) => {
             if (!doc.exists) return;
-
-            console.log("Dados do Usuário Selecionado = ", doc.data());
+            return doc.data();
         })
         .catch((error) => {
             console.error("Erro ao buscar Usuário", error);
@@ -92,16 +91,29 @@ var alterar = function alterar(id, dados) {
 }
 
 var excluir = function excluir(id) {
-    db.usuario
-        .doc(id)
-        .delete()
-        .then(() => {
-            Swal.fire("Deletado!", "Seu usuário foi deletado com sucesso!", "success");
-        })
-        .catch((error) => {
-            console.error("Erro ao excluir usuário", error);
-            Swal.fire("Erro!", "Houve um problema ao tentar excluir o usuário!", "error");
-        });
+    Swal.fire({
+        title: 'Atenção',
+        text: "Deseja realmente excluir o registro?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, excluir!',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            db.usuario
+                .doc(id)
+                .delete()
+                .then(() => {
+                    Swal.fire("Deletado!", "Seu usuário foi deletado com sucesso!", "success");
+                })
+                .catch((error) => {
+                    console.error("Erro ao excluir usuário", error);
+                    Swal.fire("Erro!", "Houve um problema ao tentar excluir o usuário!", "error");
+                });
+        }
+    })
 }
 
 export {

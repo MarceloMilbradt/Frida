@@ -79,7 +79,25 @@ var incluir = function incluir(resposta) {
     db.avaliacao
         .add({ resposta, resultado })
         .then((ref) => {
-            Swal.fire("Salvo!", "A avaliação foi salvo com sucesso!", "success");
+            if (resultado.risco == 'E') {
+                Swal.fire({
+                    title: 'Você está sob risco Elevado',
+                    text: "Deseja fazer uma Denúncia de agressão ?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sim, fazer denúncia!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.href = '/Denuncia';
+                    }
+                })
+            }
+            else {
+                Swal.fire("Salvo!", "A avaliação foi salvo com sucesso!", "success");
+            }
         })
         .catch((error) => {
             console.error("Erro ao incluir avaliação", error);
