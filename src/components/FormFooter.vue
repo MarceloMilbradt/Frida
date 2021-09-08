@@ -1,20 +1,10 @@
 <template>
   <footer>
     <div>
-      <el-button
-        v-if="!hide[0]"
-        :type="type[0] ?? 'default'"
-        @click="onClick('prev')"
-        >{{ text[0] ?? "Voltar" }}</el-button
-      >
+      <el-button v-if="!hide[0]" :type="type[0] ?? 'default'" @click="onClick('prev')">{{ text[0] ?? "Voltar" }}</el-button>
     </div>
     <div>
-        <el-button
-      v-if="!hide[1]"
-      :type="type[1] ?? 'primary'"
-      @click="onClick('next')"
-      >{{ text[1] ?? "Avançar" }}</el-button
-    >
+      <el-button v-if="!hide[1]" :type="type[1] ?? 'primary'" @click="onClick('next')">{{ text[1] ?? "Avançar" }}</el-button>
     </div>
   </footer>
 </template>

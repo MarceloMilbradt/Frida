@@ -1,183 +1,89 @@
 <template>
   <el-card class="box-card">
     <el-container>
-      <el-header style="text-align: left" height="1.250em">{{
-        text
-      }}</el-header>
+      <el-header style="text-align: left" height="1.250em">{{text}}</el-header>
       <el-divider></el-divider>
       <el-main>
-        <el-form
-          :rules="rules"
-          :model="form"
-          :label-position="'top'"
-          ref="form"
-          v-show="!anonimo"
-        >
-          <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
-              <TextField prop="nome" label="Nome" v-model="form.nome" />
-            </el-col>
+        <el-form @validate="validate" :model="form" :label-position="'right'" :label-width="'160px'" ref="form">
+          <FormPessoaBase v-model="form" :emailField="emailField"></FormPessoaBase>
+          <el-space direction="vertical" fill wrap style="width: 100%">
+            <el-divider content-position="right" v-if="form?.endereco">Endereço
+              <AddButton v-model="exibeEndereco" />
+            </el-divider>
+            <el-collapse-transition>
+              <FormEndereco v-if="exibeEndereco" v-model="form.endereco"></FormEndereco>
+            </el-collapse-transition>
+            <el-divider content-position="right" v-if="form?.filiacao">Filiação
+              <AddButton v-model="exibeFiliacao" />
+            </el-divider>
+            <el-collapse-transition>
+              <FormFiliacao v-if="exibeFiliacao" v-model="form.filiacao"></FormFiliacao>
+            </el-collapse-transition>
 
-            <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-              <DateField
-                prop="datanascimento"
-                label="Data de Nascimento"
-                v-model="form.datanascimento"
-              />
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField v-model="form.filiacao.mae" label="Mãe" />
-            </el-col>
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField v-model="form.filiacao.pai" label="Pai" />
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField v-model="form.trabalho.profissao" label="Profissão" />
-            </el-col>
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField
-                v-model="form.trabalho.local"
-                label="Local de trabalho"
-              />
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField
-                v-model="form.CPF"
-                label="CPF"
-                prop="CPF"
-                v-maska="'###.###.###-##'"
-                maxlength="14"
-              />
-            </el-col>
-            <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField
-                v-model="form.telefone"
-                label="Telefone"
-                prop="telefone"
-                v-maska="['(##) ####-####', '(##) #####-####']"
-              />
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="14" :xs="24" :sm="24" :md="14" :lg="14" :xl="14">
-              <TextField label="Rua" v-model="form.endereco.logradouro" />
-            </el-col>
-            <el-col :span="10" :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
-              <TextField label="Bairro" v-model="form.endereco.bairro" />
-            </el-col>
-          </el-row>
-
-          <el-row :gutter="20">
-            <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <TextField label="Numero" v-model="form.endereco.numero" />
-            </el-col>
-            <el-col :span="15" :xs="24" :sm="24" :md="8" :lg="8" :xl="8">
-              <TextField
-                label="CEP"
-                maxlength="9"
-                prop="CEP"
-                v-maska="'#####-###'"
-                v-model="form.endereco.cep"
-              />
-            </el-col>
-          </el-row>
+            <el-divider v-if="form?.trabalho" content-position="right">Trabalho
+              <AddButton v-model="exibeTrabalho" />
+            </el-divider>
+            <el-collapse-transition>
+              <FormProfissao v-if="exibeTrabalho" v-model="form.trabalho"></FormProfissao>
+            </el-collapse-transition>
+          </el-space>
         </el-form>
-        <div class="box-card" v-show="anonimo">Denuncia Anonima</div>
-        <el-row :gutter="20"> <slot></slot> </el-row>
+        <div style="margin-top: 20px">
+          <slot></slot>
+        </div>
       </el-main>
-      <el-footer>
-        <FormFooter
-          @btn-click-next="$emit('btn-click-next', form)"
-          @btn-click-prev="$emit('btn-click-prev')"
-          :hide="hideBtn"
-          :type="typeBtn"
-          :text="textBtn"
-        />
-      </el-footer>
     </el-container>
   </el-card>
 </template>
 
 <script>
-import FormFooter from "./FormFooter.vue";
-import TextField from "./TextField.vue";
-import DateField from "./DateField.vue";
+import FormEndereco from "./FormEndereco.vue";
+import FormProfissao from "./FormProfissao.vue";
+import FormFiliacao from "./FormFiliacao.vue";
+import FormPessoaBase from "./FormPessoaBase.vue";
+import AddButton from "./AddRemoveButton.vue";
 
 export default {
   components: {
-    FormFooter,
-    TextField,
-    DateField,
+    FormEndereco,
+    FormFiliacao,
+    FormProfissao,
+    FormPessoaBase,
+    AddButton,
   },
   name: "FormPessoa",
-  props: {
-    text: String,
-    anonimo: Boolean,
-    hideBtn: {
-      type: Array,
-      default: () => [false, false],
-    },
-    typeBtn: {
-      type: Array,
-      default: () => ["default", "primary"],
-    },
-    textBtn: {
-      type: Array,
-      default: () => ["Voltar", "Avançar"],
-    },
-  },
+  emits: ["update:modelValue", "form-validate"],
   data() {
     return {
-      form: {
-        name: "",
-        CPF: "",
-        endereco: {
-          logradouro: "",
-          bairro: "",
-          numero: "",
-          cep: "",
-        },
-        telefone: "",
-        trabalho: {
-          profissao: "",
-          local: "",
-        },
-        filiacao: {
-          mae: "",
-          pai: "",
-        },
-        datanascimento: null,
-      },
+      exibeEndereco: false,
+      exibeTrabalho: false,
+      exibeFiliacao: false,
+      isValid: {},
     };
   },
+  props: {
+    text: String,
+    storeId: String,
+    emailField: Boolean,
+    modelValue: Object,
+  },
   computed: {
-    rules() {
-      return {
-        nome: [
-          {
-            required: !this.anonimo,
-            message: "Infome ao menos um nome ou apelido",
-            trigger: "blur",
-          },
-        ],
-        CPF: [
-          {
-            min: 14,
-            message: "Informe o CPF completo",
-            trigger: "blur",
-          },
-        ],
-      };
+    form: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
+    },
+  },
+  methods: {
+    async validate(p, v) {
+      this.isValid[p] = v;
+      let valid = Object.values(this.isValid).every((v) => v);
+      if (this.form) this.form.valid = valid;
+      this.$emit("form-validate", valid);
+      return valid
     },
   },
 };

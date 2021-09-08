@@ -1,29 +1,24 @@
-
 <template>
   <el-table
     :data="
-      this.usuarios.filter(
+      this.dados.filter(
         (data) =>
           !search || data.nome.toLowerCase().includes(search.toLowerCase())
       )
     "
+    border
     style="width: 100%"
   >
-    <el-table-column label="Login" prop="login"> </el-table-column>
     <el-table-column label="Nome" prop="nome"> </el-table-column>
+    <el-table-column label="Email" prop="email"> </el-table-column>
     <el-table-column align="right">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Pesquisar..." />
       </template>
       <template #default="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-          >Edit</el-button
-        >
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-          >Delete</el-button
+        <el-button size="mini" @click="handleEdit(scope.row)">Editar</el-button>
+        <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
+          >Deletar</el-button
         >
       </template>
     </el-table-column>
@@ -38,23 +33,23 @@ export default {
     };
   },
   props: {
-    usuarios: {
+    dados: {
       type: Array,
       default() {
         return [];
       },
     },
+    controller: Object,
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+    handleEdit(row) {
+      this.$router.push({ path: "CadastrarUsuario", query: { id: row.id } });
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    handleDelete(row) {
+      this.controller.excluir(row.id);
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

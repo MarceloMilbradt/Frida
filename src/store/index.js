@@ -2,7 +2,82 @@ import { createStore } from 'vuex'
 import { login, logout, getCurrentUser } from '../controller/AuthService';
 import router from '../router'
 
-const store = createStore({
+const denuncia = {
+    namespaced: true,
+    state: {
+        denuncia: {
+            vitima: {
+                endereco: {},
+                trabalho: {},
+                filiacao: {},
+                isValid:true,
+            },
+
+            agressor: {
+                endereco: {},
+                trabalho: {},
+                filiacao: {},
+                isValid:true,
+            },
+        }
+    },
+    mutations: {
+        SET_FORM_VITIMA(state, form) {
+            state.denuncia.vitima = form
+        },
+        SET_FORM_AGRESSOR(state, form) {
+            state.denuncia.agressor = form
+        },
+        SET_VALID_AGRESSOR(state, v) {
+            state.denuncia.agressor.isValid = v
+        },
+        SET_VALID_VITIMA(state, v) {
+            state.denuncia.vitima.isValid = v
+        },
+        SET_DENUNCIA(state, form) {
+            state.denuncia = form
+        },
+    },
+    actions: {
+        setFormAgressor({ commit }, form) {
+            commit('SET_FORM_AGRESSOR', form)
+        },
+        setValidAgressor({ commit }, v) {
+            commit('SET_VALID_AGRESSOR', v)
+        },
+        setDenuncia({ commit }, denuncia) {
+            commit('SET_DENUNCIA', denuncia)
+        },
+        setFormVitima({ commit }, form) {
+            commit('SET_FORM_VITIMA', form)
+        },
+        setValidVitima({ commit }, v) {
+            commit('SET_VALID_VITIMA', v)
+        },
+    },
+    getters: {
+        getVitima(state) {
+            return state.denuncia.vitima
+        },
+        getDenuncia(state) {
+            return state.denuncia
+        },
+        getAgressor(state) {
+            return state.denuncia.agressor
+        },
+        vitimaIsValid(state) {
+            return state.denuncia.vitima.isValid
+        },
+        agressorIsValid(state) {
+            return state.denuncia.agressor.isValid
+        },
+        denunciaIsValid(state) {
+            return this.vitimaIsValid(state) && this.agressorIsValid(state)
+        },
+    },
+}
+
+const security = {
     state: {
         user: {},
         logged: getCurrentUser() != null,
@@ -55,7 +130,7 @@ const store = createStore({
         },
         getLogged(state) {
             let usr = getCurrentUser()
-            if(usr && !!usr !=state.logged)
+            if (usr && !!usr != state.logged)
                 state.dispatch('setUser', usr)
             return state.logged
 
@@ -64,6 +139,14 @@ const store = createStore({
             return state.isInited
         },
     },
+}
+
+
+const store = createStore({
+    modules: {
+        security,
+        denuncia
+    }
 })
 
 export default store

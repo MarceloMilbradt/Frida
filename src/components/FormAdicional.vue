@@ -4,41 +4,23 @@
       <el-header style="text-align: left" height="1.250em">{{ text }}</el-header>
       <el-divider></el-divider>
       <el-main>
-        <el-form
-          :rules="rules"
-          :model="form"
-          :label-position="'top'"
-          ref="form"
-        >
+        <el-form :rules="rules" :model="form" :label-position="'top'" ref="form">
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="13" :xl="15">
               <TextField prop="nome" label="nome" v-model="form.nome" />
             </el-col>
 
             <el-col :span="6" :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
-              <DateField
-                prop="datanascimento"
-                label="Data de Nascimento"
-                v-model="form.datanascimento"
-              />
+              <DateField prop="datanascimento" label="Data de Nascimento" v-model="form.datanascimento" />
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField
-                v-model="form.CPF"
-                label="CPF"
-                v-maska="'###.###.###-##'"
-                maxlength="9"
-              />
+              <TextField v-model="form.CPF" label="CPF" v-maska="'###.###.###-##'" maxlength="9" />
             </el-col>
             <el-col :span="15" :xs="24" :sm="24" :md="11" :lg="12" :xl="12">
-              <TextField
-                v-model="form.telefone"
-                label="Telefone"
-                v-maska="['(##) ####-####', '(##) #####-####']"
-              />
+              <TextField v-model="form.telefone" label="Telefone" v-maska="['(##) ####-####', '(##) #####-####']" />
             </el-col>
           </el-row>
 
@@ -59,17 +41,13 @@
               <TextField label="CEP" v-maska="'#####-###'" v-model="form.cep" />
             </el-col>
           </el-row>
-          <el-row :gutter="20"> <slot></slot> </el-row>
+          <el-row :gutter="20">
+            <slot></slot>
+          </el-row>
         </el-form>
       </el-main>
       <el-footer>
-        <FormFooter
-          @btn-click-next="$emit('btn-click-next')"
-          @btn-click-prev="$emit('btn-click-prev')"
-          :hide="hideBtn"
-          :type="typeBtn"
-          :text="textBtn"
-        />
+        <FormFooter @btn-click-next="$emit('btn-click-next')" @btn-click-prev="$emit('btn-click-prev')" :hide="hideBtn" :type="typeBtn" :text="textBtn" />
       </el-footer>
     </el-container>
   </el-card>
@@ -143,6 +121,6 @@ export default {
 
 <style scoped>
 .box-card {
-  margin: 0 0 1.250em 0;
+  margin: 0 0 1.25em 0;
 }
 </style>

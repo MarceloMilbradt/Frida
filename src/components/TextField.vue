@@ -1,5 +1,5 @@
 <template>
-  <el-form-item :label="label" >
+  <el-form-item :label="label" :label-position="'top'">
     <el-input :maxlength="maxlength" v-model="value" size="large"></el-input>
   </el-form-item>
 </template>
@@ -11,8 +11,8 @@ export default {
   props: {
     label: String,
     maxlength: {
-      type: Number,
-      default: 200,
+      type: String,
+      default: "200",
     },
     modelValue: String,
   },

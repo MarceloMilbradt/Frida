@@ -1,20 +1,13 @@
 <template>
-  <el-form-item
-    class="input-date"
-    :label="label"
-  >
-    <el-input
-      type="date"
-      v-model="value"
-      :max="maxDate"
-    ></el-input>
+  <el-form-item class="input-date" :label="label">
+    <el-input type="date" v-model="value" :max="maxDate"></el-input>
   </el-form-item>
 </template>
 
 <script>
 export default {
   name: "DataNascimento",
-  props: ["modelValue","label"],
+  props: ["modelValue", "label"],
   emits: ["update:modelValue"],
   computed: {
     value: {
@@ -35,5 +28,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

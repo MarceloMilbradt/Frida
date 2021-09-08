@@ -16,15 +16,15 @@
       :visible="visible"
       content="Clique para trocar de página!"
     >
-      <template #reference
-        ><el-button
+      <template #reference>
+        <el-button
           type="danger"
           icon="el-icon-warning-outline"
           class="icon"
           round
           @click="redirect"
-        ></el-button
-      ></template>
+        ></el-button>
+      </template>
     </el-popover>
   </el-affix>
 </template>
@@ -44,6 +44,7 @@ export default {
       window.location.href = urls[i];
     },
   },
+
   mounted: function() {
     this.$nextTick(function() {
       setTimeout(() => (this.visible = true), 1000);
@@ -63,10 +64,14 @@ footer {
   bottom: 20vh;
   position: fixed;
   right: 1.5rem;
+  background-color: #ffbaba;
+}
+.el-button.el-button--danger.is-round.icon:hover {
+  background-color: #ffe5e5;
 }
 .btn-panic {
   float: right;
-  margin-right: 5rem;
+  margin-right: 1.25em;
 }
 .icon {
   font-size: 2.5em;

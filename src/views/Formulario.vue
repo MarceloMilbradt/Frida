@@ -5,11 +5,7 @@
   </h3>
   <el-form ref="form" :model="questions">
     <div v-bind:key="question.id" v-for="question in questions">
-      <Question
-        v-bind:alternatives="question.alternatives"
-        v-bind:question="question"
-        @radio-change="changeAnswer"
-      />
+      <Question v-bind:alternatives="question.alternatives" v-bind:question="question" @radio-change="changeAnswer" />
     </div>
   </el-form>
   <el-button @click="onClick" type="success">Salvar</el-button>
@@ -31,12 +27,19 @@ export default {
       );
     },
     onClick() {
-      var data = {};
-      this.questions.map((q) => {
-        data["questao_" + q.id] = q.answer || 0;
-      });
+      var invalid = false;
+      var resposta = {};
 
-      controller.incluir(data);
+      for (const q of this.questions) {
+        if (q.answer == undefined) {
+          this.$message.error("Questão " + q.id + " é obrigatória");
+          invalid = true;
+          break;
+        }
+        resposta["r_" + q.id] = q.answer;
+      }
+
+      if (invalid == false) controller.incluir(resposta);
     },
   },
   data() {
@@ -162,8 +165,8 @@ export default {
 
 <style>
 .el-radio__inner::after {
-  width: 0.500em;
-  height: 0.500em;
+  width: 0.5em;
+  height: 0.5em;
 }
 .el-radio__inner {
   width: 1.125em;

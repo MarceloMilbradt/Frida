@@ -1,6 +1,6 @@
 <template>
-  <Menu :items="menuAjuda" />
-  <Menu :items="menus" />
+  <Menu v-if="!$store.getters.getLogged" :items="menuAjuda" />
+  <Menu v-if="!$store.getters.getLogged" :items="menus" />
 </template>
 
 <script>
@@ -12,12 +12,12 @@ export default {
   },
   data() {
     return {
-      menuAjuda:[
+      menuAjuda: [
         {
           to: "/Ajuda",
           text: "ME AJUDA!",
-          big:true,
-          red:true,
+          big: true,
+          red: true,
         },
       ],
       menus: [

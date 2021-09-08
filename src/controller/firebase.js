@@ -21,9 +21,6 @@ const auth = firebase.auth()
 //collection references
 const usuario = db.collection('usuario')
 const avaliacao = db.collection('avaliacao')
-const vitima = db.collection('vitima')
-const agressor = db.collection('agressor')
-const denunciaTerceiro = db.collection('denunciaTerceiro')
 const denuncia = db.collection('denuncia')
 const ajuda = db.collection('ajuda')
 
@@ -33,9 +30,6 @@ export {
     auth,
     usuario,
     avaliacao,
-    vitima,
-    agressor,
-    denunciaTerceiro,
     denuncia,
     ajuda
 }

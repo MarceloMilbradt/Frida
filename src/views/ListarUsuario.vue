@@ -1,9 +1,11 @@
 <template>
-  <ListarDados :usuarios="usuarios" />
+  <ListarDados :dados="usuarios" :controller="repo" />
 </template>
 
 <script>
 import ListarDados from "../components/Listar.vue";
+import * as controller from "../controller/ctlUsuario";
+
 export default {
   name: "Home",
   components: {
@@ -11,19 +13,12 @@ export default {
   },
   data() {
     return {
-      usuarios: [
-        {
-          id: "1",
-          login: "TomTheBoy",
-          nome: "Tom",
-        },
-        {
-          id: "2",
-          login: "JohnTheBoy",
-          nome: "John",
-        },
-      ],
+      usuarios: [],
     };
+  },
+  async created() {
+    this.usuarios = await controller.listarTodos();
+    this.repo = controller;
   },
 };
 </script>

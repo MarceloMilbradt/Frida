@@ -1,73 +1,37 @@
 <template>
   <el-card class="box-card">
     <el-container>
-      <el-header style="text-align: center" height="20px"
-        >Precisamos de algumas informações suas para podermos te
-        ajudar!</el-header
-      >
+      <el-header style="text-align: center" height="20px">Precisamos de algumas informações suas para podermos te
+        ajudar!</el-header>
       <el-divider></el-divider>
       <el-main>
-        <el-form
-          :model="form"
-          :label-position="'top'"
-          label-width="70px"
-          :rules="rules"
-          ref="form"
-        >
+        <el-form :model="form" :label-position="'top'" label-width="70px" :rules="rules" ref="form">
           <el-row>
             <el-col :span="24">
-              <TextField
-                :fontSize="'20px'"
-                prop="nome"
-                label="Nome"
-                v-model="form.nome"
-              />
+              <TextField :fontSize="'20px'" prop="nome" label="Nome" v-model="form.nome" />
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="24">
-              <TextField
-                v-model="form.contato"
-                label="Como podemos entrar em contato ?"
-              />
+              <TextField v-model="form.contato" label="Como podemos entrar em contato ?" />
             </el-col>
           </el-row>
 
           <el-row :gutter="20">
             <el-col :span="geo ? 19 : 17">
-              <TextField
-                v-model="form.endereco"
-                label="Onde podemos te encontrar ?"
-              />
+              <TextField v-model="form.endereco" label="Onde podemos te encontrar ?" />
             </el-col>
             <el-col :span="geo ? 4 : 6">
-              <el-button
-                v-if="!geo"
-                class="geo"
-                :type="!geo ? 'info' : 'success'"
-                icon="el-icon-location-outline"
-                @click="getGeo"
-                round
-              >
+              <el-button v-if="!geo" class="geo" :type="!geo ? 'info' : 'success'" icon="el-icon-location-outline" @click="getGeo" round>
                 <span class="geo-text">Localização</span>
               </el-button>
-              <CircleCheck
-                v-if="geo"
-                color="green"
-                size="2"
-                style="width: 2.25em; height: 2.25em; margin-bottom: 1.25em"
-              />
+              <CircleCheck v-if="geo" color="green" size="2" style="width: 2.25em; height: 2.25em; margin-bottom: 1.25em" />
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-button
-                icon="el-icon-check"
-                @click="$emit('clickSubmit', form)"
-                type="primary"
-                plain
-              >
+              <el-button icon="el-icon-check" @click="$emit('clickSubmit', form)" type="primary" plain>
                 <span class="">Enviar</span>
               </el-button>
             </el-col>
@@ -123,9 +87,9 @@ export default {
   },
   methods: {
     async setGeo({ latitude, longitude }) {
-      console.log(latitude, longitude)
-      const ends = await geolocation.getLocation(latitude,longitude)
-      const endereco = ends?.place_name ?? ''
+      console.log(latitude, longitude);
+      const ends = await geolocation.getLocation(latitude, longitude);
+      const endereco = ends?.place_name ?? "";
       this.form = { ...this.form, endereco, coords: { latitude, longitude } };
       this.geo = true;
     },

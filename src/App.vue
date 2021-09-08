@@ -1,13 +1,19 @@
 <template>
   <el-config-provider :locale="locale">
     <el-container v-loading="!$store.getters.getInited">
-      <el-aside v-if="$store.getters.getLogged" width="65px"
-        ><Header :vertical="true"
-      /></el-aside>
+      <el-aside v-if="$store.getters.getLogged" width="65px">
+        <Header :vertical="true" />
+      </el-aside>
       <el-container>
-        <el-header v-if="!$store.getters.getLogged"><Header /></el-header>
-        <el-main class="main"> <router-view></router-view> </el-main>
-        <el-footer> <Footer /> </el-footer>
+        <el-header v-if="!$store.getters.getLogged">
+          <Header />
+        </el-header>
+        <el-main class="main">
+          <router-view></router-view>
+        </el-main>
+        <el-footer>
+          <Footer />
+        </el-footer>
       </el-container>
     </el-container>
   </el-config-provider>
@@ -17,12 +23,14 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import locale from "element-plus/lib/locale/lang/pt-br";
+import { ElConfigProvider } from "element-plus";
 
 export default {
   name: "App",
   components: {
     Header,
     Footer,
+    ElConfigProvider,
   },
   data() {
     return {
