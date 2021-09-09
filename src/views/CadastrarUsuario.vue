@@ -11,6 +11,7 @@
       @btn-click-prev="voltarListaUsuario"
       :hide="[false, false]"
       :text="['Voltar', 'Salvar']"
+      :type="['default', 'success']"
     />
   </FormPessoa>
 </template>

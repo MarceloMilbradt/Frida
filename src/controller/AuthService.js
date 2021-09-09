@@ -33,12 +33,6 @@ const createCredentials = async (email) => {
       secondaryApp.auth().signOut();
       var user = userCredential.user;
       return user;
-    })
-    .catch((error) => {
-      console.error("Erro ao criar Usuário", error);
-      Swal.fire("Erro!", error.message, "error");
-      var errorCode = error.code;
-      var errorMessage = error.message;
     });
   return user;
 };

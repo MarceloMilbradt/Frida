@@ -16,7 +16,11 @@
     <el-table-column label="Email" prop="email"> </el-table-column>
     <el-table-column align="right">
       <template #header>
-        <el-input v-model="search" size="mini" placeholder="Pesquisar..." />
+        <el-input
+          v-model="search"
+          size="mini"
+          placeholder="Pesquisar por nome..."
+        />
       </template>
       <template #default="scope">
         <el-button size="mini" @click="handleEdit(scope.row)">Editar</el-button>
