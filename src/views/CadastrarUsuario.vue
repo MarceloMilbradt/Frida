@@ -8,9 +8,9 @@
   >
     <FormFooter
       @btn-click-next="onClick"
-      @btn-click-prev="changeTab(-1)"
-      :hide="[true, false]"
-      :text="['', 'Salvar']"
+      @btn-click-prev="voltarListaUsuario"
+      :hide="[false, false]"
+      :text="['Voltar', 'Salvar']"
     />
   </FormPessoa>
 </template>
@@ -46,16 +46,23 @@ export default {
     }
   },
   methods: {
-    setValid(valid) {
-      this.usuario.valid = valid;
-    },
     async onClick() {
-      this.usuario.valid = await this.$refs.user.validate();
-      if (!this.usuario.valid) return;
+      let valid = await this.$refs.user.validate();
+      console.log("valid =", valid);
+      //if (!valid) return;
 
-      this.id
-        ? controller.alterar(this.id, this.usuario)
-        : controller.incluir(this.usuario);
+      if (this.id) {
+        controller.alterar(this.id, this.usuario).then(() => {
+          this.$router.push({ path: "ListarUsuario" });
+        });
+      } else {
+        controller.incluir(this.usuario).then(() => {
+          this.$router.push({ path: "ListarUsuario" });
+        });
+      }
+    },
+    voltarListaUsuario() {
+      this.$router.push({ path: "ListarUsuario" });
     },
   },
 };

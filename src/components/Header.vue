@@ -1,11 +1,24 @@
 <template>
-  <el-menu :router="true" :class="
+  <el-menu
+    :router="true"
+    :class="
       vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'
-    " :collapse="vertical && isCollapse" :default-active="$route.path" :mode="vertical ? 'vertical' : 'horizontal'">
+    "
+    :collapse="vertical && isCollapse"
+    :default-active="$route.path"
+    :mode="vertical ? 'vertical' : 'horizontal'"
+  >
     <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand">
-      <i :class="!isCollapse ? 'el-icon-arrow-left ' : 'el-icon-arrow-right'"></i>
+      <i
+        :class="!isCollapse ? 'el-icon-arrow-left ' : 'el-icon-arrow-right'"
+      ></i>
     </el-menu-item>
-    <el-menu-item :key="index" :index="rule.path" v-for="(rule, index) in routes" @click="collapse">
+    <el-menu-item
+      :key="index"
+      :index="rule.path"
+      v-for="(rule, index) in routes"
+      @click="collapse"
+    >
       <i :class="rule.meta?.icon"></i>
       <template v-if="rule.name && !(rule.meta?.hiddenH && !vertical)" #title>
         <span class="menu-item-name">{{ rule.name }}</span>
@@ -18,7 +31,6 @@
         <span class="menu-item-name">Sair</span>
       </template>
     </el-menu-item>
-
   </el-menu>
 </template>
 <script>
@@ -47,12 +59,17 @@ export default {
     routes() {
       const logged = this.$store.getters.getLogged;
       const [home, ...routes] = this.$router.options.routes;
-      return [home, ...routes.filter((r) => r.meta?.requiresAuth === logged)];
+      return [
+        home,
+        ...routes.filter(
+          (r) => r.meta?.requiresAuth === logged && r.meta?.hideNavbar !== true
+        ),
+      ];
     },
   },
 };
 </script>
-<style  scoped>
+<style scoped>
 @media (max-width: 800px) {
   .el-menu-horizontal .menu-item-name {
     display: none;
