@@ -1,4 +1,5 @@
 <template>
+{{this.formVitima}}
   <el-tabs v-model="tab" style="margin-top: 1.25em">
     <el-tab-pane>
       <template #label>
@@ -39,8 +40,17 @@ export default {
   },
   data() {
     return {
+      id: null,
       tab: "0",
     };
+  },
+  async created() {
+    var id = this.$route.query.id;
+    if (id) {
+      var dados = await controller.bucarPorId(id);
+      this.denuncia = dados;
+      this.id = id;
+    }
   },
   computed: {
     ...mapGetters({
@@ -66,10 +76,17 @@ export default {
       this.tab = `${+this.tab + tab}`;
     },
     onClickSaveSubmit() {
-      var formVitima = this.formVitima;
-      var formAgressor = this.formAgressor;
+      var denuncia = { vitima: this.denuncia.vitima, agressor: this.denuncia.agressor, adicional: null};
 
-      controller.incluirDenuncia(formVitima, formAgressor);
+      if (this.id) {
+        controller.alterar(this.id, denuncia).then(() => {
+          this.$router.push({ path: "ListarDenuncia" });
+        });
+      } else {
+        controller.incluir(denuncia).then(() => {
+          this.$router.push({ path: "ListarDenuncia" });
+        });
+      }
     },
   },
 };

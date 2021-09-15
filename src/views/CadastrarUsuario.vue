@@ -8,7 +8,7 @@
   >
     <FormFooter
       @btn-click-next="onClick"
-      @btn-click-prev="voltarListaUsuario"
+      @btn-click-prev="btnVoltar"
       :hide="[false, false]"
       :text="['Voltar', 'Salvar']"
       :type="['default', 'success']"
@@ -62,7 +62,7 @@ export default {
         });
       }
     },
-    voltarListaUsuario() {
+    btnVoltar() {
       this.$router.push({ path: "ListarUsuario" });
     },
   },

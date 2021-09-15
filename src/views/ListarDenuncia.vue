@@ -6,14 +6,15 @@
     :data="
       this.dados.filter(
         (data) =>
-          !search || data.nome.toLowerCase().includes(search.toLowerCase())
+          !search || data.vitima.nome.toLowerCase().includes(search.toLowerCase())
       )
     "
     border
     style="width: 100%"
   >
-    <el-table-column label="Nome" prop="nome"> </el-table-column>
-    <el-table-column label="Email" prop="email"> </el-table-column>
+    <el-table-column label="Nome" prop="vitima.nome"> </el-table-column>
+    <el-table-column label="Telefone" prop="vitima.telefone"> </el-table-column>
+    <el-table-column label="Agressor" prop="agressor.nome"> </el-table-column>
     <el-table-column align="right">
       <template #header>
         <el-input
@@ -33,7 +34,7 @@
 </template>
 
 <script>
-import * as controller from "../controller/ctlUsuario";
+import * as controller from "../controller/ctlDenuncia";
 export default {
   name: "Home",
   components: {},
@@ -48,10 +49,10 @@ export default {
       this.dados = await controller.listarTodos();
     },
     handleAdd() {
-      this.$router.push({ path: "CadastrarUsuario" });
+      this.$router.push({ path: "Denuncia" });
     },
     handleEdit(row) {
-      this.$router.push({ path: "CadastrarUsuario", query: { id: row.id } });
+      this.$router.push({ path: "Denuncia", query: { id: row.id } });
     },
     async handleDelete(row) {
       controller.excluir(row.id).then(() => {

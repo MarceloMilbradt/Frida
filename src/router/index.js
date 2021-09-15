@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Formulario from "../views/Formulario";
 import Home from "../views/Home";
+import ListarDenuncia from "../views/ListarDenuncia";
 import Denuncia from "../views/Denuncia";
 import Info from "../views/Info";
 import Login from "../views/Login";
@@ -49,10 +50,20 @@ const routes = [
     },
   },
   {
+    path: "/ListarDenuncia",
+    name: "Denúncias",
+    component: ListarDenuncia,
+    meta: {
+      requiresAuth: true,
+      icon: "el-icon-warning-outline",
+    },
+  },
+  {
     path: "/Denuncia",
-    name: "Denuncia",
+    name: "Cad. Denúncia",
     component: Denuncia,
     meta: {
+      hideNavbar: true,
       requiresAuth: true,
       icon: "el-icon-warning-outline",
     },
