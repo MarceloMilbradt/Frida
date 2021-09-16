@@ -1,5 +1,4 @@
 <template>
-{{this.formVitima}}
   <el-tabs v-model="tab" style="margin-top: 1.25em">
     <el-tab-pane>
       <template #label>

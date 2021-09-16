@@ -9,7 +9,6 @@ var listarTodos = async function listarTodos() {
                 id: doc.id,
                 ...doc.data(),
             }));
-            console.log('data =', data);
             return data;
         });
 }

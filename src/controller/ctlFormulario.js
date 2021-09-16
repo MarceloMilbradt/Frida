@@ -1,22 +1,22 @@
 import * as db from "./firebase";
 const Swal = require('sweetalert2')
 
-var listarTodos = function listarTodos() {
-    db.avaliacao.get().then((snapshot) => {
+var listarTodos = async function listarTodos() {
+    return await db.avaliacao.get().then((snapshot) => {
         const data = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data(),
         }));
-        console.log("Todas Avaliações = ", data);
+        return data;
     });
 }
 
-var bucarPorId = function bucarPorId(id) {
-    db.avaliacao
+var bucarPorId = async function bucarPorId(id) {
+    return await db.avaliacao
         .doc(id).get()
         .then((doc) => {
             if (!doc.exists) return;
-            console.log("Dados da Avaliação Selecionada = ", doc.data());
+            return doc.data();
         })
         .catch((error) => {
             console.error("Erro ao buscar Avaliação", error);
@@ -76,9 +76,9 @@ function geraResultado(respostas) {
 
 var incluir = function incluir(resposta) {
     var resultado = geraResultado(resposta);
-    db.avaliacao
+    return db.avaliacao
         .add({ resposta, resultado })
-        .then((ref) => {
+        .then(() => {
             if (resultado.risco == 'E') {
                 Swal.fire({
                     title: 'Você está sob risco Elevado',
@@ -106,7 +106,7 @@ var incluir = function incluir(resposta) {
 }
 
 var alterar = function alterar(id, dados) {
-    db.avaliacao
+    return db.avaliacao
         .doc(id)
         .update(dados)
         .then(() => {
@@ -119,16 +119,29 @@ var alterar = function alterar(id, dados) {
 }
 
 var excluir = function excluir(id) {
-    db.avaliacao
-        .doc(id)
-        .delete()
-        .then(() => {
-            Swal.fire("Deletado!", "Sua avaliação foi deletada com sucesso!", "success");
-        })
-        .catch((error) => {
-            console.error("Erro ao excluir avaliação", error);
-            Swal.fire("Erro!", "Houve um problema ao tentar excluir a avaliação!", "error");
-        });
+    return Swal.fire({
+        title: "Atenção",
+        text: "Deseja realmente excluir o registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sim, excluir!",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            db.avaliacao
+                .doc(id)
+                .delete()
+                .then(() => {
+                    Swal.fire("Deletado!", "Sua avaliação foi deletada com sucesso!", "success");
+                })
+                .catch((error) => {
+                    console.error("Erro ao excluir avaliação", error);
+                    Swal.fire("Erro!", "Houve um problema ao tentar excluir a avaliação!", "error");
+                });
+        }
+    });
 }
 
 export {

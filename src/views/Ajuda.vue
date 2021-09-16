@@ -11,8 +11,16 @@ export default {
     FormAjuda,
   },
   methods: {
-    onClickSaveSubmit(form) {
-      controller.incluir(form)
+    onClickSaveSubmit(id, ajuda) {
+      if (id) {
+          controller.alterar(id, ajuda).then(() => {
+            this.$router.push({ path: "ListarAjuda" });
+          });
+        } else {
+          controller.incluir(ajuda).then(() => {
+            this.$router.push({ path: "ListarAjuda" });
+          });
+        }
     },
   },
 };

@@ -1,14 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Formulario from "../views/Formulario";
 import Home from "../views/Home";
+import Info from "../views/Info";
+import ListarAjuda from "../views/ListarAjuda";
+import Ajuda from "../views/Ajuda";
+import ListarFormulario from "../views/ListarFormulario";
+import Formulario from "../views/Formulario";
 import ListarDenuncia from "../views/ListarDenuncia";
 import Denuncia from "../views/Denuncia";
-import Info from "../views/Info";
-import Login from "../views/Login";
-//import Logout from '../views/Logout'
-import Ajuda from "../views/Ajuda";
 import ListarUsuario from "../views/ListarUsuario";
 import CadastrarUsuario from "../views/CadastrarUsuario";
+import Login from "../views/Login";
+//import Logout from '../views/Logout'
 
 const routes = [
   {
@@ -23,15 +25,6 @@ const routes = [
     },
   },
   {
-    path: "/Ajuda",
-    name: "Ajuda",
-    component: Ajuda,
-    meta: {
-      requiresAuth: false,
-      icon: "el-icon-warning-outline",
-    },
-  },
-  {
     path: "/Info",
     name: "Informações",
     component: Info,
@@ -41,10 +34,38 @@ const routes = [
     },
   },
   {
+    path: "/ListarAjuda",
+    name: "Ajudas",
+    component: ListarAjuda,
+    meta: {
+      requiresAuth: true,
+      icon: "el-icon-warning-outline",
+    },
+  },
+  {
+    path: "/Ajuda",
+    name: "Ajuda",
+    component: Ajuda,
+    meta: {
+      requiresAuth: false,
+      icon: "el-icon-warning-outline",
+    },
+  },
+  {
+    path: "/ListarAvaliacao",
+    name: "Avaliações",
+    component: ListarFormulario,
+    meta: {
+      requiresAuth: true,
+      icon: "el-icon-tickets",
+    },
+  },
+  {
     path: "/Avaliacao",
     name: "Avaliação",
     component: Formulario,
     meta: {
+      hideNavbar: true,
       requiresAuth: false,
       icon: "el-icon-tickets",
     },
@@ -60,11 +81,10 @@ const routes = [
   },
   {
     path: "/Denuncia",
-    name: "Cad. Denúncia",
+    name: "Denúncia",
     component: Denuncia,
     meta: {
-      hideNavbar: true,
-      requiresAuth: true,
+      requiresAuth: false,
       icon: "el-icon-warning-outline",
     },
   },
@@ -83,7 +103,7 @@ const routes = [
     component: CadastrarUsuario,
     meta: {
       hideNavbar: true,
-      requiresAuth: true,
+      requiresAuth: false,
       icon: "el-icon-user",
     },
   },

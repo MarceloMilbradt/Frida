@@ -31,7 +31,7 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <el-button icon="el-icon-check" @click="$emit('clickSubmit', form)" type="primary" plain>
+              <el-button icon="el-icon-check" @click="clickSubmit" type="primary" plain>
                 <span class="">Enviar</span>
               </el-button>
             </el-col>
@@ -46,6 +46,7 @@
 import TextField from "./TextField.vue";
 import { CircleCheck } from "@element-plus/icons";
 import * as geolocation from "../controller/MapBoxs";
+import * as controller from "../controller/ctlAjuda";
 
 export default {
   components: {
@@ -59,6 +60,7 @@ export default {
   },
   data() {
     return {
+      id: null,
       form: {
         nome: "",
         endereco: "",
@@ -85,7 +87,18 @@ export default {
       };
     },
   },
+  async created() {
+    var id = this.$route.query.id;
+    if (id) {
+      var dados = await controller.bucarPorId(id);
+      this.form = dados;
+      this.id = id;
+    }
+  },
   methods: {
+    clickSubmit() {
+      this.$emit('clickSubmit', this.id, this.form);
+    },
     async setGeo({ latitude, longitude }) {
       console.log(latitude, longitude);
       const ends = await geolocation.getLocation(latitude, longitude);

@@ -39,11 +39,22 @@ export default {
         resposta["r_" + q.id] = q.answer;
       }
 
-      if (invalid == false) controller.incluir(resposta);
+      if (invalid == false) {
+        if (this.id) {
+          controller.alterar(this.id, resposta).then(() => {
+            this.$router.push({ path: "ListarFormulario" });
+          });
+        } else {
+          controller.incluir(resposta).then(() => {
+            this.$router.push({ path: "ListarFormulario" });
+          });
+        }
+      }
     },
   },
   data() {
     return {
+      id: null,
       items: [
         {
           to: "/",
@@ -159,6 +170,14 @@ export default {
         },
       ],
     };
+  },
+  async created() {
+    var id = this.$route.query.id;
+    if (id) {
+      var dados = await controller.bucarPorId(id);
+      //this.questions = dados.resposta;
+      this.id = id;
+    }
   },
 };
 </script>
