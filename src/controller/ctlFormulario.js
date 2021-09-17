@@ -105,10 +105,11 @@ var incluir = function incluir(resposta) {
         });
 }
 
-var alterar = function alterar(id, dados) {
+var alterar = function alterar(id, resposta) {
+    var resultado = geraResultado(resposta);
     return db.avaliacao
         .doc(id)
-        .update(dados)
+        .update({ resposta, resultado })
         .then(() => {
             Swal.fire("Atualizado!", "A avaliação foi atualizada com sucesso!", "success");
         })

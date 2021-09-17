@@ -5,7 +5,7 @@
   </h3>
   <el-form ref="form" :model="questions">
     <div v-bind:key="question.id" v-for="question in questions">
-      <Question v-bind:alternatives="question.alternatives" v-bind:question="question" @radio-change="changeAnswer" />
+      <Question v-model="question.answer" :alternatives="question.alternatives" :question="question" />
     </div>
   </el-form>
   <el-button @click="onClick" type="success">Salvar</el-button>
@@ -21,11 +21,6 @@ export default {
     Question,
   },
   methods: {
-    changeAnswer(q_id, answer) {
-      this.questions = this.questions.map((q) =>
-        q.id == q_id ? { ...q, answer } : q
-      );
-    },
     onClick() {
       var invalid = false;
       var resposta = {};
@@ -42,11 +37,11 @@ export default {
       if (invalid == false) {
         if (this.id) {
           controller.alterar(this.id, resposta).then(() => {
-            this.$router.push({ path: "ListarFormulario" });
+            this.$router.push({ path: "ListarAvaliacao" });
           });
         } else {
           controller.incluir(resposta).then(() => {
-            this.$router.push({ path: "ListarFormulario" });
+            this.$router.push({ path: "ListarAvaliacao" });
           });
         }
       }
@@ -172,11 +167,20 @@ export default {
     };
   },
   async created() {
-    var id = this.$route.query.id;
-    if (id) {
-      var dados = await controller.bucarPorId(id);
-      //this.questions = dados.resposta;
-      this.id = id;
+    try {
+      var id = this.$route.query.id;
+      if (id) {
+        var dados = await controller.bucarPorId(id);
+        this.id = id;
+
+        for (var [key, answer] of Object.entries(dados.resposta)) {
+          var q_id = key.replace('r_', '') - 1;
+          this.questions[q_id].answer = answer;
+        }
+      }
+    }
+    catch (ex) {
+      console.error("Erro ao Buscar Valores", ex);
     }
   },
 };

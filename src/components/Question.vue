@@ -3,7 +3,7 @@
     <template #header>
       <h3>{{ question.text }}</h3>
     </template>
-    <el-radio-group class="radio-group" v-model="val" @change="(val) => $emit('radio-change', question.id, val)">
+    <el-radio-group class="radio-group" v-model="val">
       <div v-bind:key="alternative.value" v-for="alternative in alternatives">
         <el-radio :label="alternative.value">{{ alternative.text }}</el-radio>
       </div>
@@ -14,7 +14,7 @@
 <script>
 export default {
   name: "Question",
-  emits: ["radio-change"],
+  emits: ["update:modelValue"],
   props: {
     question: Object,
     alternatives: {
@@ -40,11 +40,17 @@ export default {
         ];
       },
     },
+    modelValue: Object,
   },
-  data() {
-    return {
-      val: 0,
-    };
+  computed: {
+    val: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit("update:modelValue", value);
+      },
+    },
   },
 };
 </script>
