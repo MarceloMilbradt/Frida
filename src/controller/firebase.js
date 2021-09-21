@@ -23,6 +23,7 @@ const usuario = db.collection('usuario')
 const avaliacao = db.collection('avaliacao')
 const denuncia = db.collection('denuncia')
 const ajuda = db.collection('ajuda')
+const log = db.collection('log')
 
 export {
     firebase,
@@ -31,5 +32,6 @@ export {
     usuario,
     avaliacao,
     denuncia,
-    ajuda
+    ajuda,
+    log
 }

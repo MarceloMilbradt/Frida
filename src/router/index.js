@@ -9,6 +9,7 @@ import ListarDenuncia from "../views/ListarDenuncia";
 import Denuncia from "../views/Denuncia";
 import ListarUsuario from "../views/ListarUsuario";
 import CadastrarUsuario from "../views/CadastrarUsuario";
+import ListarLog from "../views/ListarLog";
 import Login from "../views/Login";
 //import Logout from '../views/Logout'
 
@@ -105,6 +106,15 @@ const routes = [
       hideNavbar: true,
       requiresAuth: false,
       icon: "el-icon-user",
+    },
+  },
+  {
+    path: "/ListarLog",
+    name: "Log",
+    component: ListarLog,
+    meta: {
+      requiresAuth: true,
+      icon: "el-icon-receiving",
     },
   },
   {

@@ -37,6 +37,7 @@ export default {
       }
 
       if (invalid == false) {
+        this.form.resultado = this.geraResultado(this.form.resposta);
         if (this.id) {
           controller.alterar(this.id, this.form).then(() => {
             this.$router.push({ path: "ListarAvaliacao" });
@@ -48,6 +49,55 @@ export default {
         }
       }
     },
+    geraResultado(respostas) {
+      var resp = Object.values(respostas);
+      var counts = {};
+      for (var num of resp) {
+          counts[num] = counts[num] ? counts[num] + 1 : 1;
+      }
+
+      var qtdeSim = counts[1];
+      var qtdeNao = /*counts[2]*/ + counts[3] + counts[4];
+      var risco = '';
+
+      switch (qtdeSim) {
+          case 0:
+          case 1:
+          case 2:
+              risco = (qtdeNao > 0) ? 'M' : 'B';
+              break;
+          case 3:
+              risco = (qtdeNao > 7) ? 'M' : 'B';
+              break;
+          case 4:
+              risco = (qtdeNao > 3) ? 'M' : 'B';
+              break;
+          case 5:
+              risco = (qtdeNao == 10) ? 'E' : 'M';
+              break;
+          case 6:
+              risco = (qtdeNao > 7 && qtdeNao < 11) ? 'E' : 'M';
+              break;
+          case 7:
+              risco = (qtdeNao > 5 && qtdeNao < 11) ? 'E' : 'M';
+              break;
+          case 8:
+              risco = (qtdeNao > 3 && qtdeNao < 11) ? 'E' : 'M';
+              break;
+          case 9:
+              risco = (qtdeNao > 1 && qtdeNao < 11) ? 'E' : 'M';
+              break;
+          default:
+              risco = 'E';
+              break;
+      }
+
+      return {
+          qtdeSim: qtdeSim,
+          qtdeNao: qtdeNao,
+          risco: risco,
+      };
+    }
   },
   data() {
     return {
