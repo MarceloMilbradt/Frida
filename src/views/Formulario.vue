@@ -4,6 +4,9 @@
     Mulher
   </h3>
   <el-form ref="form" :model="questions">
+    <el-form-item prop="nome">
+      <el-input v-model="form.nome" placeholder="Nome"></el-input>
+    </el-form-item>
     <div v-bind:key="question.id" v-for="question in questions">
       <Question v-model="question.answer" :alternatives="question.alternatives" :question="question" />
     </div>
@@ -23,7 +26,6 @@ export default {
   methods: {
     onClick() {
       var invalid = false;
-      var resposta = {};
 
       for (const q of this.questions) {
         if (q.answer == undefined) {
@@ -31,16 +33,16 @@ export default {
           invalid = true;
           break;
         }
-        resposta["r_" + q.id] = q.answer;
+        this.form.resposta["r_" + q.id] = q.answer;
       }
 
       if (invalid == false) {
         if (this.id) {
-          controller.alterar(this.id, resposta).then(() => {
+          controller.alterar(this.id, this.form).then(() => {
             this.$router.push({ path: "ListarAvaliacao" });
           });
         } else {
-          controller.incluir(resposta).then(() => {
+          controller.incluir(this.form).then(() => {
             this.$router.push({ path: "ListarAvaliacao" });
           });
         }
@@ -50,6 +52,12 @@ export default {
   data() {
     return {
       id: null,
+      form: {
+        nome: "",
+        data: new Date().toISOString(),
+        resposta: {},
+        resultado: {},
+      },
       items: [
         {
           to: "/",
@@ -171,6 +179,7 @@ export default {
       var id = this.$route.query.id;
       if (id) {
         var dados = await controller.bucarPorId(id);
+        this.form = dados;
         this.id = id;
 
         for (var [key, answer] of Object.entries(dados.resposta)) {

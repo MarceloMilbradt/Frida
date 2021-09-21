@@ -74,12 +74,12 @@ function geraResultado(respostas) {
     };
 }
 
-var incluir = function incluir(resposta) {
-    var resultado = geraResultado(resposta);
+var incluir = function incluir(form) {
+    form.resultado = geraResultado(form.resposta);
     return db.avaliacao
-        .add({ resposta, resultado })
+        .add(form)
         .then(() => {
-            if (resultado.risco == 'E') {
+            if (form.resultado.risco == 'E') {
                 Swal.fire({
                     title: 'Você está sob risco Elevado',
                     text: "Deseja fazer uma Denúncia de agressão ?",
@@ -105,11 +105,11 @@ var incluir = function incluir(resposta) {
         });
 }
 
-var alterar = function alterar(id, resposta) {
-    var resultado = geraResultado(resposta);
+var alterar = function alterar(id, form) {
+    form.resultado = geraResultado(form.resposta);
     return db.avaliacao
         .doc(id)
-        .update({ resposta, resultado })
+        .update(form)
         .then(() => {
             Swal.fire("Atualizado!", "A avaliação foi atualizada com sucesso!", "success");
         })

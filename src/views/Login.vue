@@ -3,10 +3,10 @@
     <el-card>
       <h2>Login</h2>
       <el-form class="login-form" :model="model" :rules="rules" ref="form" @submit.prevent="login">
-        <el-alert title="Falha no login" type="error" description="Usuario ou senhas incorretos!" show-icon v-if="fail">
+        <el-alert title="Falha no login" type="error" description="E-mail ou senhas incorretos!" show-icon v-if="fail">
         </el-alert>
-        <el-form-item prop="usuario">
-          <el-input v-model="model.usuario" placeholder="Usuário" prefix-icon="fas fa-user"></el-input>
+        <el-form-item prop="email">
+          <el-input v-model="model.email" placeholder="E-mail" prefix-icon="fas fa-user"></el-input>
         </el-form-item>
         <el-form-item prop="senha">
           <el-input v-model="model.senha" placeholder="Senha" type="password" prefix-icon="fas fa-lock"></el-input>
@@ -14,30 +14,27 @@
         <el-form-item>
           <el-button :loading="loading" class="login-button" type="primary" native-type="submit" block>Login</el-button>
         </el-form-item>
-        <!-- <a class="novo-usuario" href="CadastrarUsuario">Criar novo usuário</a> -->
-        <!-- <router-link class="link" to="CadastrarUsuario"
-          >Criar novo usuário</router-link
-        > -->
+        <a class="novo-link" href="#" @click="resetSenha">Esqueci a senha</a>
       </el-form>
     </el-card>
   </div>
 </template>
 
 <script>
-import * as controller from "../controller/ctlUsuario";
+import { resetSenha } from "../controller/AuthService";
 export default {
   name: "login",
   data() {
     return {
       fail: false,
       model: {
-        usuario: "",
+        email: "",
         senha: "",
       },
       loading: false,
       rules: {
-        usuario: [
-          { required: true, message: "Usuário é obrigatório", trigger: "blur" },
+        email: [
+          { required: true, message: "E-mail é obrigatório", trigger: "blur" },
         ],
         senha: [
           { required: true, message: "Senha é obrigatório", trigger: "blur" },
@@ -51,6 +48,9 @@ export default {
     };
   },
   methods: {
+    resetSenha: function() {
+      resetSenha(this.model.email);
+    },
     async login() {
       this.fail = false;
       let valid = await this.$refs.form.validate();
@@ -59,7 +59,7 @@ export default {
       this.loading = true;
 
       await this.$store.dispatch("login", {
-        email: this.model.usuario,
+        email: this.model.email,
         password: this.model.senha,
       });
 
@@ -87,7 +87,7 @@ export default {
 .login-form {
   width: 18.125em;
 }
-.novo-usuario {
+.novo-link {
   margin-top: 0.625em;
 }
 </style>

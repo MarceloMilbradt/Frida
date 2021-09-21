@@ -56,6 +56,23 @@ function mensagemLoginSucesso() {
   });
 }
 
+const resetSenha = (email) => {
+  return auth.sendPasswordResetEmail(email)
+    .then(() => {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Foi enviado um e-mail para ' + email + ' para a redefinição da sua senha',
+        showConfirmButton: false,
+        timer: 3000
+      })
+    })
+    .catch((error) => {
+      console.error("Erro ao resetar a senha do usuário no Firebase Authentication", error);
+      Swal.fire("Erro!", "Endereço de e-mail informado é invalido!", "error");
+    });
+}
+
 const login = async (email, password) => {
   const user = await auth
     .signInWithEmailAndPassword(email, password)
@@ -107,6 +124,7 @@ const getCurrentUser = () => {
 
 export {
   createCredentials,
+  resetSenha,
   login,
   logout,
   getLoginState,
