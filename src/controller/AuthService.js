@@ -114,13 +114,28 @@ const getLoginState = async () => {
     }
   });
 };
+
 const setWatcher = (fn) => {
   auth.onAuthStateChanged(fn);
 };
+
 const getCurrentUser = () => {
   const user = auth.currentUser;
   return user;
 };
+
+const atualizarPerfil = (dados) => {
+  //dados = { displayName: "Cristian W.", telefone: "(55) 99999-9999", cpf: "012.345.678-90" };
+  const user = getCurrentUser();
+  if (user) {
+    user.updateProfile(dados)
+  }
+}
+
+const getNomeUser = () => {
+  //Posteriormente, da pra buscar esse e-mail na collection de usuarios pra descobrir o nome
+  return auth.currentUser.email;
+}
 
 export {
   createCredentials,
@@ -130,4 +145,5 @@ export {
   getLoginState,
   getCurrentUser,
   setWatcher,
+  getNomeUser,
 };

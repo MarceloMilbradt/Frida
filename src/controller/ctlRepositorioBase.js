@@ -1,13 +1,19 @@
 import * as db from "./firebase";
 const Swal = require('sweetalert2')
-import { getCurrentUser } from "./AuthService";
+import { getNomeUser } from "./AuthService";
 
 var ativarLog = (nome, tabela) => {
     tabela.onSnapshot((snapshot) => {
         if (snapshot.docChanges().length == 1) { /*Não mostrar quando tiver listando*/
             var change = snapshot.docChanges()[0];
-            db.log.add({ id: change.doc.id, usuario: 'admin', tabela: nome, tipo: change.type, data: new Date().toISOString(), dados: change.doc.data() })
-                .catch((error) => console.error("Erro ao incluir log", error));
+            db.log.add({
+                id: change.doc.id,
+                usuario: getNomeUser(),
+                tabela: nome,
+                tipo: change.type,
+                data: new Date().toISOString(),
+                dados: change.doc.data()
+            }).catch((error) => console.error("Erro ao incluir log", error));
         }
     });
 }
