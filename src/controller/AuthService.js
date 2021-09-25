@@ -12,6 +12,8 @@ var config = {
   appId: "1:127916459378:web:546f32e5936d4e7b1e09eb",
 };
 
+
+
 var secondaryApp = firebase.initializeApp(config, "Secondary");
 
 const generatePassword = () => {
@@ -150,4 +152,5 @@ export {
   getCurrentUser,
   setWatcher,
   getNomeUser,
+  loginAnonimo
 };
