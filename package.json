@@ -9,6 +9,10 @@
   },
   "dependencies": {
     "@element-plus/icons": "0.0.11",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/vue-fontawesome": "^3.0.0-4",
+    "algoliasearch": "^4.10.5",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.70",
     "firebase": "^8.10.0",
@@ -16,6 +20,7 @@
     "maska": "^1.4.5",
     "sweetalert2": "^11.1.4",
     "vue": "^3.0.0",
+    "vue-instantsearch": "^4.0.1",
     "vue-router": "^4.0.11",
     "vue-sweetalert2": "^5.0.2",
     "vuex": "^4.0.2"

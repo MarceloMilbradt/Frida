@@ -10,14 +10,14 @@ const denuncia = {
                 endereco: {},
                 trabalho: {},
                 filiacao: {},
-                isValid:true,
+                isValid: true,
             },
 
             agressor: {
                 endereco: {},
                 trabalho: {},
                 filiacao: {},
-                isValid:true,
+                isValid: true,
             },
         }
     },
@@ -141,11 +141,35 @@ const security = {
     },
 }
 
+const algolia = {
+    namespaced: true,
+
+    state: {
+        refreshed: false,
+    },
+    mutations: {
+        SET_REFRESHED(state, refresh) {
+            state.refreshed = refresh;
+        },
+
+    },
+    actions: {
+        setRefreshed({ commit }, refresh) {
+            commit('SET_REFRESHED', refresh)
+        },
+    },
+    getters: {
+        getRefreshed(state) {
+            return state.refreshed
+        },
+    },
+}
 
 const store = createStore({
     modules: {
         security,
-        denuncia
+        denuncia,
+        algolia
     }
 })
 

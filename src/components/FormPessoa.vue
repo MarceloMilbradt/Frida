@@ -1,39 +1,52 @@
 <template>
-  <el-card class="box-card">
-    <el-container>
-      <el-header style="text-align: left" height="1.250em">{{text}}</el-header>
-      <el-divider></el-divider>
-      <el-main>
-        <el-form @validate="validate" :model="form" :label-position="'right'" :label-width="'160px'" ref="form">
-          <FormPessoaBase v-model="form" :emailField="emailField"></FormPessoaBase>
-          <el-space direction="vertical" fill wrap style="width: 100%">
-            <el-divider content-position="right" v-if="form?.endereco">Endereço
-              <AddButton v-model="exibeEndereco" />
-            </el-divider>
-            <el-collapse-transition>
-              <FormEndereco v-if="exibeEndereco" v-model="form.endereco"></FormEndereco>
-            </el-collapse-transition>
-            <el-divider content-position="right" v-if="form?.filiacao">Filiação
-              <AddButton v-model="exibeFiliacao" />
-            </el-divider>
-            <el-collapse-transition>
-              <FormFiliacao v-if="exibeFiliacao" v-model="form.filiacao"></FormFiliacao>
-            </el-collapse-transition>
+  <!-- <el-card class="box-card"> -->
+  <el-container>
+    <el-header style="text-align: left" height="1.250em">
+      <div>{{text}}<i v-if="!valid" title="Formulário Inválido!" class="el-icon-warning-outline"></i></div>
+    </el-header>
+    <el-divider></el-divider>
+    <el-main>
+      <el-form @validate="validate" :model="form" :label-position="'right'" :label-width="'160px'" ref="form">
+        <FormPessoaBase v-model="form" :emailField="emailField"></FormPessoaBase>
+        <el-space direction="vertical" fill wrap style="width: 100%">
 
-            <el-divider v-if="form?.trabalho" content-position="right">Trabalho
-              <AddButton v-model="exibeTrabalho" />
+          <AddButton v-if="!exibeEndereco" v-model="exibeEndereco" label="Endereço" title="Adicionar Endereço" />
+
+          <div v-if="exibeEndereco">
+            <el-divider content-position="right">Endereço
+              <AddRemoveButton v-model="exibeEndereco" @click="() => this.form.endereco = {}" />
             </el-divider>
-            <el-collapse-transition>
-              <FormProfissao v-if="exibeTrabalho" v-model="form.trabalho"></FormProfissao>
-            </el-collapse-transition>
-          </el-space>
-        </el-form>
-        <div style="margin-top: 20px">
-          <slot></slot>
-        </div>
-      </el-main>
-    </el-container>
-  </el-card>
+
+            <FormEndereco v-model="form.endereco"></FormEndereco>
+          </div>
+
+          <AddButton v-if="!exibeFiliacao && form?.filiacao" v-model="exibeFiliacao" label="Fámilia" title="Adicionar informações da fámilia" />
+
+          <div v-if="exibeFiliacao && form?.filiacao ">
+            <el-divider content-position="right">Fámilia
+              <AddRemoveButton v-model="exibeFiliacao" />
+            </el-divider>
+
+            <FormFiliacao v-model="form.filiacao"></FormFiliacao>
+          </div>
+
+          <AddButton v-if="!exibeTrabalho && form?.trabalho" v-model="exibeTrabalho" label="Ocupação" title="Adicionar informações da ocupação" />
+
+          <div v-if="exibeTrabalho && form?.trabalho">
+            <el-divider content-position="right">Ocupação
+              <AddRemoveButton v-model="exibeTrabalho" />
+            </el-divider>
+            <FormProfissao v-model="form.trabalho"></FormProfissao>
+          </div>
+
+        </el-space>
+      </el-form>
+      <div style="margin-top: 20px">
+        <slot></slot>
+      </div>
+    </el-main>
+  </el-container>
+  <!-- </el-card> -->
 </template>
 
 <script>
@@ -41,7 +54,8 @@ import FormEndereco from "./FormEndereco.vue";
 import FormProfissao from "./FormProfissao.vue";
 import FormFiliacao from "./FormFiliacao.vue";
 import FormPessoaBase from "./FormPessoaBase.vue";
-import AddButton from "./AddRemoveButton.vue";
+import AddButton from "./AddButton.vue";
+import AddRemoveButton from "./AddRemoveButton.vue";
 
 export default {
   components: {
@@ -50,15 +64,17 @@ export default {
     FormProfissao,
     FormPessoaBase,
     AddButton,
+    AddRemoveButton,
   },
   name: "FormPessoa",
   emits: ["update:modelValue", "form-validate"],
   data() {
     return {
-      exibeEndereco: false,
-      exibeTrabalho: false,
-      exibeFiliacao: false,
       isValid: {},
+      valid: true,
+      exibeTrabalho: null,
+      exibeFiliacao: null,
+      exibeEndereco: null,
     };
   },
   props: {
@@ -66,6 +82,19 @@ export default {
     storeId: String,
     emailField: Boolean,
     modelValue: Object,
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler: function () {
+        if (this.exibeEndereco == null)
+          this.exibeEndereco = Object.keys(this.form.endereco).length > 0;
+        if (this.exibeFiliacao == null)
+          this.exibeFiliacao = Object.keys(this.form.filiacao).length > 0;
+        if (this.exibeTrabalho == null)
+          this.exibeTrabalho = Object.keys(this.form.trabalho).length > 0;
+      },
+    },
   },
   computed: {
     form: {
@@ -83,14 +112,17 @@ export default {
       let valid = Object.values(this.isValid).every((v) => v);
       if (this.form) this.form.valid = valid;
       this.$emit("form-validate", valid);
-      return valid
+      this.valid = valid;
+      return valid;
     },
+    
   },
 };
 </script>
 
 <style scoped>
-.box-card {
-  margin: 0 0 1.25em 0;
+.el-icon-warning-outline {
+  color: #f56c6c;
+  margin-left: 10px;
 }
 </style>

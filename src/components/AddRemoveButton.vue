@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "AddRemoveButton",
-  emits: ["update:modelValue"],
+  emits: ["update:modelValue","btn-change"],
   props: {
     modelValue: Boolean,
   },
@@ -24,7 +24,7 @@ export default {
   methods: {
     btnChangeValue() {
       this.value = !this.value;
-      this.$emit("btn-change");
+      this.$emit("btn-change",this.value);
     },
   },
 };

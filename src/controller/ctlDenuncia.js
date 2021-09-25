@@ -1,4 +1,5 @@
 import * as db from "./firebase";
+import { addToIndex, updateIndex, deleteFromIndex } from "./Algolia"
 const Swal = require('sweetalert2')
 
 var listarTodos = async function listarTodos() {
@@ -29,7 +30,8 @@ var bucarPorId = async function bucarPorId(id) {
 
 var incluir = function incluir(denuncia) {
     return db.denuncia.add(denuncia)
-        .then(() => {
+        .then((snapshot) => {
+            addToIndex(denuncia, snapshot.id)
             Swal.fire("Salvo!", "A Denúncia foi salvo com sucesso!", "success");
         })
         .catch((error) => {
@@ -43,6 +45,7 @@ var alterar = function alterar(id, denuncia) {
         .doc(id)
         .update(denuncia)
         .then(() => {
+            updateIndex(denuncia, id)
             Swal.fire("Atualizado!", "A Denúncia foi atualizada com sucesso!", "success");
         })
         .catch((error) => {
@@ -67,6 +70,7 @@ var excluir = function excluir(id) {
                 .doc(id)
                 .delete()
                 .then(() => {
+                    deleteFromIndex(id)
                     Swal.fire("Deletado!", "Sua Denúncia foi deletada com sucesso!", "success");
                 })
                 .catch((error) => {

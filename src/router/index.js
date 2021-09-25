@@ -81,7 +81,7 @@ const routes = [
     },
   },
   {
-    path: "/Denuncia",
+    path: "/Denuncia/:id?",
     name: "Denúncia",
     component: Denuncia,
     meta: {

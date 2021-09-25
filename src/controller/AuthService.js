@@ -1,4 +1,5 @@
 import { firebase } from "./firebase";
+
 const Swal = require("sweetalert2");
 
 var config = {
@@ -24,6 +25,9 @@ const generatePassword = () => {
 };
 
 const auth = firebase.auth();
+
+const loginAnonimo = async () => auth.signInAnonymously();
+
 const createCredentials = async (email) => {
   const user = await secondaryApp
     .auth()

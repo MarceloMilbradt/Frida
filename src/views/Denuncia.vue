@@ -1,26 +1,36 @@
 <template>
   <el-tabs v-model="tab" style="margin-top: 1.25em">
-    <el-tab-pane>
-      <template #label>
-        <span>Vitima <i v-if="!vitimaIsValid" class="el-icon-warning-outline"></i></span>
-      </template>
-      <FormPessoa :text="'Dados da Vítima'"  @form-validate="setVitimaValid" v-model="denuncia.vitima">
-        <FormFooter @btn-click-next="changeTab(+1)" @btn-click-prev="changeTab(-1)" :hide="[true, false]" />
-      </FormPessoa>
-    </el-tab-pane>
-
-    <el-tab-pane>
-      <template #label>
-        <span>Agressor(a) <i v-if="!agressorIsValid" class="el-icon-warning-outline"></i></span>
-      </template>
-      <FormPessoa :text="'Dados do(a) Agressor(a)'" @form-validate="setAgressorValid" v-model="denuncia.agressor">
-        <FormFooter @btn-click-next="changeTab(+1)" @btn-click-prev="changeTab(-1)" />
-      </FormPessoa>
-    </el-tab-pane>
-
     <el-tab-pane label="Adicionais">
-      <FormAdicional @btn-click-prev="changeTab(-1)" @btn-click-next="onClickSaveSubmit" :text="'Informacoes Adicionais'" ref="formAdicional" />
+      <el-card class="box-card">
+
+        <FormAdicional v-model="denuncia" @btn-click-next="onClickSaveSubmit" :text="'Informacoes Adicionais'" />
+        <FormFooter @btn-click-next="changeTab(+1)" @btn-click-prev="goBack"  :text="['Cancelar', null]"/>
+
+      </el-card>
+
     </el-tab-pane>
+    <el-tab-pane>
+      <template #label>
+        <span>Vitima <i v-if="vitimaIsValid === false" class="el-icon-warning-outline"></i></span>
+      </template>
+      <el-card class="box-card">
+        <FormPessoa :text="'Dados da Vítima'" @form-validate="setVitimaValid" v-model="denuncia.vitima">
+        </FormPessoa>
+        <FormFooter @btn-click-next="changeTab(+1)" @btn-click-prev="changeTab(-1)" :hide="[false, false]" />
+      </el-card>
+    </el-tab-pane>
+
+    <el-tab-pane>
+      <template #label>
+        <span>Agressor(a) <i v-if="agressorIsValid === false" class="el-icon-warning-outline"></i></span>
+      </template>
+      <el-card class="box-card">
+        <FormPessoa :text="'Dados do(a) Agressor(a)'" @form-validate="setAgressorValid" v-model="denuncia.agressor">
+        </FormPessoa>
+        <FormFooter @btn-click-next="onClickSaveSubmit" @btn-click-prev="changeTab(-1)"  :text="[null, 'Salvar!']"/>
+      </el-card>
+    </el-tab-pane>
+
   </el-tabs>
 </template>
 
@@ -41,15 +51,35 @@ export default {
     return {
       id: null,
       tab: "0",
+      denuncia: {
+        data: new Date().toISOString(),
+
+        agressao: [],
+
+        vitima: {
+          endereco: {},
+          trabalho: {},
+          filiacao: {},
+          isValid: true,
+        },
+
+        agressor: {
+          endereco: {},
+          trabalho: {},
+          filiacao: {},
+          isValid: true,
+        },
+      },
     };
   },
   async created() {
-    var id = this.$route.query.id;
+    let id = this.$route.params.id;
     if (id) {
-      var dados = await controller.bucarPorId(id);
-      this.denuncia = dados;
+      let dados = await controller.bucarPorId(id);
+      this.denuncia = { ...dados, id };
       this.id = id;
     }
+    this.$store.dispatch("denuncia/setDenuncia", this.denuncia);
   },
   computed: {
     ...mapGetters({
@@ -58,9 +88,6 @@ export default {
       agressorIsValid: "denuncia/agressorIsValid",
       denunciaIsValid: "denuncia/denunciaIsValid",
     }),
-    denuncia() {
-      return this.getDenuncia;
-    },
   },
   methods: {
     setVitimaValid(valid) {
@@ -74,24 +101,37 @@ export default {
     changeTab(tab) {
       this.tab = `${+this.tab + tab}`;
     },
+    parseObject(denuncia){
+        delete denuncia.vitima.isValid;
+        delete denuncia.vitima.valid;
+        delete denuncia.agressor.isValid;
+        delete denuncia.agressor.valid;
+        return {...denuncia};
+    },
     onClickSaveSubmit() {
-      var denuncia = { vitima: this.denuncia.vitima, agressor: this.denuncia.agressor, adicional: null};
+      let denuncia = this.parseObject(this.denuncia);
 
       if (this.id) {
         controller.alterar(this.id, denuncia).then(() => {
-          this.$router.push({ path: "ListarDenuncia" });
+          this.goBack();
         });
       } else {
         controller.incluir(denuncia).then(() => {
-          this.$router.push({ path: "ListarDenuncia" });
+          this.goBack();
         });
       }
     },
+    goBack(){
+       this.$router.push({ path: "/ListarDenuncia" });
+    }
   },
 };
 </script>
 
-<style>
+<style scoped>
+.box-card {
+  margin: 0 0 1.25em 0;
+}
 .el-icon-warning-outline {
   color: #f56c6c;
 }

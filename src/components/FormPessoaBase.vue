@@ -22,6 +22,14 @@
       <el-col :sm="24" :lg="10">
         <TextField v-model="pessoa.telefone" label="Telefone" prop="telefone" v-maska="['(##) ####-####', '(##) #####-####']" />
       </el-col>
+      <el-col :sm="24" :lg="10">
+        <el-form-item label="Sexo" >
+          <el-select v-model="pessoa.sexo" placeholder="Sexo">
+            <el-option v-for="sexo in sexos" :key="sexo.sigla" :label="sexo.descricao" :value="sexo.sigla">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -37,7 +45,20 @@ export default {
   },
   name: "FormPessoaBase",
   emits: ["update:modelValue"],
-
+  data() {
+    return {
+      sexos: [
+        {
+          sigla: "M",
+          descricao: "Masculino",
+        },
+        {
+          sigla: "F",
+          descricao: "Feminino",
+        },
+      ],
+    };
+  },
   props: {
     modelValue: {
       type: Object,

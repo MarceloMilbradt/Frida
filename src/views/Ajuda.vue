@@ -12,16 +12,10 @@ export default {
   },
   methods: {
     onClickSaveSubmit(id, ajuda) {
-      if (id) {
-          controller.alterar(id, ajuda).then(() => {
-            this.$router.push({ path: "ListarAjuda" });
-          });
-        } else {
           controller.incluir(ajuda).then(() => {
-            this.$router.push({ path: "ListarAjuda" });
-          });
-        }
-    },
+            this.$router.push({ path: "/" });
+          })
+    }
   },
 };
 </script>
