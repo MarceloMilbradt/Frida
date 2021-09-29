@@ -94,7 +94,8 @@ body {
   position: static;
   bottom: 0;
   text-align: center;
-  width: calc(80vw - 30px);
+  width: 50%;
+  margin: 0 auto;
 }
 html body{
   margin: 0;
