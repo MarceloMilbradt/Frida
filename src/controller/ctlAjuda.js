@@ -1,5 +1,7 @@
 import * as repo from "./ctlRepositorioBase";
 import { ajuda } from "./firebase";
+import {logout, loginAnonimo} from './AuthService';
+const Swal = require('sweetalert2')
 
 repo.ativarLog('ajuda', ajuda);
 const listarTodos = async () => repo.listarTodos(ajuda)
@@ -7,7 +9,7 @@ const bucarPorId = async (id) => repo.bucarPorId(ajuda, id)
 
 const incluir = async function incluir(dados) {
     await loginAnonimo();
-    return db.ajuda
+    return ajuda
         .add(dados)
         .then(() => {
             logout()
