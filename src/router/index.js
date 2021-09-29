@@ -85,6 +85,7 @@ const routes = [
     name: "Denúncia",
     component: Denuncia,
     meta: {
+      hideNavbar: true,
       requiresAuth: true,
       icon: "el-icon-warning-outline",
     },
