@@ -1,4 +1,5 @@
 import { firebase } from "./firebase";
+import {bucarPorEmail} from "./ctlUsuario";
 
 const Swal = require("sweetalert2");
 

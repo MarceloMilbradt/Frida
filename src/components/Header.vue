@@ -1,32 +1,22 @@
 <template>
-  <el-menu
-    :router="true"
-    :class="
+  <el-menu :router="true" :class="(
       vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'
-    "
-    :collapse="vertical && isCollapse"
-    :default-active="$route.path"
-    :mode="vertical ? 'vertical' : 'horizontal'"
-  >
+    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="$route.path" :mode="vertical ? 'vertical' : 'horizontal'">
     <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand">
-      <i
-        :class="!isCollapse ? 'el-icon-arrow-left ' : 'el-icon-arrow-right'"
-      ></i>
+
+      <font-awesome-icon  class="icon" :icon="!isCollapse ? 'angle-double-left':'angle-double-right'" />
+
     </el-menu-item>
-    <el-menu-item
-      :key="index"
-      :index="rule.path"
-      v-for="(rule, index) in routes"
-      @click="collapse"
-    >
-      <i :class="rule.meta?.icon"></i>
+
+    <el-menu-item :key="index" :index="rule.path" v-for="(rule, index) in routes" @click="collapse">
+      <font-awesome-icon  class="icon" :icon="rule.meta?.icon" />
       <template v-if="rule.name && !(rule.meta?.hiddenH && !vertical)" #title>
         <span class="menu-item-name">{{ rule.name }}</span>
       </template>
     </el-menu-item>
 
     <el-menu-item v-if="$store.getters.getLogged" @click="logout">
-      <i class="el-icon-unlock"></i>
+      <font-awesome-icon  class="icon" icon="sign-out-alt" />
       <template #title>
         <span class="menu-item-name">Sair</span>
       </template>
@@ -58,9 +48,8 @@ export default {
   computed: {
     routes() {
       const logged = this.$store.getters.getLogged;
-      const [home, ...routes] = this.$router.options.routes;
+      const [...routes] = this.$router.options.routes;
       return [
-        home,
         ...routes.filter(
           (r) => r.meta?.requiresAuth === logged && r.meta?.hideNavbar !== true
         ),
@@ -70,6 +59,13 @@ export default {
 };
 </script>
 <style scoped>
+.menu-header-dark {
+  margin-bottom: 2rem;
+  background: var(--default-dark-tone);
+  border-bottom: unset;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);
+}
+
 @media (max-width: 800px) {
   .el-menu-horizontal .menu-item-name {
     display: none;
@@ -88,10 +84,16 @@ export default {
 .el-menu-vertical {
   text-align: center;
   position: fixed;
-  z-index: 99999;
+  z-index: 99;
 }
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+</style>
+<style>
+.icon {
+  width: 1.15em;
+  margin: 5px;
 }
 </style>

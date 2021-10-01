@@ -29,6 +29,16 @@ var bucarPorId = async function bucarPorId(id) {
     });
 };
 
+var bucarPorEmail = async function bucarPorEmail(email) {
+  return await db.usuario
+    .where("email", "==", email)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) return null;
+      return doc.data();
+    })
+};
+
 var incluir = function incluir(dados) {
   return createCredentials(dados.email)
     .then((retorno) => {
@@ -114,4 +124,4 @@ var excluir = function excluir(id) {
   });
 };
 
-export { listarTodos, bucarPorId, incluir, alterar, excluir };
+export { listarTodos, bucarPorId, incluir, alterar, excluir, bucarPorEmail };

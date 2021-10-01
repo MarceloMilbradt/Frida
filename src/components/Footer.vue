@@ -20,7 +20,7 @@
         <el-button
           type="danger"
           icon="el-icon-warning-outline"
-          class="icon"
+          class="icon-help"
           round
           @click="redirect"
         ></el-button>
@@ -60,20 +60,20 @@ a {
 footer {
   text-align: center;
 }
-.el-button.el-button--danger.is-round.icon {
+.el-button.el-button--danger.is-round.icon-help  {
   bottom: 20vh;
   position: fixed;
   right: 1.5rem;
   background-color: #ffbaba;
 }
-.el-button.el-button--danger.is-round.icon:hover {
+.el-button.el-button--danger.is-round.icon-help:hover {
   background-color: #ffe5e5;
 }
 .btn-panic {
   float: right;
   margin-right: 1.25em;
 }
-.icon {
+.icon-help {
   font-size: 2.5em;
 }
 @media (max-width: 800px) {
@@ -81,7 +81,7 @@ footer {
     float: right;
     margin-right: 0.938em;
   }
-  .icon {
+  .icon-help  {
     font-size: 1.563em;
   }
 }

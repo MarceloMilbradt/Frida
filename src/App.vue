@@ -41,6 +41,12 @@ export default {
 </script>
 
 <style>
+:root{
+  --el-color-primary-header: #4b218b;
+  --default-dark-tone: #121212;
+  --default-dark-tone-secondary: #cfcfcf;
+  --el-menu-item-font-color: #9d9fa1;
+}
 body {
   margin: 0;
 }
@@ -52,9 +58,9 @@ body {
   color: #2c3e50;
   margin-top: 0em;
   padding-bottom: 1.563em;
-  padding-left: 0.938em;
+  /* padding-left: 0.938em; */
   padding-top: 0em;
-  padding-right: 0.938em;
+  /* padding-right: 0.938em; */
   background-color: white;
   /* box-shadow: 0 2px 7px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
@@ -62,8 +68,22 @@ body {
 
   min-height: calc( 95vh - 20px); */
 }
-.el-menu-item.is-active i {
-  color: var(--el-color-primary);
+.el-menu-item.is-active {
+  background: var(--default-dark-tone);
+}
+.el-menu-vertical .el-menu-item.is-active {
+  background: var(--el-color-primary-light-1);
+}
+.el-menu-vertical .el-menu-item.is-active:hover {
+ background-color: var(--el-menu-item-hover-fill);
+ }
+.el-menu-item:hover {
+  color: var(--el-color-primary-light-1)!important;
+
+}
+main {
+  padding-left: 0.938em;
+  padding-right: 0.938em;
 }
 
 @media (max-width: 800px) {
@@ -75,9 +95,6 @@ body {
 }
 </style>
 <style scoped>
-.el-header {
-  margin-bottom: 2rem;
-}
 .main {
   min-width: 80vw;
   margin: 0 auto;
@@ -90,14 +107,14 @@ body {
     max-width: unset;
   }
 }
-.el-footer{
+.el-footer {
   position: static;
   bottom: 0;
   text-align: center;
   width: 50%;
   margin: 0 auto;
 }
-html body{
+html body {
   margin: 0;
   padding: 0;
 }

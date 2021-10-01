@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home";
+import Dashboard from "../views/Dashboard";
 import Info from "../views/Info";
 import ListarAjuda from "../views/ListarAjuda";
 import Ajuda from "../views/Ajuda";
@@ -16,40 +17,51 @@ import Login from "../views/Login";
 const routes = [
   {
     path: "/",
-    name: "Home",
+    name: "",
     component: Home,
     meta: {
-      requiresAuth: false,
       home: true,
+      requiresAuth: false,
       hiddenH: true,
-      icon: "el-icon-s-home",
+      icon: "home",
     },
   },
   {
-    path: "/Info",
-    name: "Informações",
-    component: Info,
+    path: "/",
+    name: "Home",
+    component: Dashboard,
     meta: {
-      requiresAuth: false,
-      icon: "el-icon-question",
+      requiresAuth: true,
+      home: true,
+      hiddenH: true,
+      icon: "home",
     },
   },
+  // {
+  //   path: "/Info",
+  //   name: "Informações",
+  //   component: Info,
+  //   meta: {
+  //     requiresAuth: false,
+  //     icon: "info",
+  //   },
+  // },
   {
     path: "/ListarAjuda",
     name: "Ajudas",
     component: ListarAjuda,
     meta: {
       requiresAuth: true,
-      icon: "el-icon-warning-outline",
+      icon: "heart",
     },
   },
   {
     path: "/Ajuda",
-    name: "Ajuda",
+    name: "Pedir Ajuda!",
     component: Ajuda,
     meta: {
       requiresAuth: false,
-      icon: "el-icon-warning-outline",
+      icon: "heart",
     },
   },
   {
@@ -58,7 +70,7 @@ const routes = [
     component: ListarFormulario,
     meta: {
       requiresAuth: true,
-      icon: "el-icon-tickets",
+      icon: "chart-line",
     },
   },
   {
@@ -68,7 +80,7 @@ const routes = [
     meta: {
       hideNavbar: true,
       requiresAuth: false,
-      icon: "el-icon-tickets",
+      icon: "chart-line",
     },
   },
   {
@@ -77,7 +89,7 @@ const routes = [
     component: ListarDenuncia,
     meta: {
       requiresAuth: true,
-      icon: "el-icon-warning-outline",
+      icon: "fist-raised",
     },
   },
   {
@@ -87,7 +99,16 @@ const routes = [
     meta: {
       hideNavbar: true,
       requiresAuth: true,
-      icon: "el-icon-warning-outline",
+      icon: "fist-raised",
+    },
+  },
+  {
+    path: "/DenunciaAnonima",
+    name: "Fazer Denúncia",
+    component: Denuncia,
+    meta: {
+      requiresAuth: false,
+      icon: "fist-raised",
     },
   },
   {
@@ -96,7 +117,7 @@ const routes = [
     component: ListarUsuario,
     meta: {
       requiresAuth: true,
-      icon: "el-icon-user",
+      icon: "users",
     },
   },
   {
@@ -106,7 +127,7 @@ const routes = [
     meta: {
       hideNavbar: true,
       requiresAuth: false,
-      icon: "el-icon-user",
+      icon: "users",
     },
   },
   {
@@ -115,7 +136,7 @@ const routes = [
     component: ListarLog,
     meta: {
       requiresAuth: true,
-      icon: "el-icon-receiving",
+      icon: "clipboard-list",
     },
   },
   {
@@ -124,7 +145,7 @@ const routes = [
     component: Login,
     meta: {
       requiresAuth: false,
-      icon: "el-icon-unlock",
+      icon: "sign-in-alt",
     },
   },
   // {

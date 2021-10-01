@@ -201,9 +201,6 @@ p {
   gap: 5px;
   flex-wrap: wrap;
 }
-.icon {
-  width: 1.15em;
-}
 .search-info {
   display: flex;
   flex-direction: column;
