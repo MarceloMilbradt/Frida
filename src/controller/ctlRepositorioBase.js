@@ -3,19 +3,19 @@ const Swal = require('sweetalert2')
 import { getNomeUser } from "./AuthService";
 
 var ativarLog = (nome, tabela) => {
-    tabela.onSnapshot((snapshot) => {
-        if (snapshot.docChanges().length == 1) { /*Não mostrar quando tiver listando*/
-            var change = snapshot.docChanges()[0];
-            db.log.add({
-                id: change.doc.id,
-                usuario: getNomeUser(),
-                tabela: nome,
-                tipo: change.type,
-                data: new Date().toISOString(),
-                dados: change.doc.data()
-            }).catch((error) => console.error("Erro ao incluir log", error));
-        }
-    });
+    // tabela.onSnapshot((snapshot) => {
+    //     if (snapshot.docChanges().length == 1) { /*Não mostrar quando tiver listando*/
+    //         var change = snapshot.docChanges()[0];
+    //         db.log.add({
+    //             id: change.doc.id,
+    //             usuario: getNomeUser(),
+    //             tabela: nome,
+    //             tipo: change.type,
+    //             data: new Date().toISOString(),
+    //             dados: change.doc.data()
+    //         }).catch((error) => console.error("Erro ao incluir log", error));
+    //     }
+    // });
 }
 
 var listarTodos = async (tabela) => {
@@ -44,7 +44,16 @@ var bucarPorId = async (tabela, id) => {
 var incluir = (tabela, dados) => {
     return tabela
         .add(dados)
-        .then(() => {
+        .then((doc) => {
+            db.log.add({
+                id: doc.id,
+                usuario: getNomeUser(),
+                tabela,
+                tipo: "I",
+                data: new Date().toISOString(),
+                dados: doc.data()
+            }).catch((error) => console.error("Erro ao incluir log", error));
+        
             Swal.fire("Salvo!", "O registro foi salvo com sucesso!", "success");
         })
         .catch((error) => {
@@ -57,7 +66,15 @@ var alterar = (tabela, id, dados) => {
     return tabela
         .doc(id)
         .set(dados, { merge: true })
-        .then(() => {
+        .then((doc) => {
+            db.log.add({
+                id: doc.id,
+                usuario: getNomeUser(),
+                tabela,
+                tipo: "A",
+                data: new Date().toISOString(),
+                dados: doc.data()
+            }).catch((error) => console.error("Erro ao incluir log", error));
             Swal.fire("Atualizado!", "O registro foi atualizado com sucesso!", "success");
         })
         .catch((error) => {
@@ -81,7 +98,15 @@ var excluir = (tabela, id) => {
             tabela
                 .doc(id)
                 .delete()
-                .then(() => {
+                .then((doc) => {
+                    db.log.add({
+                        id: doc.id,
+                        usuario: getNomeUser(),
+                        tabela,
+                        tipo: "E",
+                        data: new Date().toISOString(),
+                        dados: doc.data()
+                    }).catch((error) => console.error("Erro ao incluir log", error));
                     Swal.fire("Deletado!", "O registro foi deletado com sucesso!", "success");
                 })
                 .catch((error) => {

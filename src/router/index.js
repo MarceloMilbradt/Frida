@@ -17,7 +17,7 @@ import Login from "../views/Login";
 const routes = [
   {
     path: "/",
-    name: "",
+    name: "Home",
     component: Home,
     meta: {
       home: true,
@@ -27,8 +27,8 @@ const routes = [
     },
   },
   {
-    path: "/",
-    name: "Home",
+    path: "/Home",
+    name: "Página Inicial",
     component: Dashboard,
     meta: {
       requiresAuth: true,
@@ -78,7 +78,7 @@ const routes = [
     name: "Avaliação",
     component: Formulario,
     meta: {
-      hideNavbar: true,
+      hideNavbar: false,
       requiresAuth: false,
       icon: "chart-line",
     },

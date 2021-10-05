@@ -1,50 +1,112 @@
 <template>
-  <div v-if="!$store.getters.getLogged">
+  <div class="main-flex card" v-if="!$store.getters.getLogged">
 
     <el-card>
-      <div class="main-grid">
+      <div class="grid top-grid">
+
+        <el-carousel class="carousel" height="150px">
+          <el-carousel-item v-for="item in items" :key="item">
+            <h3 class="small">{{ item.title }}</h3>
+            {{item.content}}
+          </el-carousel-item>
+        </el-carousel>
+        <div></div>
         <el-button class="ajuda" type="danger" size="big">
           ME AJUDE!
         </el-button>
-        <el-card class="violencia">
-          A violência doméstica contra a mulher é uma grave violação aos direitos
-          humanos. Como é por todos sabido, os números da violência doméstica
-          contra a mulher não param de subir a cada pesquisa. A magnitude das
-          agressões, a crueldade das ações criminosas e o requinte da vileza são
-          notícias de todos os dias. O feminicídio, por exemplo, é o crime do
-          momento, sem que haja uma perspectiva racional para o prenúncio ao menos
-          de um declínio.
-        </el-card>
-        <el-card class="lei">
-         A Lei Maria da Penha (11.340/16) é o instrumento principal no
-        enfrentamento à violência doméstica e familiar contra mulheres no
-        Brasil. Mais do que física, ela abrange abusos sexuais, psicológicos,
-        morais e patrimoniais entre a vítima e seu agressor – que não precisa
-        necessariamente ser cônjuge, basta que tenha algum tipo de relação
-        afetiva. O nome da lei é uma homenagem à biofarmacêutica cearense Maria
-        da Penha, que lutou por 20 anos para ver seu agressor preso. Maria da
-        Penha sofreu duas tentativas de homicídio pelo marido, e a primeira – um
-        tiro nas costas enquanto dormia – a deixou paraplégica. Depois de
-        acionar a Justiça, ONGs e, por fim, a Comissão Interamericana de
-        Direitos Humanos (CIDH-OEA), Penha conseguiu que seu agressor, Marco
-        Antonio Herredia Viveros, fosse condenado. É essencial que as mulheres
-        busquem os órgãos competentes e continuem denunciando os diversos tipos
-        de violência sofridos.
-        </el-card>
+
       </div>
     </el-card>
+    <el-card>
+      <div class="info">
 
+        <h2>O QUE É VIOLÊNCIA DOMÉSTICA ?</h2>
+        <p class="violencia">
+          Violência doméstica é todo tipo de violência que é praticada entre os membros que habitam um ambiente familiar em comum.
+        </p>
+        <el-divider>
+          <font-awesome-icon class="icon" icon="heart" />
+        </el-divider>
+        <h2 class="existe-lei">EXISTE LEI ?</h2>
+
+        <p class="title-lei">
+          A Lei Maria da Penha, em vigor desde 2006. ela cria mecanismos para prevenir e coibir a violência doméstica e familiar contra a mulher
+        </p>
+
+        <p class="lei">A Lei Maria da Penha (11.340/16) é o instrumento principal no
+          enfrentamento à violência doméstica e familiar contra mulheres no
+          Brasil. Mais do que física, ela abrange abusos sexuais, psicológicos,
+          morais e patrimoniais entre a vítima e seu agressor – que não precisa
+          necessariamente ser cônjuge, basta que tenha algum tipo de relação
+          afetiva.</p>
+
+        <el-divider>
+          <font-awesome-icon class="icon" icon="heart" />
+        </el-divider>
+      </div>
+
+    </el-card>
+    <el-card>
+      <div class="ciclos">
+        <CicloItem :key="ciclo.title" :icon="ciclo.icon" :text="ciclo.text" :title="ciclo.title" :index="index+1" v-for="(ciclo,index) in clicos">
+          <el-divider>
+          </el-divider>
+        </CicloItem>
+      </div>
+    </el-card>
   </div>
 </template>
 
 <script>
-import Menu from "../components/Menu.vue";
+import CicloItem from "../components/CicloItem.vue";
 export default {
   name: "Home",
   components: {
-    //Menu,
+    CicloItem,
   },
-  data() {},
+  data() {
+    return {
+      items: [
+        {
+          title: "1 denúncia de violência doméstica a cada minuto",
+          content:
+            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
+        },
+        {
+          title: "1 denúncia de violência doméstica a cada minuto",
+          content:
+            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
+        },
+        {
+          title: "1 denúncia de violência doméstica a cada minuto",
+          content:
+            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
+        },
+        {
+          title: "1 denúncia de violência doméstica a cada minuto",
+          content:
+            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
+        },
+      ],
+      clicos: [
+        {
+          title: "AUMENTO DA TENSÃO",
+          text: "Nesse primeiro momento, o agressor mostra-se tenso e irritado por coisas insignificantes, chegando a ter acessos de raiva. Ele também humilha a vítima, faz ameaças e destrói objetos.",
+          icon: "thermometer-half",
+        },
+        {
+          title: "ATO DE VIOLÊNCIA",
+          text: "Esta fase corresponde à explosão do agressor, ou seja, a falta de controle chega ao limite e leva ao ato violento. Aqui, toda a tensão acumulada na Fase 1 se materializa em violência verbal, física, psicológica, moral ou patrimonial.",
+          icon: "fist-raised",
+        },
+        {
+          title: "ARREPENDIMENTO E COMPORTAMENTO CARINHOSO",
+          text: "Também conhecida como “lua de mel”, esta fase se caracteriza pelo arrependimento do agressor, que se torna amável para conseguir a reconciliação.<br><br> A mulher se sente confusa e pressionada a manter o seu relacionamento diante da sociedade, sobretudo quando o casal tem filhos. Um misto de medo, confusão, culpa e ilusão fazem parte dos sentimentos da mulher.<br><br> Por fim, a tensão volta e, com ela, as agressões da Fase 1.",
+          icon: "hand-holding-heart",
+        },
+      ],
+    };
+  },
 };
 </script>
 
@@ -57,17 +119,35 @@ p {
   justify-content: space-between;
   align-items: flex-start;
 }
-
-.main-grid {
+.main-flex {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 2em;
+}
+.grid {
   display: grid;
   min-height: 500px;
   grid-gap: 20px;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-row-gap: 55px;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 0 20%;
+}
+.ciclos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 50px;
+}
+.top-grid {
+  grid-template-columns: 1fr 2fr 1fr;
   grid-template-areas:
-    "ajuda ajuda ajuda"
-    "violencia violencia ."
-    ". lei lei"
-    ". . .";
+    "carousel carousel carousel"
+    ". ajuda .";
 }
 
 @media (max-width: 800px) {
@@ -75,6 +155,7 @@ p {
     display: grid;
     min-height: 500px;
     grid-gap: 20px;
+    align-items: stretch;
     grid-template-columns: 1fr;
     grid-template-areas:
       "paralax"
@@ -90,12 +171,21 @@ p {
 }
 .ajuda {
   grid-area: ajuda;
+  height: 80px;
+}
+.carousel {
+  grid-area: carousel;
 }
 .lei {
   grid-area: lei;
 }
-.violencia{
-  grid-area: violencia;
+.title-lei {
+  grid-area: title-lei;
 }
-
+.existe-lei {
+  grid-area: existe-lei;
+}
+.violencia {
+  grid-area: oque;
+}
 </style>

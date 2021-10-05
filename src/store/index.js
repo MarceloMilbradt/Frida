@@ -108,12 +108,12 @@ const security = {
                 return true
             })
             if (result)
-                router.push({ name: 'Home' })
+                router.push({ name: 'Página Inicial' })
         },
         async logout({ commit }) {
+            router.push({ name: 'Home' })
             await logout()
             commit('LOGOUT_USER')
-            router.push({ name: 'Home' })
         },
         stateChange({ dispatch, commit }, usr) {
             commit('INITED')

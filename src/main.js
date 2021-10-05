@@ -33,11 +33,13 @@ import {
     faAngleDoubleLeft,
     faExclamationTriangle,
     faExternalLinkAlt,
+    faThermometerHalf,
+    faHandHoldingHeart,
+    faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(    faExternalLinkAlt,
-    faExclamationTriangle,faAngleDoubleLeft,faAngleDoubleRight,faSignInAlt,faSignOutAlt,faHome,faInfo,faClipboardList,faUsers,faChartLine,faFistRaised, faFemale, faHeart, faIdCard, faExclamation, faTags, faCalendarAlt, faEdit, faSearch, faTrashAlt, faHandsHelping);
+library.add(faStar,faHandHoldingHeart,faThermometerHalf,faExternalLinkAlt,faExclamationTriangle,faAngleDoubleLeft,faAngleDoubleRight,faSignInAlt,faSignOutAlt,faHome,faInfo,faClipboardList,faUsers,faChartLine,faFistRaised, faFemale, faHeart, faIdCard, faExclamation, faTags, faCalendarAlt, faEdit, faSearch, faTrashAlt, faHandsHelping);
 
 let app = null;
 setWatcher((usr) => {
