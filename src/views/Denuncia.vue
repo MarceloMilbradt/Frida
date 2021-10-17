@@ -1,37 +1,23 @@
 <template>
-  <el-tabs v-model="tab" style="margin-top: 1.25em">
-    <el-tab-pane label="Adicionais">
-      <el-card class="box-card">
 
-        <FormAdicional v-model="denuncia" @btn-click-next="onClickSaveSubmit" :text="'Informacoes Adicionais'" />
-        <FormFooter @btn-click-next="changeTab(+1)" @btn-click-prev="goBack"  :text="['Cancelar', null]"/>
+  <steps :tab="tab" />
 
-      </el-card>
+  <el-card class="box-card" v-if="tab === 2">
+    <FormAdicional v-model="denuncia" @btn-click-next="onClickSaveSubmit" :text="'Informacoes Adicionais'" />
+    <FormFooter @btn-click-prev="changeTab(-1)" @btn-click-next="onClickSaveSubmit" :text="[null, 'Salvar!']" />
+  </el-card>
 
-    </el-tab-pane>
-    <el-tab-pane>
-      <template #label>
-        <span>Vitima <i v-if="vitimaIsValid === false" class="el-icon-warning-outline"></i></span>
-      </template>
-      <el-card class="box-card">
-        <FormPessoa :text="'Dados da Vítima'" @form-validate="setVitimaValid" v-model="denuncia.vitima">
-        </FormPessoa>
-        <FormFooter @btn-click-next="changeTab(+1)" @btn-click-prev="changeTab(-1)" :hide="[false, false]" />
-      </el-card>
-    </el-tab-pane>
+  <el-card class="box-card" v-if="tab === 0">
+    <FormPessoa :text="'Dados da Vítima'" @form-validate="setVitimaValid" v-model="denuncia.vitima" ref="vitima">
+    </FormPessoa>
+    <FormFooter @btn-click-next="changeTab(+1, 'vitima')" @btn-click-prev="goBack" :text="['Cancelar', null]" />
+  </el-card>
 
-    <el-tab-pane>
-      <template #label>
-        <span>Agressor(a) <i v-if="agressorIsValid === false" class="el-icon-warning-outline"></i></span>
-      </template>
-      <el-card class="box-card">
-        <FormPessoa :text="'Dados do(a) Agressor(a)'" @form-validate="setAgressorValid" v-model="denuncia.agressor">
-        </FormPessoa>
-        <FormFooter @btn-click-next="onClickSaveSubmit" @btn-click-prev="changeTab(-1)"  :text="[null, 'Salvar!']"/>
-      </el-card>
-    </el-tab-pane>
-
-  </el-tabs>
+  <el-card class="box-card" v-if="tab === 1">
+    <FormPessoa :text="'Dados do(a) Agressor(a)'" @form-validate="setAgressorValid" v-model="denuncia.agressor" ref="agressor">
+    </FormPessoa>
+    <FormFooter @btn-click-next="changeTab(+1, 'agressor')" @btn-click-prev="changeTab(-1)" :hide="[false, false]" />
+  </el-card>
 </template>
 
 <script>
@@ -39,6 +25,7 @@ import FormPessoa from "../components/FormPessoa.vue";
 import FormAdicional from "../components/FormAdicional.vue";
 import FormFooter from "../components/FormFooter.vue";
 import * as controller from "../controller/ctlDenuncia";
+import Steps from "../components/Steps.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -46,11 +33,12 @@ export default {
     FormPessoa,
     FormAdicional,
     FormFooter,
+    Steps,
   },
   data() {
     return {
       id: null,
-      tab: "0",
+      tab: 0,
       denuncia: {
         data: new Date().toISOString(),
 
@@ -90,6 +78,9 @@ export default {
     }),
   },
   methods: {
+    submitForm(formName) {
+      return this.$refs[formName].$refs.form.validate((valid) => valid);
+    },
     setVitimaValid(valid) {
       this.$store.dispatch("denuncia/setValidVitima", valid);
       this.denuncia.vitima.valid = valid;
@@ -98,15 +89,21 @@ export default {
       this.$store.dispatch("denuncia/setValidAgressor", valid);
       this.denuncia.agressor.valid = valid;
     },
-    changeTab(tab) {
-      this.tab = `${+this.tab + tab}`;
+    async changeTab(tab, formName) {
+      let valid = 1;
+      if (formName) {
+        await this.submitForm(formName);
+        if (formName === "vitima") valid = this.vitimaIsValid;
+        if (formName === "agressor") valid = this.agressorIsValid;
+      }
+      this.tab += tab * valid;
     },
-    parseObject(denuncia){
-        delete denuncia.vitima.isValid;
-        delete denuncia.vitima.valid;
-        delete denuncia.agressor.isValid;
-        delete denuncia.agressor.valid;
-        return {...denuncia};
+    parseObject(denuncia) {
+      delete denuncia.vitima.isValid;
+      delete denuncia.vitima.valid;
+      delete denuncia.agressor.isValid;
+      delete denuncia.agressor.valid;
+      return { ...denuncia };
     },
     onClickSaveSubmit() {
       let denuncia = this.parseObject(this.denuncia);
@@ -116,14 +113,17 @@ export default {
           this.goBack();
         });
       } else {
-        controller.incluir(denuncia).then(() => {
+        const anonima = this.$store.getters.getLogged
+        controller.incluir(denuncia, !anonima).then(() => {
           this.goBack();
         });
       }
     },
-    goBack(){
-       this.$router.push({ path: "/ListarDenuncia" });
-    }
+    goBack() {
+      if (this.$store.getters.getLogged)
+        this.$router.push({ path: "/ListarDenuncia" });
+      else this.$router.push({ path: "/" });
+    },
   },
 };
 </script>

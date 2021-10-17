@@ -1,5 +1,6 @@
 import * as db from "./firebase";
 import { addToIndex, updateIndex, deleteFromIndex } from "./Algolia"
+import { logout,loginAnonimo } from "./AuthService";
 const Swal = require('sweetalert2')
 
 var listarTodos = async function listarTodos() {
@@ -28,10 +29,14 @@ var bucarPorId = async function bucarPorId(id) {
         });
 }
 
-var incluir = function incluir(denuncia) {
+var incluir = async function incluir(denuncia, anonima) {
+    if (anonima)
+        await loginAnonimo();
     return db.denuncia.add(denuncia)
-        .then((snapshot) => {
+        .then((snapshot) => {            
             addToIndex(denuncia, snapshot.id)
+            if (anonima)
+            logout()
             Swal.fire("Salvo!", "A Denúncia foi salvo com sucesso!", "success");
         })
         .catch((error) => {
