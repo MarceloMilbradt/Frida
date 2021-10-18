@@ -6,6 +6,18 @@
     <el-main style="text-align: left">
       <el-form @validate="validate" :model="form" :label-position="'right'" :label-width="'160px'" ref="form">
 
+        <el-card shadow="hover">
+          <div class="container">
+            <el-tag :closable="tag.closable" :effect="tag.effect" :key="tag.tag" v-for="tag in form.tags?.map(remapTags)" :disable-transitions="false" @close="removeTag(tag.tag)">
+              {{tag.tag}}
+            </el-tag>
+            <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keypress.enter.stop.prevent="handleInputConfirm" @blur="handleInputConfirm" maxlength="50">
+            </el-input>
+            <el-button v-if="!inputValue && $store.getters.getLogged" class="button-new-tag" size="small" @click="showInput">+ Nova Tag</el-button>
+          </div>
+
+        </el-card>
+
         <div :key="agressao.key" v-for="agressao in agressoes">
 
           <el-form-item :label="agressao.label">
@@ -21,18 +33,6 @@
           </el-collapse-transition>
 
         </div>
-
-        <el-card shadow="hover">
-          <div class="container">
-            <el-tag :closable="tag.closable" :effect="tag.effect" :key="tag.tag" v-for="tag in form.tags?.map(remapTags)" :disable-transitions="false" @close="removeTag(tag.tag)">
-              {{tag.tag}}
-            </el-tag>
-            <el-input class="input-new-tag" v-if="inputVisible" v-model="inputValue" ref="saveTagInput" size="mini" @keypress.enter.stop.prevent="handleInputConfirm" @blur="handleInputConfirm" maxlength="50">
-            </el-input>
-            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Nova Tag</el-button>
-          </div>
-
-        </el-card>
 
       </el-form>
       <div style="margin-top: 20px">
@@ -140,7 +140,7 @@ export default {
     form: {
       get() {
         let value = this.modelValue;
-        if (value.agressao == null) value.agressao  = [];
+        if (value.agressao == null) value.agressao = [];
         return value;
       },
       set(value) {

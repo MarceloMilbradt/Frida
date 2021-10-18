@@ -3,15 +3,9 @@
 
     <el-card>
       <div class="grid top-grid">
-
-        <el-carousel class="carousel" height="150px">
-          <el-carousel-item v-for="item in items" :key="item">
-            <h3 class="small">{{ item.title }}</h3>
-            {{item.content}}
-          </el-carousel-item>
-        </el-carousel>
-        <div></div>
-        <el-button class="ajuda" type="danger" size="big">
+        <h2 class="title">NÃO SE CALE!</h2>
+        <h4 class="subtitle">PEÇA AJUDA!</h4>
+        <el-button class="ajuda" type="danger" size="big" @click="helpme">
           ME AJUDE!
         </el-button>
 
@@ -66,28 +60,6 @@ export default {
   },
   data() {
     return {
-      items: [
-        {
-          title: "1 denúncia de violência doméstica a cada minuto",
-          content:
-            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
-        },
-        {
-          title: "1 denúncia de violência doméstica a cada minuto",
-          content:
-            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
-        },
-        {
-          title: "1 denúncia de violência doméstica a cada minuto",
-          content:
-            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
-        },
-        {
-          title: "1 denúncia de violência doméstica a cada minuto",
-          content:
-            " A cada minuto de 2020, alguém ligava para um centro de denúncias para relatar um caso de violência doméstica contra mulheres.",
-        },
-      ],
       clicos: [
         {
           title: "AUMENTO DA TENSÃO",
@@ -107,11 +79,17 @@ export default {
       ],
     };
   },
+  methods: {
+    helpme() {
+      this.$router.push({ name: "Pedir Ajuda!" });
+    },
+  },
 };
 </script>
 
 <style scoped>
-p {
+p,
+h2 {
   text-align: center;
 }
 .card {
@@ -144,10 +122,11 @@ p {
   gap: 50px;
 }
 .top-grid {
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-areas:
-    "carousel carousel carousel"
-    ". ajuda .";
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15em;
+  gap: 0px;
+  min-height: unset;
 }
 
 @media (max-width: 800px) {
@@ -173,8 +152,14 @@ p {
   grid-area: ajuda;
   height: 80px;
 }
-.carousel {
-  grid-area: carousel;
+.title {
+  grid-area: title;
+  font-size: 36pt;
+  margin: 0;
+}
+.subtitle {
+  grid-area: subtitle;
+  font-size: 16pt;
 }
 .lei {
   grid-area: lei;

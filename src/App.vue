@@ -1,6 +1,6 @@
 <template>
   <el-config-provider :locale="locale">
-    <el-container v-loading="!$store.getters.getInited">
+    <el-container v-loading="!$store.getters.getInited" :class="($store.getters.getLogged)?'bg':'bg bg-publico'" >
       <el-aside v-if="$store.getters.getLogged" width="65px">
         <Header :vertical="true" />
       </el-aside>
@@ -40,8 +40,11 @@ export default {
 };
 </script>
 
+<style scoped>
+</style>
+
 <style>
-:root{
+:root {
   --el-color-primary-header: #4b218b;
   --default-dark-tone: #121212;
   --default-dark-tone-secondary: #cfcfcf;
@@ -57,7 +60,7 @@ body {
   text-align: center;
   color: #2c3e50;
   margin-top: 0em;
-  padding-bottom: 1.563em;
+  /* padding-bottom: 1.563em; */
   /* padding-left: 0.938em; */
   padding-top: 0em;
   /* padding-right: 0.938em; */
@@ -75,15 +78,27 @@ body {
   background: var(--el-color-primary-light-1);
 }
 .el-menu-vertical .el-menu-item.is-active:hover {
- background-color: var(--el-menu-item-hover-fill);
- }
+  background-color: var(--el-menu-item-hover-fill);
+}
 .el-menu-item:hover {
-  color: var(--el-color-primary-light-1)!important;
-
+  color: var(--el-color-primary-light-1) !important;
 }
 main {
   padding-left: 0.938em;
   padding-right: 0.938em;
+}
+.bg {
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: cover;
+  min-height: 100vh;
+}
+.bg-publico{
+    background-image: url("./svg/background-fill-light.svg");
+
+}
+.bg-interno{
+  background-image: url("./svg/background-fill-light-interno.svg");
 }
 
 @media (max-width: 800px) {
