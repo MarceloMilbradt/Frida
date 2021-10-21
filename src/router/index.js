@@ -7,6 +7,7 @@ import Ajuda from "../views/Ajuda";
 import ListarFormulario from "../views/ListarFormulario";
 import Formulario from "../views/Formulario";
 import ListarDenuncia from "../views/ListarDenuncia";
+import ListarDenunciaAnonima from "../views/ListarDenunciaAnonima";
 import Denuncia from "../views/Denuncia";
 import DenunciaAnonima from "../views/DenunciaAnonima";
 import ListarUsuario from "../views/ListarUsuario";
@@ -86,16 +87,24 @@ const routes = [
     },
   },
   {
+    path: "/CasosAcolhidos",
+    name: "Casos",
+    component: ListarDenuncia,
+    meta: {
+      requiresAuth: true,
+      icon: "folder-open",
+    },
+    children: []
+  },
+  {
     path: "/ListarDenuncia",
     name: "Denúncias",
-    component: ListarDenuncia,
+    component: ListarDenunciaAnonima,
     meta: {
       requiresAuth: true,
       icon: "fist-raised",
     },
-    children: [
-
-    ]
+    children: []
   },
   {
     path: "/Denuncia/",

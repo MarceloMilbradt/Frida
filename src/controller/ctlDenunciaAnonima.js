@@ -42,6 +42,5 @@ export {
     incluir,
     alterar,
     excluir,
-    listarUltimosN,
-
+    listarUltimosN
 }
