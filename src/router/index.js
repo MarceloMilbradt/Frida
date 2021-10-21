@@ -8,6 +8,7 @@ import ListarFormulario from "../views/ListarFormulario";
 import Formulario from "../views/Formulario";
 import ListarDenuncia from "../views/ListarDenuncia";
 import Denuncia from "../views/Denuncia";
+import DenunciaAnonima from "../views/DenunciaAnonima";
 import ListarUsuario from "../views/ListarUsuario";
 import CadastrarUsuario from "../views/CadastrarUsuario";
 import ListarLog from "../views/ListarLog";
@@ -92,7 +93,7 @@ const routes = [
       requiresAuth: true,
       icon: "fist-raised",
     },
-    children:[
+    children: [
 
     ]
   },
@@ -101,17 +102,16 @@ const routes = [
     name: "Nova Denúncia",
     component: Denuncia,
     meta: {
-      quickAccess:true,
+      quickAccess: true,
       hideNavbar: true,
       requiresAuth: true,
       icon: "fist-raised",
     },
   },
-  
   {
     path: "/DenunciaAnonima",
     name: "Fazer Denúncia",
-    component: Denuncia,
+    component: DenunciaAnonima,
     meta: {
       requiresAuth: false,
       icon: "fist-raised",
@@ -131,7 +131,7 @@ const routes = [
     name: "Cad. Usuários",
     component: CadastrarUsuario,
     meta: {
-      quickAccess:true,
+      quickAccess: true,
       hideNavbar: true,
       requiresAuth: false,
       icon: "users",

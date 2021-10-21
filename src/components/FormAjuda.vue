@@ -8,7 +8,7 @@
         <el-form :model="form" :label-position="'top'" label-width="70px" :rules="rules" ref="form">
           <el-row>
             <el-col :span="24">
-              <TextField :fontSize="'20px'" prop="nome" label="Nome" v-model="form.nome" />
+              <TextField :fontSize="'20px'" prop="nome" label="Qual nome ou apelido você quer usar ?" v-model="form.nome" />
             </el-col>
           </el-row>
 
