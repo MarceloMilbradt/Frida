@@ -37,15 +37,6 @@ const routes = [
       icon: "home",
     },
   },
-  // {
-  //   path: "/Info",
-  //   name: "Informações",
-  //   component: Info,
-  //   meta: {
-  //     requiresAuth: false,
-  //     icon: "info",
-  //   },
-  // },
   {
     path: "/ListarAjuda",
     name: "Ajudas",
@@ -84,15 +75,6 @@ const routes = [
     },
   },
   {
-    path: "/ListarDenuncia",
-    name: "Denúncias",
-    component: ListarDenuncia,
-    meta: {
-      requiresAuth: true,
-      icon: "fist-raised",
-    },
-  },
-  {
     path: "/Denuncia/:id?",
     name: "Denúncia",
     component: Denuncia,
@@ -102,6 +84,30 @@ const routes = [
       icon: "fist-raised",
     },
   },
+  {
+    path: "/ListarDenuncia",
+    name: "Denúncias",
+    component: ListarDenuncia,
+    meta: {
+      requiresAuth: true,
+      icon: "fist-raised",
+    },
+    children:[
+
+    ]
+  },
+  {
+    path: "/Denuncia/",
+    name: "Nova Denúncia",
+    component: Denuncia,
+    meta: {
+      quickAccess:true,
+      hideNavbar: true,
+      requiresAuth: true,
+      icon: "fist-raised",
+    },
+  },
+  
   {
     path: "/DenunciaAnonima",
     name: "Fazer Denúncia",
@@ -125,6 +131,7 @@ const routes = [
     name: "Cad. Usuários",
     component: CadastrarUsuario,
     meta: {
+      quickAccess:true,
       hideNavbar: true,
       requiresAuth: false,
       icon: "users",
@@ -148,15 +155,7 @@ const routes = [
       icon: "sign-in-alt",
     },
   },
-  // {
-  //     path: '/Logout',
-  //     name: 'Logout',
-  //     component: Logout,
-  //     meta: {
-  //         requiresAuth: true,
-  //         icon: 'el-icon-unlock',
-  //     }
-  // },
+
 ];
 
 const router = createRouter({

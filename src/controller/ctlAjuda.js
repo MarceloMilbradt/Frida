@@ -1,11 +1,23 @@
 import * as repo from "./ctlRepositorioBase";
 import { ajuda } from "./firebase";
-import {logout, loginAnonimo} from './AuthService';
+import { logout, loginAnonimo } from './AuthService';
 const Swal = require('sweetalert2')
 
 repo.ativarLog('ajuda', ajuda);
 const listarTodos = async () => repo.listarTodos(ajuda)
 const bucarPorId = async (id) => repo.bucarPorId(ajuda, id)
+
+const listarUltimosN = async n => {
+    let date = new Date();
+    date.setMonth(date.getMonth() - 1)
+    let list = await ajuda.where("data", ">=", date).orderBy('data', 'desc').limit(n ?? 5).get();
+    list = list.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+    return list
+}
+
 
 const incluir = async function incluir(dados) {
     await loginAnonimo();
@@ -23,11 +35,23 @@ const incluir = async function incluir(dados) {
 
 const alterar = (id, dados) => repo.alterar(ajuda, id, dados)
 const excluir = (id) => repo.excluir(ajuda, id)
-
+// const ajustarDatas = async () => {
+//     let ajudas = await listarTodos()
+//     ajudas.forEach(a => {
+//         console.log(a);
+//         let days = Math.floor(Math.random() * 19);
+//         let date = new Date();
+//         date.setDate(days)
+//         a.data =date
+//         alterar(a.id, a);
+//     })
+// }
 export {
     listarTodos,
     bucarPorId,
     incluir,
     alterar,
-    excluir
+    excluir,
+    listarUltimosN,
+    
 }

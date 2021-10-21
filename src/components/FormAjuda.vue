@@ -65,7 +65,7 @@ export default {
         nome: "",
         endereco: "",
         contato: "",
-        data: new Date().toISOString(),
+        data: new Date(),
         coords: {
           latitude: "",
           longitude: "",

@@ -1,22 +1,22 @@
 <template>
-  <el-menu :router="true" :class="(
+  <el-menu :class="(
       vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'
-    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="$route.path" :mode="vertical ? 'vertical' : 'horizontal'">
+    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="activeLink" :mode="vertical ? 'vertical' : 'horizontal'">
     <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand">
 
-      <font-awesome-icon  class="icon" :icon="!isCollapse ? 'angle-double-left':'angle-double-right'" />
+      <font-awesome-icon class="icon" :icon="!isCollapse ? 'angle-double-left':'angle-double-right'" />
 
     </el-menu-item>
 
-    <el-menu-item :key="index" :index="rule.path" v-for="(rule, index) in routes" @click="collapse">
-      <font-awesome-icon  class="icon" :icon="rule.meta?.icon" />
+    <el-menu-item :key="index" :index="rule.meta.icon" v-for="(rule, index) in routes"  @click="()=>gotoRoute(rule.path)" >
+      <font-awesome-icon class="icon" :icon="rule.meta?.icon" />
       <template v-if="rule.name && !(rule.meta?.hiddenH && !vertical)" #title>
         <span class="menu-item-name">{{ rule.name }}</span>
       </template>
     </el-menu-item>
 
     <el-menu-item v-if="$store.getters.getLogged" @click="logout">
-      <font-awesome-icon  class="icon" icon="sign-out-alt" />
+      <font-awesome-icon class="icon" icon="sign-out-alt" />
       <template #title>
         <span class="menu-item-name">Sair</span>
       </template>
@@ -32,6 +32,7 @@ export default {
   data() {
     return {
       isCollapse: true,
+      activeLink: null,
     };
   },
   methods: {
@@ -44,6 +45,18 @@ export default {
     logout() {
       this.$store.dispatch("logout");
     },
+    gotoRoute(path) {
+      this.collapse();
+      this.$router.push({ path });
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.activeLink = to.meta.icon;
+    },
+  },
+  mounted() {
+    this.activeLink = this.$route.meta.icon;
   },
   computed: {
     routes() {
@@ -63,7 +76,8 @@ export default {
   margin-bottom: 2rem;
   background: var(--default-dark-tone);
   border-bottom: unset;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),0px 1px 1px 0px rgba(0, 0, 0, 0.14),0px 1px 3px 0px rgba(0,0,0,.12);
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 @media (max-width: 800px) {

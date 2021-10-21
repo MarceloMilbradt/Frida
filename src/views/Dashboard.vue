@@ -17,20 +17,48 @@
       <template #header>
         <div class="card">
           <span>Novos pedidos de Ajuda</span>
-          <el-button type="primary" size="small">
+          <el-button type="primary" size="small" @click="()=>toRoute('/ListarAjuda')">
             <font-awesome-icon icon="external-link-alt" />
           </el-button>
         </div>
       </template>
 
-      TODO tabela de ajudas
+      <el-table :data="listAjudas" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!">
+        <el-table-column label="Data">
+          <template #default="scope">
+            <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
+              <template #default>
+                {{ scope.row.dataLocal }}
+              </template>
+              <template #reference>
+                <i class="el-icon-time"></i>
+              </template>
+            </el-popover>
+            {{ scope.row.dataRelativa }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Nome">
+          <template #default="scope">
+            <el-popover v-if="scope.row.contato ||  scope.row.endereco" effect="light" trigger="hover" placement="top" width="400px">
+              <template #default>
+                <p v-if="scope.row.contato">Contato: {{ scope.row.contato }}</p>
+                <p v-if="scope.row.endereco">endereco: {{ scope.row.endereco }}</p>
+              </template>
+              <template #reference>
+                <span>{{ scope.row.nome }}</span>
+              </template>
+            </el-popover>
+            <div v-else>{{ scope.row.nome }}</div>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-card>
 
     <el-card class="denuncia-info">
       <template #header>
         <div class="card">
           <span>Novas denuncias</span>
-          <el-button type="primary" size="small">
+          <el-button type="primary" size="small" @click="()=>toRoute('/ListarDenuncia')">
             <font-awesome-icon icon="external-link-alt" />
           </el-button>
         </div>
@@ -39,23 +67,103 @@
     </el-card>
 
     <el-card class="acesso-rapido">
-      TODO acesso rápido
+      <el-menu :router="true">
+        <el-menu-item :key="index" :index="rule.path" v-for="(rule, index) in routes">
+          <font-awesome-icon class="icon" :icon="rule.meta?.icon" />
+          <template #title>
+            <span class="menu-item-name">{{ rule.name }}</span>
+          </template>
+        </el-menu-item>
+      </el-menu>
     </el-card>
 
   </div>
 </template>
 
 <script>
+import { listarUltimosN } from "../controller/ctlAjuda";
 export default {
   name: "Dashboard",
   components: {
     //Menu,
   },
-  data() {return {}},
+  data() {
+    return {
+      ajudas: [],
+    };
+  },
+  computed: {
+    listAjudas() {
+      return this.ajudas.map((a) => {
+        a.dataRelativa = this.formatRelativeDate(a.data.toDate());
+        a.dataLocal = this.formatDate(a.data.toDate());
+        return a;
+      });
+    },
+    routes() {
+      const logged = this.$store.getters.getLogged;
+      const [...routes] = this.$router.options.routes;
+      return [
+        ...routes.filter(
+          (r) => r.meta?.quickAccess
+        ),
+      ];
+    },
+  },
+
+  methods: {
+    toRoute(path){
+      this.$router.push({ path });
+    },
+    async getAjudas() {
+      this.ajudas = await listarUltimosN(5);
+      return this.ajudas;
+    },
+    formatDate(date) {
+      return new Date(date).toLocaleString();
+    },
+    formatRelativeDate(date) {
+      const rtf1 = new Intl.RelativeTimeFormat("pt-BR", { style: "narrow" });
+      let intervalo = "day";
+
+      const date1 = new Date(date);
+      const date2 = new Date();
+
+      let diffTime = Math.ceil(Math.abs(date2 - date1));
+      let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      diffTime /= 1000;
+      let diff = diffDays;
+      if (diffDays <= 1) {
+        if (diffTime < 60) intervalo = "second";
+        else if ((diffTime /= 60) < 60) intervalo = "minute";
+        else if ((diffTime /= 60) < 24) intervalo = "hour";
+        diff = diffTime;
+      } else if (diffDays < 7) {
+        intervalo = "day";
+        diff = diffDays;
+      } else if ((diffDays /= 7) < 4) {
+        intervalo = "week";
+        diff = diffDays;
+      } else {
+        intervalo = "month";
+        diffDays /= 4;
+        diff = diffDays;
+      }
+
+      if (!diff) return "";
+      return rtf1.format(Math.floor(diff * -1), intervalo);
+    },
+  },
+  async created() {
+    this.getAjudas();
+  },
 };
 </script>
 
 <style scoped>
+.el-menu{
+  border-right: unset;
+}
 p {
   text-align: center;
 }
@@ -89,10 +197,10 @@ p {
       "denuncia"
       "user";
   }
-  .title{
+  .title {
     display: none;
   }
-  .acesso-rapido{
+  .acesso-rapido {
     display: none;
   }
 }
@@ -108,7 +216,7 @@ p {
 .denuncia-info {
   grid-area: denuncia;
 }
-.acesso-rapido{
+.acesso-rapido {
   grid-area: acesso;
 }
 </style>
