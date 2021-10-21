@@ -11,22 +11,22 @@
       
           <el-row>
             <el-col :span="24">
-              <TextField v-model="form.motivo" prop="motivo" label="Qual fato você deseja comunicar na Denúncia?" />
+              <TextField v-model="form.motivo" prop="motivo" label="Qual fato você deseja comunicar na Denúncia?"/>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <TextField v-model="form.envolvidos" label="Quem são os envolvidos no fato ?" />
+              <TextField v-model="form.envolvidos" label="Quem são os envolvidos no fato ?" placeholder="Separe os nomes por vírgula (,) caso seja mais de uma pessoa"/>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <TextField v-model="form.local" label="Em que local ocorreu esse fato ?" />
+              <TextField v-model="form.local" label="Em que local ocorreu esse fato ?"/>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <TextField v-model="form.periodo" label="Período / data aproximada do(s) evento(s)?" />
+              <TextField v-model="form.periodo" label="Quando ocorreu esse fato ?" placeholder="Período / data aproximada do(s) evento(s)"/>
             </el-col>
           </el-row>
           
