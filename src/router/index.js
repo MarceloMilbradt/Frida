@@ -14,6 +14,7 @@ import ListarUsuario from "../views/ListarUsuario";
 import CadastrarUsuario from "../views/CadastrarUsuario";
 import ListarLog from "../views/ListarLog";
 import Login from "../views/Login";
+import NotFound from "../views/NotFound";
 //import Logout from '../views/Logout'
 
 const routes = [
@@ -177,6 +178,11 @@ const routes = [
       requiresAuth: false,
       icon: "sign-in-alt",
     },
+  },
+  {
+    path: '/:catchAll(.*)*',
+    name: 'NotFound',
+    component: NotFound
   },
 
 ];
