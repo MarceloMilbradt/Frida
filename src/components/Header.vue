@@ -2,7 +2,7 @@
   <el-menu :class="(
       vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'
     )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="activeLink" :mode="vertical ? 'vertical' : 'horizontal'">
-    <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand">
+    <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand" :index="-2">
 
       <font-awesome-icon class="icon" :icon="!isCollapse ? 'angle-double-left':'angle-double-right'" />
 
@@ -15,7 +15,7 @@
       </template>
     </el-menu-item>
 
-    <el-menu-item v-if="$store.getters.getLogged" @click="logout">
+    <el-menu-item :index="-1" v-if="$store.getters.getLogged" @click="logout">
       <font-awesome-icon class="icon" icon="sign-out-alt" />
       <template #title>
         <span class="menu-item-name">Sair</span>
