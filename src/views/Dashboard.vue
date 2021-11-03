@@ -63,7 +63,31 @@
           </el-button>
         </div>
       </template>
-      TODO Tabelas de denuncias
+       <el-table :data="listDenuncias" style="width: 100%" empty-text="Nenhuma denuncia nova!">
+        <el-table-column label="Data">
+          <template #default="scope">
+            <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
+              <template #default>
+                {{ scope.row.dataLocal }}
+              </template>
+              <template #reference>
+                <i class="el-icon-time"></i>
+              </template>
+            </el-popover>
+            {{ scope.row.dataRelativa }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Envolvidos">
+          <template #default="scope">
+            <div>{{ scope.row.envolvidos }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="Local">
+          <template #default="scope">
+            <div>{{ scope.row.local }}</div>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-card>
 
     <el-card class="acesso-rapido">
@@ -81,7 +105,8 @@
 </template>
 
 <script>
-import { listarUltimosN } from "../controller/ctlAjuda";
+import { listarUltimosN as listarAjudas } from "../controller/ctlAjuda";
+import { listarUltimosN  as listarDenuncias} from "../controller/ctlDenunciaAnonima";
 export default {
   name: "Dashboard",
   components: {
@@ -90,11 +115,19 @@ export default {
   data() {
     return {
       ajudas: [],
+      denuncias: [],
     };
   },
   computed: {
     listAjudas() {
       return this.ajudas.map((a) => {
+        a.dataRelativa = this.formatRelativeDate(a.data.toDate());
+        a.dataLocal = this.formatDate(a.data.toDate());
+        return a;
+      });
+    },
+    listDenuncias() {
+      return this.denuncias.map((a) => {
         a.dataRelativa = this.formatRelativeDate(a.data.toDate());
         a.dataLocal = this.formatDate(a.data.toDate());
         return a;
@@ -116,8 +149,12 @@ export default {
       this.$router.push({ path });
     },
     async getAjudas() {
-      this.ajudas = await listarUltimosN(5);
+      this.ajudas = await listarAjudas(5);
       return this.ajudas;
+    },
+    async getDenuncias() {
+      this.denuncias = await listarDenuncias(5);
+      return this.denuncias;
     },
     formatDate(date) {
       return new Date(date).toLocaleString();
@@ -156,6 +193,8 @@ export default {
   },
   async created() {
     this.getAjudas();
+    this.getDenuncias();
+
   },
 };
 </script>
