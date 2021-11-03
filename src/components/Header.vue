@@ -8,7 +8,7 @@
 
     </el-menu-item>
 
-    <el-menu-item :key="index" :index="rule.meta.icon" v-for="(rule, index) in routes"  @click="()=>gotoRoute(rule.path)" >
+    <el-menu-item :key="index" :index="rule.meta.id" v-for="(rule, index) in routes"  @click="()=>gotoRoute(rule.path)" >
       <font-awesome-icon class="icon" :icon="rule.meta?.icon" />
       <template v-if="rule.name && !(rule.meta?.hiddenH && !vertical)" #title>
         <span class="menu-item-name">{{ rule.name }}</span>
@@ -52,11 +52,11 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.activeLink = to.meta.icon;
+      this.activeLink = to.meta.id;
     },
   },
   mounted() {
-    this.activeLink = this.$route.meta.icon;
+    this.activeLink = this.$route.meta.id;
   },
   computed: {
     routes() {

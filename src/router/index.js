@@ -22,6 +22,7 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
+      id:0,
       home: true,
       requiresAuth: false,
       hiddenH: true,
@@ -33,6 +34,7 @@ const routes = [
     name: "Página Inicial",
     component: Dashboard,
     meta: {
+      id:0,
       requiresAuth: true,
       home: true,
       hiddenH: true,
@@ -44,6 +46,7 @@ const routes = [
     name: "Ajudas",
     component: ListarAjuda,
     meta: {
+      id:1,
       requiresAuth: true,
       icon: "heart",
     },
@@ -53,6 +56,7 @@ const routes = [
     name: "Pedir Ajuda!",
     component: Ajuda,
     meta: {
+      id:1,
       requiresAuth: false,
       icon: "heart",
     },
@@ -62,6 +66,7 @@ const routes = [
     name: "Avaliações",
     component: ListarFormulario,
     meta: {
+      id:2,
       requiresAuth: true,
       icon: "chart-line",
     },
@@ -71,6 +76,7 @@ const routes = [
     name: "Avaliação",
     component: Formulario,
     meta: {
+      id:2,
       hideNavbar: false,
       requiresAuth: false,
       icon: "chart-line",
@@ -81,6 +87,7 @@ const routes = [
     name: "Denúncia",
     component: Denuncia,
     meta: {
+      id:3,
       hideNavbar: true,
       requiresAuth: true,
       icon: "fist-raised",
@@ -91,6 +98,7 @@ const routes = [
     name: "Casos",
     component: ListarDenuncia,
     meta: {
+      id:3,
       requiresAuth: true,
       icon: "folder-open",
     },
@@ -101,6 +109,7 @@ const routes = [
     name: "Denúncias",
     component: ListarDenunciaAnonima,
     meta: {
+      id:4,
       requiresAuth: true,
       icon: "fist-raised",
     },
@@ -108,9 +117,10 @@ const routes = [
   },
   {
     path: "/Denuncia/",
-    name: "Nova Denúncia",
+    name: "Novo Caso",
     component: Denuncia,
     meta: {
+      id:3,
       quickAccess: true,
       hideNavbar: true,
       requiresAuth: true,
@@ -122,6 +132,7 @@ const routes = [
     name: "Fazer Denúncia",
     component: DenunciaAnonima,
     meta: {
+      id:4,
       requiresAuth: false,
       icon: "fist-raised",
     },
@@ -131,6 +142,7 @@ const routes = [
     name: "Usuários",
     component: ListarUsuario,
     meta: {
+      id:5,
       requiresAuth: true,
       icon: "users",
     },
@@ -140,6 +152,7 @@ const routes = [
     name: "Cad. Usuários",
     component: CadastrarUsuario,
     meta: {
+      id:5,
       quickAccess: true,
       hideNavbar: true,
       requiresAuth: false,
@@ -151,6 +164,7 @@ const routes = [
     name: "Log",
     component: ListarLog,
     meta: {
+      id:6,
       requiresAuth: true,
       icon: "clipboard-list",
     },
