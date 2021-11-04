@@ -33,7 +33,7 @@ const incluir = async function incluir(dados) {
         });
 }
 
-const alterar = (id, dados) => repo.alterar(ajuda, id, dados)
+// const alterar = (id, dados) => repo.alterar(ajuda, id, dados)
 const excluir = (id) => repo.excluir(ajuda, id)
 // const ajustarDatas = async () => {
 //     let ajudas = await listarTodos()
@@ -46,6 +46,10 @@ const excluir = (id) => repo.excluir(ajuda, id)
 //         alterar(a.id, a);
 //     })
 // }
+
+var alterar = function alterar(id, doc) {
+    return ajuda.doc(id).update(doc)
+}
 export {
     listarTodos,
     bucarPorId,

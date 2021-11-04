@@ -26,44 +26,7 @@
       <el-table :data="listAjudas" ref="table" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!" @row-click="expand">
         <el-table-column type="expand">
           <template #default="scope">
-            <el-descriptions :column="1" border class="border-separate">
-              <el-descriptions-item label-class-name="label-min">
-                <template #label>
-                  <el-icon>
-                    <user />
-                  </el-icon>
-                  Data
-                </template>
-                {{ scope.row.dataLocal }}
-              </el-descriptions-item>
-              <el-descriptions-item label-class-name="label-min">
-                <template #label>
-                  <el-icon>
-                    <user />
-                  </el-icon>
-                  Nome
-                </template>
-                {{ scope.row.nome }}
-              </el-descriptions-item>
-              <el-descriptions-item v-if="scope.row.contato" label-class-name="label-min">
-                <template #label>
-                  <el-icon>
-                    <user />
-                  </el-icon>
-                  Contato
-                </template>
-                {{ scope.row.contato }}
-              </el-descriptions-item>
-              <el-descriptions-item v-if="scope.row.endereco" label-class-name="label-min">
-                <template #label>
-                  <el-icon>
-                    <user />
-                  </el-icon>
-                  Endereco
-                </template>
-                {{ scope.row.endereco }}
-              </el-descriptions-item>
-            </el-descriptions>
+              <CardAjuda v-model="scope.row" :min="true"/>
           </template>
         </el-table-column>
         <el-table-column label="Data">
@@ -86,7 +49,7 @@
         </el-table-column>
         <el-table-column width="80">
           <template #default="scope">
-            <el-button type="primary" size="mini" @click="()=>toRoute('/Ajuda',scope.row.id)">
+            <el-button plain type="primary" size="mini" @click="()=>toRoute('/Ajuda',scope.row.id)">
               <font-awesome-icon icon="external-link-alt" />
             </el-button>
           </template>
@@ -147,10 +110,11 @@
 <script>
 import { listarUltimosN as listarAjudas } from "../controller/ctlAjuda";
 import { listarUltimosN as listarDenuncias } from "../controller/ctlDenunciaAnonima";
+import CardAjuda from "../components/CardAjuda.vue";
 export default {
   name: "Dashboard",
   components: {
-    //Menu,
+    CardAjuda
   },
   data() {
     return {
@@ -294,13 +258,5 @@ export default {
 }
 .acesso-rapido {
   grid-area: acesso;
-}
-</style>
-<style>
-.border-separate table {
-  border-collapse: separate !important;
-}
-.label-min {
-  width: 140px;
 }
 </style>

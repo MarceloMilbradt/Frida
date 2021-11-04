@@ -36,11 +36,16 @@ import {
     faThermometerHalf,
     faHandHoldingHeart,
     faStar,
-    faFolderOpen
+    faFolderOpen,
+    faUser,
+    faPhoneAlt,
+    faMapMarkerAlt,
+    faCheck,
+    faBan,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faFolderOpen, faStar, faHandHoldingHeart, faThermometerHalf, faExternalLinkAlt, faExclamationTriangle, faAngleDoubleLeft, faAngleDoubleRight, faSignInAlt, faSignOutAlt, faHome, faInfo, faClipboardList, faUsers, faChartLine, faFistRaised, faFemale, faHeart, faIdCard, faExclamation, faTags, faCalendarAlt, faEdit, faSearch, faTrashAlt, faHandsHelping);
+library.add(faCheck,faBan,faMapMarkerAlt,faPhoneAlt,faUser, faFolderOpen, faStar, faHandHoldingHeart, faThermometerHalf, faExternalLinkAlt, faExclamationTriangle, faAngleDoubleLeft, faAngleDoubleRight, faSignInAlt, faSignOutAlt, faHome, faInfo, faClipboardList, faUsers, faChartLine, faFistRaised, faFemale, faHeart, faIdCard, faExclamation, faTags, faCalendarAlt, faEdit, faSearch, faTrashAlt, faHandsHelping);
 
 let app = null;
 setWatcher((usr) => {
@@ -52,6 +57,8 @@ setWatcher((usr) => {
         const logged = store.getters.getLogged;
         if (!logged && to.matched.some(record => record.meta.requiresAuth)) {
             return next('/login');
+        }else if(logged && to.matched.some(record => record.path === "/")){
+            return next('/Home');
         }
         next();
     });

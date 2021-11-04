@@ -76,7 +76,7 @@
 
                 <el-descriptions-item label-class-name="label-denuncia-min" :span="hit.vitima.cpf ? 2 : 3">
                   <template #label>
-                    <font-awesome-icon class="icon" icon="heart" />
+                    <font-awesome-icon class="" icon="heart" />
                     Vítima
                   </template>
                   <ais-highlight attribute="vitima.nome" :hit="hit" />
@@ -84,7 +84,7 @@
 
                 <el-descriptions-item v-if="hit.vitima.cpf" label-class-name="label-denuncia-min" span="1">
                   <template #label>
-                    <font-awesome-icon class="icon" icon="id-card" />
+                    <font-awesome-icon class="" icon="id-card" />
                     CPF
                   </template>
                   <ais-highlight attribute="vitima.cpf" :hit="hit" />
@@ -92,7 +92,7 @@
 
                 <el-descriptions-item :span="hit.agressor.cpf ? 2 : 3">
                   <template #label>
-                    <font-awesome-icon class="icon" icon="exclamation" />
+                    <font-awesome-icon class="" icon="exclamation" />
                     Agressor(a)
                   </template>
                   <ais-highlight attribute="agressor.nome" :hit="hit" />
@@ -100,7 +100,7 @@
 
                 <el-descriptions-item v-if="hit.agressor.cpf" span="1">
                   <template #label>
-                    <font-awesome-icon class="icon" icon="id-card" />
+                    <font-awesome-icon class="" icon="id-card" />
                     CPF
                   </template>
                   <ais-highlight attribute="agressor.cpf" :hit="hit" />
@@ -116,7 +116,7 @@
 
                 <el-descriptions-item span="3" v-if="hit.data">
                   <template #label>
-                    <font-awesome-icon class="icon" icon="calendar-alt" />
+                    <font-awesome-icon class="" icon="calendar-alt" />
                     Data
                   </template>
                   {{new Date(hit.data).toLocaleDateString()}}
@@ -124,7 +124,7 @@
 
                 <el-descriptions-item span="3" v-if="hit.tags">
                   <template #label>
-                    <font-awesome-icon class="icon" icon="tags" />
+                    <font-awesome-icon class="" icon="tags" />
                     Tags
                   </template>
                   <div class="container">
