@@ -2,7 +2,7 @@
   <div class="main-grid" v-if="$store.getters.getLogged">
 
     <div class="title">
-      <h1>FRIDA</h1>
+      <h1></h1>
     </div>
 
     <el-card class="user-info">
@@ -23,7 +23,49 @@
         </div>
       </template>
 
-      <el-table :data="listAjudas" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!">
+      <el-table :data="listAjudas" ref="table" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!" @row-click="expand">
+        <el-table-column type="expand">
+          <template #default="scope">
+            <el-descriptions :column="1" border class="border-separate">
+              <el-descriptions-item label-class-name="label-min">
+                <template #label>
+                  <el-icon>
+                    <user />
+                  </el-icon>
+                  Data
+                </template>
+                {{ scope.row.dataLocal }}
+              </el-descriptions-item>
+              <el-descriptions-item label-class-name="label-min">
+                <template #label>
+                  <el-icon>
+                    <user />
+                  </el-icon>
+                  Nome
+                </template>
+                {{ scope.row.nome }}
+              </el-descriptions-item>
+              <el-descriptions-item v-if="scope.row.contato" label-class-name="label-min">
+                <template #label>
+                  <el-icon>
+                    <user />
+                  </el-icon>
+                  Contato
+                </template>
+                {{ scope.row.contato }}
+              </el-descriptions-item>
+              <el-descriptions-item v-if="scope.row.endereco" label-class-name="label-min">
+                <template #label>
+                  <el-icon>
+                    <user />
+                  </el-icon>
+                  Endereco
+                </template>
+                {{ scope.row.endereco }}
+              </el-descriptions-item>
+            </el-descriptions>
+          </template>
+        </el-table-column>
         <el-table-column label="Data">
           <template #default="scope">
             <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
@@ -39,16 +81,14 @@
         </el-table-column>
         <el-table-column label="Nome">
           <template #default="scope">
-            <el-popover v-if="scope.row.contato ||  scope.row.endereco" effect="light" trigger="hover" placement="top" width="400px">
-              <template #default>
-                <p v-if="scope.row.contato">Contato: {{ scope.row.contato }}</p>
-                <p v-if="scope.row.endereco">endereco: {{ scope.row.endereco }}</p>
-              </template>
-              <template #reference>
-                <span>{{ scope.row.nome }}</span>
-              </template>
-            </el-popover>
-            <div v-else>{{ scope.row.nome }}</div>
+            <div>{{ scope.row.nome }}</div>
+          </template>
+        </el-table-column>
+        <el-table-column width="80">
+          <template #default="scope">
+            <el-button type="primary" size="mini" @click="()=>toRoute('/Ajuda',scope.row.id)">
+              <font-awesome-icon icon="external-link-alt" />
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -63,7 +103,7 @@
           </el-button>
         </div>
       </template>
-       <el-table :data="listDenuncias" style="width: 100%" empty-text="Nenhuma denuncia nova!">
+      <el-table :data="listDenuncias" style="width: 100%" empty-text="Nenhuma denuncia nova!">
         <el-table-column label="Data">
           <template #default="scope">
             <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
@@ -106,7 +146,7 @@
 
 <script>
 import { listarUltimosN as listarAjudas } from "../controller/ctlAjuda";
-import { listarUltimosN  as listarDenuncias} from "../controller/ctlDenunciaAnonima";
+import { listarUltimosN as listarDenuncias } from "../controller/ctlDenunciaAnonima";
 export default {
   name: "Dashboard",
   components: {
@@ -120,33 +160,34 @@ export default {
   },
   computed: {
     listAjudas() {
-      return this.ajudas.map((a) => {
+      return this.ajudas.map((a, i) => {
         a.dataRelativa = this.formatRelativeDate(a.data.toDate());
         a.dataLocal = this.formatDate(a.data.toDate());
+        a.index = i;
         return a;
       });
     },
     listDenuncias() {
-      return this.denuncias.map((a) => {
+      return this.denuncias.map((a, i) => {
         a.dataRelativa = this.formatRelativeDate(a.data.toDate());
         a.dataLocal = this.formatDate(a.data.toDate());
+        a.index = i;
         return a;
       });
     },
     routes() {
       const logged = this.$store.getters.getLogged;
       const [...routes] = this.$router.options.routes;
-      return [
-        ...routes.filter(
-          (r) => r.meta?.quickAccess
-        ),
-      ];
+      return [...routes.filter((r) => r.meta?.quickAccess)];
     },
   },
 
   methods: {
-    toRoute(path){
-      this.$router.push({ path });
+    expand(row, column, event) {
+      this.$refs.table.toggleRowExpansion(row);
+    },
+    toRoute(path,id) {
+      this.$router.push({ path , query: { id }});
     },
     async getAjudas() {
       this.ajudas = await listarAjudas(5);
@@ -194,17 +235,13 @@ export default {
   async created() {
     this.getAjudas();
     this.getDenuncias();
-
   },
 };
 </script>
 
 <style scoped>
-.el-menu{
+.el-menu {
   border-right: unset;
-}
-p {
-  text-align: center;
 }
 .card {
   display: flex;
@@ -257,5 +294,13 @@ p {
 }
 .acesso-rapido {
   grid-area: acesso;
+}
+</style>
+<style>
+.border-separate table {
+  border-collapse: separate !important;
+}
+.label-min {
+  width: 140px;
 }
 </style>

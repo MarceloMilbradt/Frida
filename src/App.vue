@@ -1,6 +1,6 @@
 <template>
   <el-config-provider :locale="locale">
-    <el-container v-loading="!$store.getters.getInited" :class="($store.getters.getLogged)?'bg':'bg bg-publico'" >
+    <el-container v-loading="!$store.getters.getInited" :class="($store.getters.getLogged)?'bg':'bg bg-publico'">
       <el-aside v-if="$store.getters.getLogged" width="65px">
         <Header :vertical="true" />
       </el-aside>
@@ -41,7 +41,6 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
 
 <style>
@@ -73,7 +72,7 @@ body {
   min-height: calc( 95vh - 20px); */
 }
 .el-menu-item.is-active {
-  background: var(--default-dark-tone);
+  background: var(--el-color-primary-light-1);
 }
 .el-menu-vertical .el-menu-item.is-active {
   background: var(--el-color-primary-light-1);
@@ -94,12 +93,14 @@ main {
   background-size: cover;
   min-height: 100vh;
 }
-.bg-publico{
-    background-image: url("./svg/background-fill-light.svg");
-
+.bg-publico {
+  background-image: url("./svg/background-fill-light.svg");
 }
-.bg-interno{
+.bg-interno {
   background-image: url("./svg/background-fill-light-interno.svg");
+}
+.el-menu--horizontal > .el-menu-item {
+  color: white;
 }
 
 @media (max-width: 800px) {
