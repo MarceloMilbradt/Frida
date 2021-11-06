@@ -92,10 +92,10 @@ export default {
 }
 </style>
 <style scoped>
-.el-button--primary {
+/* .el-button--primary {
   background: rgb(0, 124, 137);
   border-color: rgb(0, 124, 137);
-}
+} */
 .login .el-input__prefix {
   background: rgb(238, 237, 234);
   left: 0;
@@ -118,7 +118,7 @@ h2 {
   padding-bottom: 1.25em;
 }
 a {
-  color: rgb(0, 124, 137);
+  color:var(--el-color-primary-light-1) !important;
   text-decoration: none;
 }
 .login .el-card {
