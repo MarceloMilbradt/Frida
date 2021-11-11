@@ -51,7 +51,9 @@ export default {
       console.log('Log Length', this.dados.length)
     },
     formataData(data) {
-      return util.formataData(data);
+      //Formata a data para o formato 'dd/mm/yyyy hh mm'
+      var options = { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' };
+      return new Date(data).toLocaleDateString("pt-BR", options);
     }
   },
   async created() {

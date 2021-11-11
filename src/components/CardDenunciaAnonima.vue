@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { formatDate } from "../controller/Util";
 import * as controller from "../controller/ctlDenunciaAnonima";
 export default {
   name: "CardDenunciaAnonima",
@@ -94,7 +95,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return new Date(date?.toDate()).toLocaleString();
+      return formatDate(date);
     },
     change() {
       controller.alterar(this.denunciaAnonima.id, this.denunciaAnonima);

@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { formatDate } from "../controller/Util";
 import * as controller from "../controller/ctlAjuda";
 export default {
   name: "CardAjuda",
@@ -81,7 +82,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return new Date(date?.toDate()).toLocaleString();
+      return formatDate(date);
     },
     change() {
       controller.alterar(this.ajuda.id, this.ajuda);

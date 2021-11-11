@@ -116,6 +116,7 @@
 </template>
 
 <script>
+import { formatDate, formatRelativeDate } from "../controller/Util";
 import { listarUltimosN as listarAjudas } from "../controller/ctlAjuda";
 import { listarUltimosN as listarDenuncias } from "../controller/ctlDenunciaAnonima";
 import CardAjuda from "../components/CardAjuda.vue";
@@ -135,16 +136,16 @@ export default {
   computed: {
     listAjudas() {
       return this.ajudas.map((a, i) => {
-        a.dataRelativa = this.formatRelativeDate(a.data.toDate());
-        a.dataLocal = this.formatDate(a.data.toDate());
+        a.dataRelativa = formatRelativeDate(a.data);
+        a.dataLocal = formatDate(a.data);
         a.index = i;
         return a;
       });
     },
     listDenuncias() {
       return this.denuncias.map((a, i) => {
-        a.dataRelativa = this.formatRelativeDate(a.data.toDate());
-        a.dataLocal = this.formatDate(a.data.toDate());
+        a.dataRelativa = formatRelativeDate(a.data);
+        a.dataLocal = formatDate(a.data);
         a.index = i;
         return a;
       });
@@ -170,40 +171,6 @@ export default {
     async getDenuncias() {
       this.denuncias = await listarDenuncias(5);
       return this.denuncias;
-    },
-    formatDate(date) {
-      return new Date(date).toLocaleString();
-    },
-    formatRelativeDate(date) {
-      const rtf1 = new Intl.RelativeTimeFormat("pt-BR", { style: "narrow" });
-      let intervalo = "day";
-
-      const date1 = new Date(date);
-      const date2 = new Date();
-
-      let diffTime = Math.ceil(Math.abs(date2 - date1));
-      let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-      diffTime /= 1000;
-      let diff = diffDays;
-      if (diffDays <= 1) {
-        if (diffTime < 60) intervalo = "second";
-        else if ((diffTime /= 60) < 60) intervalo = "minute";
-        else if ((diffTime /= 60) < 24) intervalo = "hour";
-        diff = diffTime;
-      } else if (diffDays < 7) {
-        intervalo = "day";
-        diff = diffDays;
-      } else if ((diffDays /= 7) < 4) {
-        intervalo = "week";
-        diff = diffDays;
-      } else {
-        intervalo = "month";
-        diffDays /= 4;
-        diff = diffDays;
-      }
-
-      if (!diff) return "";
-      return rtf1.format(Math.floor(diff * -1), intervalo);
     },
   },
   async created() {
