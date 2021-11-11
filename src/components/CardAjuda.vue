@@ -66,7 +66,7 @@ export default {
   },
   computed: {
     statusEnum(){
-      return this.$store.getters["utils/getStatusEnum"];
+      return controller.buscarStatusAjuda();
     },
     status() {
       return this.statusEnum.find((s) => s.value === (this.ajuda.status ?? 0));

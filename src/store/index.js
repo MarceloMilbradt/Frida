@@ -165,43 +165,11 @@ const algolia = {
     },
 }
 
-const utils = {
-    namespaced:true,
-    state:{
-        statusEnum: [
-            {
-              value: 0,
-              descricao: "Aguardando Ação",
-              icon: "exclamation",
-              color: "yellow",
-            },
-            {
-              value: 1,
-              descricao: "Atendido",
-              icon: "check",
-              color: "green",
-            },
-            {
-              value: 2,
-              descricao: "Descartado",
-              icon: "ban",
-              color: "red",
-            },
-          ],
-    },
-    getters: {
-        getStatusEnum(state) {
-            return state.statusEnum
-        },
-    },
-}
-
 const store = createStore({
     modules: {
         security,
         denuncia,
-        algolia,
-        utils
+        algolia
     }
 })
 

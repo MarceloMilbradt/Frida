@@ -50,6 +50,28 @@ const excluir = (id) => repo.excluir(ajuda, id)
 var alterar = function alterar(id, doc) {
     return ajuda.doc(id).update(doc)
 }
+
+const buscarStatusAjuda = () => [
+    {
+        value: 0,
+        descricao: "Aguardando Ação",
+        icon: "exclamation",
+        color: "yellow",
+    },
+    {
+        value: 1,
+        descricao: "Atendido",
+        icon: "check",
+        color: "green",
+    },
+    {
+        value: 2,
+        descricao: "Descartado",
+        icon: "ban",
+        color: "red",
+    },
+];
+
 export {
     listarTodos,
     bucarPorId,
@@ -57,5 +79,5 @@ export {
     alterar,
     excluir,
     listarUltimosN,
-
+    buscarStatusAjuda
 }

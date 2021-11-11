@@ -70,7 +70,7 @@ export default {
       });
     },
     statusEnum() {
-      return controller.statusDenunciaAnonima;
+      return controller.buscarStatusDenuncia();
     },
   },
   methods: {

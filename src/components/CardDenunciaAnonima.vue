@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     statusEnum(){
-      return controller.statusDenunciaAnonima;
+      return controller.buscarStatusDenuncia();
     },
     status() {
       return this.statusEnum.find((s) => s.value === (this.denunciaAnonima.status ?? 0));

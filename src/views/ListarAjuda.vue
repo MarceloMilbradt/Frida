@@ -70,7 +70,7 @@ export default {
       });
     },
     statusEnum() {
-      return this.$store.getters["utils/getStatusEnum"];
+      return controller.buscarStatusAjuda();
     },
   },
   methods: {
