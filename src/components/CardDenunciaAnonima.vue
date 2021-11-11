@@ -5,15 +5,16 @@
         <font-awesome-icon class="" icon="calendar-alt" />
         Data
       </template>
-      {{ formatDate(ajuda.data) }}
+      {{ formatDate(denunciaAnonima.data) }}
     </el-descriptions-item>
+
     <el-descriptions-item :label-class-name="min?'label-min':''" span="1">
       <template #label>
         Status
         <font-awesome-icon :class="status.color" :icon="status.icon" />
       </template>
       <el-form-item v-if="edit">
-        <el-select v-model="ajuda.status" :default-first-option="true" @change="change">
+        <el-select v-model="denunciaAnonima.status" :default-first-option="true" @change="change">
           <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value">
           </el-option>
         </el-select>
@@ -22,34 +23,46 @@
         {{status.descricao}}
       </span>
     </el-descriptions-item>
+
     <el-descriptions-item :label-class-name="min?'label-min':''" span="2">
       <template #label>
         <font-awesome-icon class="" icon="user" />
-        Nome
+        Envolvidos
       </template>
-      {{ ajuda.nome }}
+      {{ denunciaAnonima.envolvidos }}
     </el-descriptions-item>
-    <el-descriptions-item v-if="ajuda.contato" :label-class-name="min?'label-min':''" span="2">
+
+    <el-descriptions-item :label-class-name="min?'label-min':''" span="2">
       <template #label>
-        <font-awesome-icon class="" icon="phone-alt" />
-        Contato
+        <font-awesome-icon class="" icon="comment" />
+        Motivo
       </template>
-      {{ ajuda.contato }}
+      {{ denunciaAnonima.motivo }}
     </el-descriptions-item>
-    <el-descriptions-item v-if="ajuda.endereco" :label-class-name="min?'label-min':''" span="2">
+
+    <el-descriptions-item :label-class-name="min?'label-min':''" span="2">
       <template #label>
         <font-awesome-icon class="" icon="map-marker-alt" />
-        Endereco
+        Local
       </template>
-      {{ ajuda.endereco }}
+      {{ denunciaAnonima.local }}
     </el-descriptions-item>
+
+    <el-descriptions-item :label-class-name="min?'label-min':''" span="2">
+      <template #label>
+        <font-awesome-icon class="" icon="calendar-week" />
+        Período
+      </template>
+      {{ denunciaAnonima.periodo }}
+    </el-descriptions-item>
+
   </el-descriptions>
 </template>
 
 <script>
-import * as controller from "../controller/ctlAjuda";
+import * as controller from "../controller/ctlDenunciaAnonima";
 export default {
-  name: "CardAjuda",
+  name: "CardDenunciaAnonima",
   emits: ["update:modelValue"],
   props: {
     modelValue: {
@@ -65,12 +78,12 @@ export default {
   },
   computed: {
     statusEnum(){
-      return this.$store.getters["utils/getStatusEnum"];
+      return controller.statusDenunciaAnonima;
     },
     status() {
-      return this.statusEnum.find((s) => s.value === (this.ajuda.status ?? 0));
+      return this.statusEnum.find((s) => s.value === (this.denunciaAnonima.status ?? 0));
     },
-    ajuda: {
+    denunciaAnonima: {
       get() {
         return this.modelValue;
       },
@@ -84,7 +97,7 @@ export default {
       return new Date(date?.toDate()).toLocaleString();
     },
     change() {
-      controller.alterar(this.ajuda.id, this.ajuda);
+      controller.alterar(this.denunciaAnonima.id, this.denunciaAnonima);
     },
   },
 };

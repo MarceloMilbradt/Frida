@@ -36,11 +36,33 @@ const incluir = async function incluir(dados) {
 const alterar = (id, dados) => repo.alterar(denunciaAnonima, id, dados)
 const excluir = (id) => repo.excluir(denunciaAnonima, id)
 
+const statusDenunciaAnonima = [
+    {
+        value: 0,
+        descricao: "Em Análise",
+        icon: "exclamation",
+        color: "yellow",
+    },
+    {
+        value: 1,
+        descricao: "Acolhido",
+        icon: "check",
+        color: "green",
+    },
+    {
+        value: 2,
+        descricao: "Rejeitado",
+        icon: "ban",
+        color: "red",
+    }
+];
+
 export {
     listarTodos,
     bucarPorId,
     incluir,
     alterar,
     excluir,
-    listarUltimosN
+    listarUltimosN,
+    statusDenunciaAnonima
 }

@@ -28,7 +28,7 @@
         <div>{{ scope.row.nome }}</div>
       </template>
     </el-table-column>
-    <el-table-column label="">
+    <el-table-column label="Status">
       <template #default="scope">
         <font-awesome-icon :class="status(scope.row.status).color" :icon="status(scope.row.status).icon" />
         <span>{{ status(scope.row.status).descricao }}</span>

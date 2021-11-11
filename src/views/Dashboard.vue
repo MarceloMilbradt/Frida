@@ -60,13 +60,13 @@
     <el-card class="denuncia-info">
       <template #header>
         <div class="card">
-          <span>Novas denuncias</span>
+          <span>Novas denúncias</span>
           <el-button type="primary" size="small" @click="()=>toRoute('/ListarDenuncia')">
             <font-awesome-icon icon="external-link-alt" />
           </el-button>
         </div>
       </template>
-      <el-table :data="listDenuncias" style="width: 100%" empty-text="Nenhuma denuncia nova!">
+      <el-table :data="listDenuncias" style="width: 100%" empty-text="Nenhuma denúncia nova!">
         <el-table-column label="Data">
           <template #default="scope">
             <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
