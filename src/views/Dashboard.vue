@@ -66,7 +66,13 @@
           </el-button>
         </div>
       </template>
-      <el-table :data="listDenuncias" style="width: 100%" empty-text="Nenhuma denúncia nova!">
+
+      <el-table :data="listDenuncias" ref="table" style="width: 100%" empty-text="Nenhuma denúncia nova!" @row-click="expand">
+        <el-table-column type="expand">
+          <template #default="scope">
+              <CardDenunciaAnonima v-model="scope.row" :min="true"/>
+          </template>
+        </el-table-column>
         <el-table-column label="Data">
           <template #default="scope">
             <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
@@ -85,9 +91,11 @@
             <div>{{ scope.row.envolvidos }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="Local">
+        <el-table-column width="80">
           <template #default="scope">
-            <div>{{ scope.row.local }}</div>
+            <el-button plain type="primary" size="mini" @click="()=>toRoute('/DenunciaAnonima',scope.row.id)">
+              <font-awesome-icon icon="external-link-alt" />
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,10 +119,12 @@
 import { listarUltimosN as listarAjudas } from "../controller/ctlAjuda";
 import { listarUltimosN as listarDenuncias } from "../controller/ctlDenunciaAnonima";
 import CardAjuda from "../components/CardAjuda.vue";
+import CardDenunciaAnonima from "../components/CardDenunciaAnonima.vue";
 export default {
   name: "Dashboard",
   components: {
-    CardAjuda
+    CardAjuda,
+    CardDenunciaAnonima
   },
   data() {
     return {

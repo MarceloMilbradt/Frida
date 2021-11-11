@@ -1,9 +1,8 @@
 <template>
-<CardDenunciaAnonima v-model="dados" :edit="true"/>
-  <!-- <FormDenunciaAnonima @clickSubmit="onClickSaveSubmit" v-if="!$route.query.id" />
+  <FormDenunciaAnonima @clickSubmit="onClickSaveSubmit" v-if="!$route.query.id" />
   <el-card v-else>
     <CardDenunciaAnonima v-model="dados" :edit="true"/>
-  </el-card> -->
+  </el-card>
 </template>
 
 <script>
@@ -13,7 +12,8 @@ import * as controller from "../controller/ctlDenunciaAnonima";
 
 export default {
   components: {
-    CardDenunciaAnonima
+    CardDenunciaAnonima,
+    FormDenunciaAnonima
   },
   data() {
     return {
