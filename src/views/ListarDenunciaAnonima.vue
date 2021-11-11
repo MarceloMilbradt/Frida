@@ -1,9 +1,14 @@
 <template>
+  Buscar Por Status
+  <el-select v-model="searchStatus" @change="change">
+    <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value">
+    </el-option>
+  </el-select>
   <el-table
     :data="
       this.listDenuncia.filter(
         (data) =>
-          !search || data.envolvidos.toLowerCase().includes(search.toLowerCase())
+          data.envolvidos.toLowerCase().includes(search.toLowerCase()) && data.status == this.searchStatus
       )
     "
     ref="table" style="width: 100%" empty-text="Nenhum denúncia nova!" @row-click="expand">
@@ -57,6 +62,7 @@ export default {
   data() {
     return {
       search: "",
+      searchStatus: "",
       dados: [],
     };
   },
@@ -88,6 +94,7 @@ export default {
     },
   },
   async created() {
+    this.searchStatus = 0;
     this.listarDados();
   },
 };
