@@ -28,6 +28,16 @@ var listarTodos = async (tabela) => {
     });
 }
 
+var listarOrderBy = async (tabela, field, sort) => {
+    return await tabela.orderBy(field, sort).get().then((snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        return data;
+    });
+}
+
 var bucarPorId = async (tabela, id) => {
     return await tabela
         .doc(id).get()
@@ -53,7 +63,7 @@ var incluir = (tabela, dados) => {
                 data: new Date().toISOString(),
                 dados: doc.data()
             }).catch((error) => console.error("Erro ao incluir log", error));
-        
+
             Swal.fire("Salvo!", "O registro foi salvo com sucesso!", "success");
         })
         .catch((error) => {
@@ -120,6 +130,7 @@ var excluir = (tabela, id) => {
 export {
     ativarLog,
     listarTodos,
+    listarOrderBy,
     bucarPorId,
     incluir,
     alterar,

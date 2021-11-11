@@ -4,7 +4,7 @@ import { logout, loginAnonimo } from './AuthService';
 const Swal = require('sweetalert2')
 
 repo.ativarLog('denunciaAnonima', denunciaAnonima);
-const listarTodos = async () => repo.listarTodos(denunciaAnonima)
+const listarTodos = async () => repo.listarOrderBy(denunciaAnonima, 'data', 'desc')
 const bucarPorId = async (id) => repo.bucarPorId(denunciaAnonima, id)
 
 const listarUltimosN = async n => {
