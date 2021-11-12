@@ -11,7 +11,7 @@
             <ais-refinement-list attribute="tags" searchable>
               <template v-slot="{ items,isFromSearch, refine,searchForItems}">
                 <div class="search-info">
-                  <input @input="searchForItems($event.currentTarget.value)">
+                  <input placeholder="Pesquisar por Tag"  @input="searchForItems($event.currentTarget.value)">
                   <div v-if="isFromSearch && !items.length">Nenhum resultado.</div>
                   <div v-for="item in items" :key="item.value">
                     <el-checkbox @change="refine(item.value)">{{item.label}} <el-badge :value=" item.count" :max="99"></el-badge>
