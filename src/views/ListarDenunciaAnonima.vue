@@ -2,26 +2,23 @@
   <el-container class="containerFilter">
     <el-header class="headerFilter">
         <el-row>
-          <el-input v-model="search" placeholder="Pesquisar envolvidos..." class="input-with-select">
-            <template #prepend>
-              <el-select v-model="searchStatus" placeholder="Select" style="width: 120px">
+          <el-col :span="6">
+              <el-select v-model="searchStatus" multiple collapse-tags>
                 <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value"/>
               </el-select>
-            </template>
-            <template #append>
-              <font-awesome-icon icon="search" />
-            </template>
-          </el-input>
+          </el-col>
+          <el-col :span="18">
+            <el-input v-model="search" placeholder="Pesquisar envolvidos..." class="input-with-select">
+              <template #append>
+                <font-awesome-icon icon="search" />
+              </template>
+            </el-input>
+          </el-col>
         </el-row>
     </el-header>
     <el-main>
         <el-table
-          :data="
-            this.listDenuncia.filter(
-              (data) =>
-                data.envolvidos.toLowerCase().includes(this.search.toLowerCase()) && data.status == this.searchStatus
-            )
-          "
+          :data="this.listDenuncia.filter(filterByDenuncia)"
           ref="table" style="width: 100%" empty-text="Nenhum denúncia nova!" @row-click="expand">
           <el-table-column type="expand">
           <template #default="scope">
@@ -72,7 +69,7 @@ export default {
   data() {
     return {
       search: "",
-      searchStatus: "",
+      searchStatus: [],
       dados: [],
     };
   },
@@ -87,7 +84,7 @@ export default {
     },
     statusEnum() {
       return controller.buscarStatusDenuncia();
-    },
+    }
   },
   methods: {
     status(status) {
@@ -102,9 +99,14 @@ export default {
     toRoute(path, id) {
       this.$router.push({ path, query: { id } });
     },
+    filterByDenuncia(data) {
+      let filterByEnvolvidos = data.envolvidos.toLowerCase().includes(this.search.toLowerCase());
+      let filterByStatus = this.searchStatus.toString().includes(data.status.toString());
+      return filterByEnvolvidos && filterByStatus;
+    }
   },
   async created() {
-    this.searchStatus = 0;
+    this.searchStatus = [0];
     this.listarDados();
   },
 };
