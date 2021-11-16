@@ -74,7 +74,7 @@ const routes = [
   },
   {
     path: "/Avaliacao",
-    name: "Avaliação de risco",
+    name: "Avaliação de Risco",
     component: Formulario,
     meta: {
       id: 2,

@@ -11,6 +11,7 @@
 
       </div>
     </el-card>
+
     <el-card>
       <div class="info">
 
@@ -38,8 +39,8 @@
           <font-awesome-icon class="icon" icon="heart" />
         </el-divider>
       </div>
-
     </el-card>
+    
     <el-card>
       <div class="ciclos">
         <CicloItem :key="ciclo.title" :icon="ciclo.icon" :text="ciclo.text" :title="ciclo.title" :index="index+1" v-for="(ciclo,index) in clicos">
@@ -48,6 +49,37 @@
         </CicloItem>
       </div>
     </el-card>
+
+    <el-card>
+      <div class="info">
+
+        <h2>AVALIAÇÃO DE RISCO</h2>
+
+        <p class="avaliacao-risco">
+          A avaliação de risco tem como objetivo prevenir a ocorrência ou o agravamento da violência doméstica e
+          familiar contra as mulheres.
+        </p>
+
+        <p class="avaliacao-risco">
+          A coleta sistematizada e padronizada de informa&ccedil;&otilde;es permite&nbsp;
+          <ul>
+              <li style="line-height: 1.5; text-align: justify;">Fundamentar pedidos de medidas protetivas de urg&ecirc;ncia previstas na Lei Maria da Penha contribuindo para a celeridade de seu deferimento;&nbsp;</li>
+              <li style="line-height: 1.5; text-align: justify;">Orientar a aplica&ccedil;&atilde;o das medidas de prote&ccedil;&atilde;o previstas no artigo 11&ordm; da Lei Maria da Penha;&nbsp;</li>
+              <li style="line-height: 1.5; text-align: justify;">Prevenir o agravamento da viol&ecirc;ncia para v&iacute;timas sobreviventes de feminic&iacute;dios e/ou v&iacute;timas indiretas&nbsp;</li>
+              <li style="line-height: 1.5; text-align: justify;">Organizar o encaminhamento e o acompanhamento das mulheres atrav&eacute;s da rede de servi&ccedil;os facilitando a comunica&ccedil;&atilde;o entre os profissionais com vistas a ampliar a prote&ccedil;&atilde;o para as mulheres.</li>
+          </ul>
+        </p>
+
+        <el-button type="primary" size="small" @click="avaliacaoRisco">
+          REALIZAR A AVALIAÇÃO DE RISCO (GRATUITO)!
+        </el-button>
+
+        <el-divider>
+          <font-awesome-icon class="icon" icon="chart-line" />
+        </el-divider>
+      </div>
+    </el-card>
+
   </div>
 </template>
 
@@ -83,6 +115,9 @@ export default {
     helpme() {
       this.$router.push({ name: "Pedir Ajuda!" });
     },
+    avaliacaoRisco() {
+      this.$router.push({ name: "Avaliação de Risco" });
+    },
   },
 };
 </script>
@@ -91,6 +126,9 @@ export default {
 p,
 h2 {
   text-align: center;
+}
+.avaliacao-risco {
+  text-align: justify;
 }
 .card {
   display: flex;
