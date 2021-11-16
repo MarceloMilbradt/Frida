@@ -2,25 +2,24 @@
   <el-container class="containerFilter">
     <el-header class="headerFilter">
         <el-row>
-          <el-input v-model="search" placeholder="Pesquisar por nome..." class="input-with-select">
-            <template #prepend>
-              <el-select v-model="searchStatus" placeholder="Select" style="width: 160px">
+          <el-col :span="8">
+              <el-select v-model="searchStatus" multiple collapse-tags @change="changeStatus">
                 <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value"/>
               </el-select>
-            </template>
-            <template #append>
-              <font-awesome-icon icon="search" />
-            </template>
-          </el-input>
+          </el-col>
+          <el-col :span="16">
+            <el-input v-model="search" placeholder="Pesquisar por nome..." class="input-with-select">
+              <template #append>
+                <font-awesome-icon icon="search" />
+              </template>
+            </el-input>
+          </el-col>
         </el-row>
     </el-header>
     <el-main>
-      <el-table :data="
-          this.listAjudas.filter(
-            (data) =>
-              data.nome.toLowerCase().includes(this.search.toLowerCase()) && data.status == this.searchStatus
-          )
-        " ref="table" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!" @row-click="expand">
+      <el-table 
+          :data="this.listAjudas.filter(filterByAjuda)" 
+          ref="table" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!" @row-click="expand">
         <el-table-column type="expand">
           <template #default="scope">
             <CardAjuda v-model="scope.row" :min="true" />
@@ -68,7 +67,7 @@ export default {
   data() {
     return {
       search: "",
-      searchStatus: "",
+      searchStatus: [],
       dados: [],
     };
   },
@@ -109,9 +108,18 @@ export default {
     toRoute(path, id) {
       this.$router.push({ path, query: { id } });
     },
+    filterByAjuda(data) {
+      let filterByNome = data.nome.toLowerCase().includes(this.search.toLowerCase());
+      let filterByStatus = this.searchStatus.toString().includes(data.status?.toString());
+      return filterByNome && filterByStatus;
+    },
+    changeStatus() {
+      if (this.searchStatus.toString() === '')
+        this.searchStatus = [0];
+    },
   },
   async created() {
-    this.searchStatus = 0;
+    this.searchStatus = [0];
     this.listarDados();
   },
 };

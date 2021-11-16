@@ -2,12 +2,12 @@
   <el-container class="containerFilter">
     <el-header class="headerFilter">
         <el-row>
-          <el-col :span="6">
-              <el-select v-model="searchStatus" multiple collapse-tags>
+          <el-col :span="8">
+              <el-select v-model="searchStatus" multiple collapse-tags @change="changeStatus">
                 <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value"/>
               </el-select>
           </el-col>
-          <el-col :span="18">
+          <el-col :span="16">
             <el-input v-model="search" placeholder="Pesquisar envolvidos..." class="input-with-select">
               <template #append>
                 <font-awesome-icon icon="search" />
@@ -101,9 +101,13 @@ export default {
     },
     filterByDenuncia(data) {
       let filterByEnvolvidos = data.envolvidos.toLowerCase().includes(this.search.toLowerCase());
-      let filterByStatus = this.searchStatus.toString().includes(data.status.toString());
+      let filterByStatus = this.searchStatus.toString().includes(data.status?.toString());
       return filterByEnvolvidos && filterByStatus;
-    }
+    },
+    changeStatus() {
+      if (this.searchStatus.toString() === '')
+        this.searchStatus = [0];
+    },
   },
   async created() {
     this.searchStatus = [0];
