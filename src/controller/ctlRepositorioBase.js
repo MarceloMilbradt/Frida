@@ -127,6 +127,14 @@ var excluir = (tabela, id) => {
     });
 }
 
+var addNovoCampo = async (tabela, campo) => {
+    return await tabela.get().then((snapshot) => {
+        snapshot.forEach(async function (doc) {
+            await tabela.doc(doc.id).set(campo, { merge: true });
+        });
+    });
+}
+
 export {
     ativarLog,
     listarTodos,
@@ -134,5 +142,6 @@ export {
     bucarPorId,
     incluir,
     alterar,
-    excluir
+    excluir,
+    addNovoCampo
 }

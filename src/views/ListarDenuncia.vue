@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <div style="margin-top: 15px;" >
       <ais-instant-search :search-client="searchClient" index-name="frida_denuncias">
@@ -39,21 +38,31 @@
             <el-button type="success" @click="handleAdd()">Incluir</el-button>
 
           </div>
-          <ais-search-box>
-            <template v-slot="{ currentRefinement, refine }">
-              <el-input type="search" :value="currentRefinement" @input="refine(input3)" placeholder="Pesquisar" v-model="input3" class="input-with-select">
-                <template #append>
-                  <font-awesome-icon icon="search" />
-                </template>
-              </el-input>
-            </template>
-          </ais-search-box>
 
-          <ais-pagination class="pagination">
-            <template v-slot="{ nbHits,refine}">
-              <el-pagination layout="prev, pager, next" :page-size="20" :total="nbHits" background @current-change="(p)=>refine(p-1)"></el-pagination>
-            </template>
-          </ais-pagination>
+          <el-row>
+            <el-col :span="8">
+                <el-select v-model="searchStatus" multiple collapse-tags @change="changeStatus">
+                  <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value"/>
+                </el-select>
+            </el-col>
+            <el-col :span="16">
+              <ais-search-box>
+                <template v-slot="{ currentRefinement, refine }">
+                  <el-input type="search" :value="currentRefinement" @input="refine(input3)" placeholder="Pesquisar" v-model="input3" class="input-with-select">
+                    <template #append>
+                      <font-awesome-icon icon="search" />
+                    </template>
+                  </el-input>
+                </template>
+              </ais-search-box>
+            </el-col>
+        </el-row>
+
+        <ais-pagination class="pagination">
+          <template v-slot="{ nbHits,refine}">
+            <el-pagination layout="prev, pager, next" :page-size="20" :total="nbHits" background @current-change="(p)=>refine(p-1)"></el-pagination>
+          </template>
+        </ais-pagination>
 
         </div>
 
@@ -73,6 +82,22 @@
                     </el-button>
                   </div>
                 </template>
+
+                <el-descriptions-item span="2" v-if="hit.data">
+                  <template #label>
+                    <font-awesome-icon class="" icon="calendar-alt" />
+                    Data
+                  </template>
+                  {{new Date(hit.data).toLocaleDateString()}}
+                </el-descriptions-item>
+
+                <el-descriptions-item span="2">
+                  <template #label>
+                    <font-awesome-icon class="" icon="info-circle" />
+                    Status
+                  </template>
+                  {{this.buscaStatusPorId(hit.status)}}
+                </el-descriptions-item>
 
                 <el-descriptions-item label-class-name="label-denuncia-min" :span="hit.vitima.cpf ? 2 : 3">
                   <template #label>
@@ -114,14 +139,6 @@
                   <ais-highlight attribute="vitima.filiacao.mae" :hit="hit" />
                 </el-descriptions-item>
 
-                <el-descriptions-item span="3" v-if="hit.data">
-                  <template #label>
-                    <font-awesome-icon class="" icon="calendar-alt" />
-                    Data
-                  </template>
-                  {{new Date(hit.data).toLocaleDateString()}}
-                </el-descriptions-item>
-
                 <el-descriptions-item span="3" v-if="hit.tags">
                   <template #label>
                     <font-awesome-icon class="" icon="tags" />
@@ -153,6 +170,7 @@ export default {
   data() {
     return {
       search: "",
+      searchStatus: [],
       dados: [],
       select: "",
       input3: "",
@@ -160,11 +178,20 @@ export default {
     };
   },
   computed: {
+    statusEnum(){
+      return controller.buscarStatusDenuncia();
+    },
     searchClient() {
       return client;
     },
   },
   methods: {
+    status(status) {
+      return this.statusEnum.find((s) => s.value === (status ?? 0));
+    },
+    buscaStatusPorId(status) {
+      return this.statusEnum.find((s) => s.value === (status || 0)).descricao;
+    },
     handleAdd() {
       this.$router.push({ path: "Denuncia" });
     },
@@ -177,8 +204,13 @@ export default {
         this.seachCacheKey++;
       });
     },
+    changeStatus() {
+      if (this.searchStatus.toString() === '')
+        this.searchStatus = [0];
+    },
   },
   created() {
+    this.searchStatus = [0];
     this.seachCacheKey++;
   },
 };
@@ -218,6 +250,19 @@ p {
 }
 .pagination {
   margin-top: 10px;
+}
+.el-form-item {
+  display: flex;
+  margin-bottom: 0;
+}
+.yellow {
+  color: orange;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
 }
 </style>
 <style>

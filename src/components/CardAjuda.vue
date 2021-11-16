@@ -9,8 +9,8 @@
     </el-descriptions-item>
     <el-descriptions-item :label-class-name="min?'label-min':''" span="1">
       <template #label>
+        <font-awesome-icon class="" icon="info-circle" />
         Status
-        <font-awesome-icon :class="status.color" :icon="status.icon" />
       </template>
       <el-form-item v-if="edit">
         <el-select v-model="ajuda.status" :default-first-option="true" @change="change">

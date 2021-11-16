@@ -1,7 +1,10 @@
 import * as db from "./firebase";
 import { addToIndex, updateIndex, deleteFromIndex } from "./Algolia"
-import { logout,loginAnonimo } from "./AuthService";
+import { logout, loginAnonimo } from "./AuthService";
+import { addNovoCampo } from "./ctlRepositorioBase";
 const Swal = require('sweetalert2')
+
+//addNovoCampo(db.denuncia, { status: 0 }) /*Descomente para criar o campo de status em todos documentos*/
 
 var listarTodos = async function listarTodos() {
     return await db.denuncia
@@ -33,10 +36,10 @@ var incluir = async function incluir(denuncia, anonima) {
     if (anonima)
         await loginAnonimo();
     return db.denuncia.add(denuncia)
-        .then((snapshot) => {            
+        .then((snapshot) => {
             addToIndex(denuncia, snapshot.id)
             if (anonima)
-            logout()
+                logout()
             Swal.fire("Salvo!", "A Denúncia foi salvo com sucesso!", "success");
         })
         .catch((error) => {
@@ -86,10 +89,32 @@ var excluir = function excluir(id) {
     });
 }
 
+const buscarStatusDenuncia = () => [
+    {
+        value: 0,
+        descricao: "Em Análise",
+        icon: "exclamation",
+        color: "yellow",
+    },
+    {
+        value: 1,
+        descricao: "Acolhido",
+        icon: "check",
+        color: "green",
+    },
+    {
+        value: 2,
+        descricao: "Rejeitado",
+        icon: "ban",
+        color: "red",
+    }
+];
+
 export {
     listarTodos,
     bucarPorId,
     incluir,
     alterar,
-    excluir
+    excluir,
+    buscarStatusDenuncia
 }

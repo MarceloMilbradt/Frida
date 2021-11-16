@@ -39,19 +39,19 @@ const excluir = (id) => repo.excluir(denunciaAnonima, id)
 const buscarStatusDenuncia = () => [
     {
         value: 0,
-        descricao: "Em Análise",
+        descricao: "Em Andamento",
         icon: "exclamation",
         color: "yellow",
     },
     {
         value: 1,
-        descricao: "Acolhido",
+        descricao: "Confirmado",
         icon: "check",
         color: "green",
     },
     {
         value: 2,
-        descricao: "Rejeitado",
+        descricao: "Negado",
         icon: "ban",
         color: "red",
     }

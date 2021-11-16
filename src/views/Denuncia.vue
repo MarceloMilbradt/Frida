@@ -2,6 +2,15 @@
 
   <steps :tab="tab" />
 
+  <el-card class="box-card">
+    <el-space wrap :size="large">
+      <span>Status do Caso</span>
+    </el-space>
+    <el-select v-model="denuncia.status">
+      <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value"/>
+    </el-select>
+  </el-card>
+
   <el-card class="box-card" v-if="tab === 2">
     <FormAdicional v-model="denuncia" @btn-click-next="onClickSaveSubmit" :text="'Informacoes Adicionais'" />
     <FormFooter @btn-click-prev="changeTab(-1)" @btn-click-next="onClickSaveSubmit" :text="[null, 'Salvar!']" />
@@ -41,6 +50,7 @@ export default {
       tab: 0,
       denuncia: {
         data: new Date().toISOString(),
+        status: 0,
 
         agressao: [],
 
@@ -76,6 +86,9 @@ export default {
       agressorIsValid: "denuncia/agressorIsValid",
       denunciaIsValid: "denuncia/denunciaIsValid",
     }),
+    statusEnum(){
+      return controller.buscarStatusDenuncia();
+    }
   },
   methods: {
     submitForm(formName) {
@@ -121,9 +134,12 @@ export default {
     },
     goBack() {
       if (this.$store.getters.getLogged)
-        this.$router.push({ path: "/ListarDenuncia" });
+        this.$router.push({ path: "/CasosAcolhidos" });
       else this.$router.push({ path: "/" });
     },
+    status() {
+      return this.statusEnum.find((s) => s.value === (this.denuncia.status ?? 0));
+    }
   },
 };
 </script>
@@ -134,5 +150,18 @@ export default {
 }
 .el-icon-warning-outline {
   color: #f56c6c;
+}
+.el-form-item {
+  display: flex;
+  margin-bottom: 0;
+}
+.yellow {
+  color: orange;
+}
+.green {
+  color: green;
+}
+.red {
+  color: red;
 }
 </style>
