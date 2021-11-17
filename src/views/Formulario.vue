@@ -157,7 +157,7 @@ export default {
       id: null,
       form: {
         nome: "",
-        data: new Date().toISOString(),
+        data: new Date(),
         resposta: {},
         resultado: {
           riscoDescricao: 'Não Classificado',

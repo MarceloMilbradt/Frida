@@ -16,6 +16,7 @@
     <el-card class="ajuda-info">
       <template #header>
         <div class="card">
+          <font-awesome-icon class="icon" icon="heart" />
           <span>Novos Pedidos de Ajuda</span>
           <el-button type="primary" size="small" @click="()=>toRoute('/ListarAjuda')">
             <font-awesome-icon icon="external-link-alt" />
@@ -60,6 +61,7 @@
     <el-card class="denuncia-info">
       <template #header>
         <div class="card">
+          <font-awesome-icon class="icon" icon="fist-raised" />
           <span>Novas Denúncias</span>
           <el-button type="primary" size="small" @click="()=>toRoute('/ListarDenuncia')">
             <font-awesome-icon icon="external-link-alt" />

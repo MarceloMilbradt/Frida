@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-button type="success" @click="handleAdd()">Incluir</el-button>
+    <el-button class="botao-incluir" type="success" @click="handleAdd()">Incluir</el-button>
   </el-row>
   <el-table
     :data="
@@ -68,5 +68,9 @@ export default {
 <style scoped>
 p {
   text-align: center;
+}
+
+.botao-incluir {
+  margin-bottom: 10px;
 }
 </style>

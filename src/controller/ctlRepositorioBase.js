@@ -1,8 +1,10 @@
 import * as db from "./firebase";
 const Swal = require('sweetalert2')
 import { getNomeUser } from "./AuthService";
+var nomeTabela = '';
 
 var ativarLog = (nome, tabela) => {
+    nomeTabela = nome;
     // tabela.onSnapshot((snapshot) => {
     //     if (snapshot.docChanges().length == 1) { /*Não mostrar quando tiver listando*/
     //         var change = snapshot.docChanges()[0];
@@ -11,11 +13,35 @@ var ativarLog = (nome, tabela) => {
     //             usuario: getNomeUser(),
     //             tabela: nome,
     //             tipo: change.type,
-    //             data: new Date().toISOString(),
+    //             data: new Date(),
     //             dados: change.doc.data()
     //         }).catch((error) => console.error("Erro ao incluir log", error));
     //     }
     // });
+}
+
+var incluirLog = async (tabela, id, tipo) => {
+    let dados = await bucarPorId(tabela, id);
+    db.log.add({
+        id: id,
+        usuario: getNomeUser(),
+        tabela: nomeTabela,
+        tipo: tipo,
+        data: new Date(),
+        dados: dados
+    }).catch((error) => console.error("Erro ao incluir log", error));
+}
+
+var incluirLogOpExcluir = async (id, dados) => {
+    /*Precisa passar os dados como parâmetro, pq depois que excluir não vai mais existir esses dados*/
+    db.log.add({
+        id: id,
+        usuario: getNomeUser(),
+        tabela: nomeTabela,
+        tipo: 'Excluir',
+        data: new Date(),
+        dados: dados
+    }).catch((error) => console.error("Erro ao incluir log", error));
 }
 
 var listarTodos = async (tabela) => {
@@ -55,15 +81,7 @@ var incluir = (tabela, dados) => {
     return tabela
         .add(dados)
         .then((doc) => {
-            db.log.add({
-                id: doc.id,
-                usuario: getNomeUser(),
-                tabela,
-                tipo: "I",
-                data: new Date().toISOString(),
-                dados: doc.data()
-            }).catch((error) => console.error("Erro ao incluir log", error));
-
+            incluirLog(tabela, doc.id, 'Incluir');
             Swal.fire("Salvo!", "O registro foi salvo com sucesso!", "success");
         })
         .catch((error) => {
@@ -75,16 +93,9 @@ var incluir = (tabela, dados) => {
 var alterar = (tabela, id, dados) => {
     return tabela
         .doc(id)
-        .set(dados, { merge: true })
-        .then((doc) => {
-            db.log.add({
-                id: doc.id,
-                usuario: getNomeUser(),
-                tabela,
-                tipo: "A",
-                data: new Date().toISOString(),
-                dados: doc.data()
-            }).catch((error) => console.error("Erro ao incluir log", error));
+        .update(dados)
+        .then(() => {
+            incluirLog(tabela, id, 'Alterar');
             Swal.fire("Atualizado!", "O registro foi atualizado com sucesso!", "success");
         })
         .catch((error) => {
@@ -103,20 +114,14 @@ var excluir = (tabela, id) => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Sim, excluir!",
         cancelButtonText: "Cancelar",
-    }).then((result) => {
+    }).then(async (result) => {
         if (result.isConfirmed) {
+            let dados = await bucarPorId(tabela, id);
             tabela
                 .doc(id)
                 .delete()
-                .then((doc) => {
-                    db.log.add({
-                        id: doc.id,
-                        usuario: getNomeUser(),
-                        tabela,
-                        tipo: "E",
-                        data: new Date().toISOString(),
-                        dados: doc.data()
-                    }).catch((error) => console.error("Erro ao incluir log", error));
+                .then(() => {
+                    incluirLogOpExcluir(id, dados);
                     Swal.fire("Deletado!", "O registro foi deletado com sucesso!", "success");
                 })
                 .catch((error) => {

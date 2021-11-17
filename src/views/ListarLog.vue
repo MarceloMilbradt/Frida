@@ -1,7 +1,7 @@
 <template>
   <el-table
     :data="
-      this.dados.filter(
+      this.listLog.filter(
         (data) =>
           !search || data.tabela.toLowerCase().includes(search.toLowerCase())
       )
@@ -14,13 +14,23 @@
         <p>Dados: {{ props.row.dados }}</p>
       </template>
     </el-table-column>
+    <el-table-column label="Data">
+      <template #default="scope">
+        <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
+          <template #default>
+            {{ scope.row.dataLocal }}
+          </template>
+          <template #reference>
+            <i class="el-icon-time"></i>
+          </template>
+        </el-popover>
+        {{ scope.row.dataRelativa }}
+      </template>
+    </el-table-column>
     <el-table-column label="Código" prop="id"> </el-table-column>
     <el-table-column label="Usuário" prop="usuario"> </el-table-column>
     <el-table-column label="Tabela" prop="tabela"> </el-table-column>
     <el-table-column label="Operação" prop="tipo"> </el-table-column>
-    <el-table-column label="Data">
-      <template #default="scope">{{ formataData(scope.row.data) }}</template>
-    </el-table-column>
     <el-table-column align="right">
       <template #header>
         <el-input
@@ -34,8 +44,8 @@
 </template>
 
 <script>
+import { formatDate, formatRelativeDate } from "../controller/Util";
 import * as controller from "../controller/ctlLog";
-import * as util from "../controller/Util";
 export default {
   name: "Log",
   components: {},
@@ -45,15 +55,20 @@ export default {
       dados: [],
     };
   },
+  computed: {
+    listLog() {
+      return this.dados.map((a, i) => {
+        a.dataRelativa = formatRelativeDate(a.data);
+        a.dataLocal = formatDate(a.data);
+        a.index = i;
+        return a;
+      });
+    }
+  },
   methods: {
     async listarDados() {
       this.dados = await controller.listarTodos();
       console.log('Log Length', this.dados.length)
-    },
-    formataData(data) {
-      //Formata a data para o formato 'dd/mm/yyyy hh mm'
-      var options = { day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' };
-      return new Date(data).toLocaleDateString("pt-BR", options);
     }
   },
   async created() {

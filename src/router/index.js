@@ -68,6 +68,7 @@ const routes = [
     component: ListarFormulario,
     meta: {
       id: 2,
+      quickAccess: true,
       requiresAuth: true,
       icon: "chart-line",
     },
@@ -166,6 +167,7 @@ const routes = [
     component: ListarLog,
     meta: {
       id: 6,
+      quickAccess: true,
       requiresAuth: true,
       icon: "clipboard-list",
     },

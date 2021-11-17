@@ -33,20 +33,9 @@ const incluir = async function incluir(dados) {
         });
 }
 
-// const alterar = (id, dados) => repo.alterar(ajuda, id, dados)
 const excluir = (id) => repo.excluir(ajuda, id)
-// const ajustarDatas = async () => {
-//     let ajudas = await listarTodos()
-//     ajudas.forEach(a => {
-//         console.log(a);
-//         let days = Math.floor(Math.random() * 19);
-//         let date = new Date();
-//         date.setDate(days)
-//         a.data =date
-//         alterar(a.id, a);
-//     })
-// }
 
+// const alterar = (id, dados) => repo.alterar(ajuda, id, dados)
 var alterar = function alterar(id, doc) {
     return ajuda.doc(id).update(doc)
 }

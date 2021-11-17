@@ -1,19 +1,32 @@
 <template>
   <el-row>
-    <el-button type="success" @click="handleAdd()">Incluir</el-button>
+    <el-button class="botao-incluir" type="success" @click="handleAdd()">Incluir</el-button>
   </el-row>
   <el-table
     :data="
-      this.dados.filter(
+      this.listFormularios.filter(
         (data) =>
           !search || data.nome.toLowerCase().includes(search.toLowerCase())
       )
     "
     border
     style="width: 100%"
-  >
+>
+    <el-table-column label="Data">
+      <template #default="scope">
+        <el-popover effect="light" trigger="hover" placement="top" v-if="scope.row.data">
+          <template #default>
+            {{ scope.row.dataLocal }}
+          </template>
+          <template #reference>
+            <i class="el-icon-time"></i>
+          </template>
+        </el-popover>
+        {{ scope.row.dataRelativa }}
+      </template>
+    </el-table-column>
     <el-table-column label="Nome" prop="nome"> </el-table-column>
-    <el-table-column label="Risco" prop="resultado.risco"> </el-table-column>
+    <el-table-column label="Risco" prop="resultado.riscoDescricao"> </el-table-column>
     <el-table-column align="right">
       <template #header>
         <el-input
@@ -33,6 +46,7 @@
 </template>
 
 <script>
+import { formatDate, formatRelativeDate } from "../controller/Util";
 import * as controller from "../controller/ctlFormulario";
 export default {
   name: "Home",
@@ -42,6 +56,16 @@ export default {
       search: "",
       dados: [],
     };
+  },
+  computed: {
+    listFormularios() {
+      return this.dados.map((a, i) => {
+        a.dataRelativa = formatRelativeDate(a.data);
+        a.dataLocal = formatDate(a.data);
+        a.index = i;
+        return a;
+      });
+    }
   },
   methods: {
     async listarDados() {
@@ -54,7 +78,7 @@ export default {
       this.$router.push({ path: "Avaliacao", query: { id: row.id } });
     },
     async handleDelete(row) {
-      controller.excluir(row.id).then(() => {
+      controller.excluir(row.id).then(async () => {
         this.listarDados();
       });
     },
@@ -68,5 +92,9 @@ export default {
 <style scoped>
 p {
   text-align: center;
+}
+
+.botao-incluir {
+  margin-bottom: 10px;
 }
 </style>

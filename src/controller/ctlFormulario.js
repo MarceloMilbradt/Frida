@@ -3,7 +3,7 @@ import { avaliacao } from "./firebase";
 const Swal = require('sweetalert2')
 
 repo.ativarLog('avaliacao', avaliacao);
-var listarTodos = async () => repo.listarTodos(avaliacao)
+var listarTodos = async () => repo.listarOrderBy(avaliacao, 'data', 'desc')
 var bucarPorId = async (id) => repo.bucarPorId(avaliacao, id)
 
 var incluir = (dados) => {
