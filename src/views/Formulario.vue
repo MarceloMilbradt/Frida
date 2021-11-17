@@ -3,15 +3,42 @@
     Formulário de Avaliação de Risco em Violência Doméstica e Familiar contra a
     Mulher
   </h3>
+
   <el-form ref="form" :model="questions">
     <el-form-item prop="nome">
       <el-input v-model="form.nome" placeholder="Nome"></el-input>
     </el-form-item>
     <div v-bind:key="question.id" v-for="question in questions">
-      <Question v-model="question.answer" :alternatives="question.alternatives" :question="question" />
+      <Question v-model="question.answer" :alternatives="question.alternatives" :question="question" @change="changeAnswer" />
     </div>
   </el-form>
-  <el-button @click="onClick" type="success">Salvar</el-button>
+
+  <el-card>
+    <h4>Resumo da Avaliação de Risco FRIDA</h4>
+    <p>
+      Abaixo é informada o totalizador de respostas agrupado por 
+      "<b>Não</b>", 
+      "<b>NS/NA</b> (Não se Aplica/Não Informado)"
+      e "<b>Sim</b>"
+      informados no Formulário de Avaliação FRIDA, assim como o resultado do Grau de Risco detectado nesse formulário.
+    </p>
+    <el-progress type="circle" :percentage="this.progresso.percNao" status="success">
+      <span class="percentage-label">Não</span>
+    </el-progress>
+
+    <el-progress type="circle" :percentage="this.progresso.percNSeNA" status="warning">
+      <span class="percentage-label">NS/NA</span>
+    </el-progress>
+
+    <el-progress type="circle" :percentage="this.progresso.percSim" status="exception">
+      <span class="percentage-label">Sim</span>
+    </el-progress>
+    <el-divider>
+      <p>Grau de Risco: <b>{{this.form.resultado.riscoDescricao}}</b></p>
+    </el-divider>
+  </el-card>
+
+  <el-button class="botao-salvar" @click="onClick" type="success">Salvar</el-button>
 </template>
 
 <script>
@@ -24,20 +51,25 @@ export default {
     Question,
   },
   methods: {
-    onClick() {
-      var invalid = false;
+    changeAnswer() {
+      this.montarGraficoProgresso();
+    },
+    montarGraficoProgresso() {
+      this.montarFormulario();
 
-      for (const q of this.questions) {
-        if (q.answer == undefined) {
-          this.$message.error("Questão " + q.id + " é obrigatória");
-          invalid = true;
-          break;
-        }
-        this.form.resposta["r_" + q.id] = q.answer;
+      var calculaPerc = (total) => {
+        return Number((total * 100 / 19).toFixed(2))
       }
 
-      if (invalid == false) {
-        this.form.resultado = this.geraResultado(this.form.resposta);
+      this.progresso = {
+        percNao: calculaPerc(this.form.resultado.totalNao),
+        percNSeNA: calculaPerc(this.form.resultado.totalNaoSabe + this.form.resultado.totalNaoAplica),
+        percSim: calculaPerc(this.form.resultado.totalSim),
+      }
+    },
+    onClick() {
+      if (this.isFormularioValido()) {
+        this.montarFormulario();
         if (this.id) {
           controller.alterar(this.id, this.form).then(() => {
             this.$router.push({ path: "ListarAvaliacao" });
@@ -49,6 +81,20 @@ export default {
         }
       }
     },
+    isFormularioValido() {
+      let questaoInvalida = this.questions.find(x => x.answer == undefined);
+      if (questaoInvalida) {
+        this.$message.error("Questão " + questaoInvalida.id + " é obrigatória");
+        return false;
+      }
+      return true;
+    },
+    montarFormulario() {
+      for (const q of this.questions) {
+        this.form.resposta["r_" + q.id] = q.answer;
+      }
+      this.form.resultado = this.geraResultado(this.form.resposta);
+    },
     geraResultado(respostas) {
       var resp = Object.values(respostas);
       var counts = {};
@@ -56,36 +102,39 @@ export default {
           counts[num] = counts[num] ? counts[num] + 1 : 1;
       }
 
-      var qtdeSim = counts[1];
-      var qtdeNao = /*counts[2]*/ + counts[3] + counts[4];
+      var totalSim = counts[1] || 0;
+      var totalNao = counts[2] || 0;
+      var totalNaoSabe = counts[3] || 0;
+      var totalNaoAplica = counts[4] || 0;
+      var totalNSeNA = totalNaoSabe + totalNaoAplica;
       var risco = '';
 
-      switch (qtdeSim) {
+      switch (totalSim) {
           case 0:
           case 1:
           case 2:
-              risco = (qtdeNao > 0) ? 'M' : 'B';
+              risco = (totalNSeNA > 0) ? 'M' : 'B';
               break;
           case 3:
-              risco = (qtdeNao > 7) ? 'M' : 'B';
+              risco = (totalNSeNA > 7) ? 'M' : 'B';
               break;
           case 4:
-              risco = (qtdeNao > 3) ? 'M' : 'B';
+              risco = (totalNSeNA > 3) ? 'M' : 'B';
               break;
           case 5:
-              risco = (qtdeNao == 10) ? 'E' : 'M';
+              risco = (totalNSeNA == 10) ? 'E' : 'M';
               break;
           case 6:
-              risco = (qtdeNao > 7 && qtdeNao < 11) ? 'E' : 'M';
+              risco = (totalNSeNA > 7 && totalNSeNA < 11) ? 'E' : 'M';
               break;
           case 7:
-              risco = (qtdeNao > 5 && qtdeNao < 11) ? 'E' : 'M';
+              risco = (totalNSeNA > 5 && totalNSeNA < 11) ? 'E' : 'M';
               break;
           case 8:
-              risco = (qtdeNao > 3 && qtdeNao < 11) ? 'E' : 'M';
+              risco = (totalNSeNA > 3 && totalNSeNA < 11) ? 'E' : 'M';
               break;
           case 9:
-              risco = (qtdeNao > 1 && qtdeNao < 11) ? 'E' : 'M';
+              risco = (totalNSeNA > 1 && totalNSeNA < 11) ? 'E' : 'M';
               break;
           default:
               risco = 'E';
@@ -93,9 +142,13 @@ export default {
       }
 
       return {
-          qtdeSim: qtdeSim,
-          qtdeNao: qtdeNao,
+          totalSim: totalSim,
+          totalNao: totalNao,
+          totalNaoSabe: totalNaoSabe,
+          totalNaoAplica: totalNaoAplica,
+          totalNSeNA: totalNSeNA,
           risco: risco,
+          riscoDescricao: (risco == 'E') ? 'Elevado' : (risco == 'M') ? 'Médio' : 'Baixo'
       };
     }
   },
@@ -106,8 +159,11 @@ export default {
         nome: "",
         data: new Date().toISOString(),
         resposta: {},
-        resultado: {},
+        resultado: {
+          riscoDescricao: 'Não Classificado',
+        },
       },
+      progresso: {},
       items: [
         {
           to: "/",
@@ -236,6 +292,7 @@ export default {
           var q_id = key.replace('r_', '') - 1;
           this.questions[q_id].answer = answer;
         }
+        this.montarGraficoProgresso();
       }
     }
     catch (ex) {
@@ -253,5 +310,28 @@ export default {
 .el-radio__inner {
   width: 1.125em;
   height: 1.125em;
+}
+</style>
+
+<style scoped>
+.percentage-value {
+  display: block;
+  margin-top: 10px;
+  font-size: 28px;
+}
+
+.percentage-label {
+  display: block;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.el-progress {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.botao-salvar {
+  margin-top: 10px;
 }
 </style>
