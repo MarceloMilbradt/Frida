@@ -71,11 +71,13 @@
             <el-card class="box-card" v-for="hit in items" :key="hit.objectID">
 
               <el-descriptions :title="hit.filiacao?.mae ?? hit.vitima.nome +' - '+ new Date(hit.data).toLocaleDateString()" column="3" size="small" border>
-
                 <template #extra>
                   <div>
                     <el-button type="danger" size="small" @click="handleDelete(hit.objectID)">
                       <font-awesome-icon icon="trash-alt" />
+                    </el-button>
+                    <el-button type="info" size="small" @click="handleAvaliacao(hit.objectID, hit.vitima.nome)">
+                      <font-awesome-icon icon="chart-line" />
                     </el-button>
                     <el-button type="primary" size="small" @click="handleEdit(hit.objectID)">
                       <font-awesome-icon icon="edit" />
@@ -196,13 +198,16 @@ export default {
       this.$router.push({ path: "Denuncia" });
     },
     handleEdit(id) {
-      this.$router.push({ name: "Denúncia", params: { id } });
+      this.$router.push({ name: "Denúncia", params: { id } }).then(() => window.scrollTo(0, 0));
     },
     async handleDelete(id) {
       controller.excluir(id).then(() => {
         doRefresh(this.searchClient)
         this.seachCacheKey++;
       });
+    },
+    handleAvaliacao(id, vitima) {
+      this.$router.push({ name: "Avaliação de Risco", query: { idCaso: id, vitima: vitima } }).then(() => window.scrollTo(0, 0));
     },
     changeStatus() {
       if (this.searchStatus.toString() === '')

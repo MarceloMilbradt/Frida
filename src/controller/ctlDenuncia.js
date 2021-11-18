@@ -104,7 +104,7 @@ const buscarStatusDenuncia = () => [
     },
     {
         value: 2,
-        descricao: "Rejeitado",
+        descricao: "Arquivado",
         icon: "ban",
         color: "red",
     }
