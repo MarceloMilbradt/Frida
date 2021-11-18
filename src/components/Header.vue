@@ -1,26 +1,55 @@
 <template>
   <el-menu :class="(
       vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'
-    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="activeLink" :mode="vertical ? 'vertical' : 'horizontal'">
-    <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand" :index="-2">
-
+    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="activeLink" :mode="vertical ? 'vertical' : 'horizontal'"
+        background-color="#5D3FD3"
+        text-color="#fff"
+        active-text-color="#fff">
+   
+   <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand" :index="-2">
       <font-awesome-icon class="icon" :icon="!isCollapse ? 'angle-double-left':'angle-double-right'" />
-
     </el-menu-item>
 
-    <el-menu-item :key="index" :index="rule.meta.id" v-for="(rule, index) in routes"  @click="()=>gotoRoute(rule.path)" >
-      <font-awesome-icon class="icon" :icon="rule.meta?.icon" />
-      <template v-if="rule.name && !(rule.meta?.hiddenH && !vertical)" #title>
-        <span class="menu-item-name">{{ rule.name }}</span>
-      </template>
-    </el-menu-item>
 
-    <el-menu-item :index="-1" v-if="$store.getters.getLogged" @click="logout">
-      <font-awesome-icon class="icon" icon="sign-out-alt" />
-      <template #title>
-        <span class="menu-item-name">Sair</span>
-      </template>
-    </el-menu-item>
+    <div v-if="$store.getters.getLogged == false">
+      <!-- MENU DO USUÁRIO ANONIMO -->
+      <el-menu-item unique-opened class="menu-home" :index="1" @click="()=>gotoRoute('/')">
+        <font-awesome-icon class="icon" icon="home" />
+        <template #title>
+          <span class="menu-item-name">Home</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item unique-opened class="menu-home" :index="2" @click="()=>gotoRoute('/')">
+        <font-awesome-icon class="icon" icon="newspaper" />
+        <template #title>
+          <span class="menu-item-name">Posts</span>
+        </template>
+      </el-menu-item>
+      <el-menu-item class="menu-login" :index="3" @click="()=>gotoRoute('/login')">
+        <font-awesome-icon class="icon" icon="sign-in-alt" />
+        <template #title>
+          <span class="menu-item-name">Login</span>
+        </template>
+      </el-menu-item>
+    </div>
+
+    <div v-if="$store.getters.getLogged == true">
+      <!-- MENU DO USUÁRIO ADMIN (LOGADO) -->
+      <el-menu-item :key="index" :index="rule.meta.id" v-for="(rule, index) in routes"  @click="()=>gotoRoute(rule.path)" >
+        <font-awesome-icon class="icon" :icon="rule.meta?.icon" />
+        <template v-if="rule.name && !(rule.meta?.hiddenH && !vertical)" #title>
+          <span class="menu-item-name">{{ rule.name }}</span>
+        </template>
+      </el-menu-item>
+
+      <el-menu-item :index="-1" @click="logout">
+        <font-awesome-icon class="icon" icon="sign-out-alt" />
+        <template #title>
+          <span class="menu-item-name">Sair</span>
+        </template>
+      </el-menu-item>
+    </div>
+    
   </el-menu>
 </template>
 <script>
@@ -103,6 +132,12 @@ export default {
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
+}
+.menu-home {
+  float: left;
+}
+.menu-login {
+  float: right;
 }
 </style>
 <style>

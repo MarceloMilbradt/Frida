@@ -68,7 +68,8 @@ const routes = [
     component: ListarFormulario,
     meta: {
       id: 2,
-      quickAccess: true,
+      quickAccess: false,
+      hideNavbar: true,
       requiresAuth: true,
       icon: "chart-line",
     },
