@@ -16,6 +16,9 @@ import ListarLog from "../views/ListarLog";
 import Login from "../views/Login";
 import NotFound from "../views/NotFound";
 //import Logout from '../views/Logout'
+import Posts from "../views/Posts";
+import Feed from "../views/Feed";
+import Post from "../views/Post";
 
 const routes = [
   {
@@ -169,6 +172,37 @@ const routes = [
       id: 6,
       quickAccess: true,
       requiresAuth: true,
+      icon: "clipboard-list",
+    },
+  },
+  {
+    path: "/Posts",
+    name: "Posts",
+    component: Posts,
+    meta: {
+      id:8,
+      requiresAuth: true,
+      icon: "clipboard-list",
+    },
+  },
+  {
+    path: "/Post/:id",
+    name: "Post",
+    component: Post,
+    meta: {
+      id:8,
+      requiresAuth: false,
+      hideNavbar: true,
+      icon: "clipboard-list",
+    },
+  },
+  {
+    path: "/Feed/",
+    name: "Feed",
+    component: Feed,
+    meta: {
+      id:8,
+      requiresAuth: false,
       icon: "clipboard-list",
     },
   },

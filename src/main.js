@@ -58,6 +58,10 @@ setWatcher((usr) => {
     store.dispatch('stateChange', usr)
     router.beforeEach((to, from, next) => {
         const logged = store.getters.getLogged;
+        if(to.params.id === ":id"){
+            to.fullPath = to.fullPath.replace(":id",'')
+            to.params.id = null;
+        }
         if (!logged && to.matched.some(record => record.meta.requiresAuth)) {
             return next('/login');
         } else if (logged && to.matched.some(record => record.path === "/")) {

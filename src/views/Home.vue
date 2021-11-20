@@ -2,7 +2,7 @@
   <div class="main-flex card" v-if="!$store.getters.getLogged">
 
     <el-card>
-      <div class="grid top-grid">
+      <div class="top-grid">
         <h2 class="title">NÃO SE CALE!</h2>
         <h4 class="subtitle">PEÇA AJUDA!</h4>
         <el-button class="ajuda" type="danger" size="big" @click="helpme">
@@ -11,84 +11,89 @@
 
       </div>
     </el-card>
-
-    <el-card>
-      <div class="info">
-
-        <h2>O QUE É VIOLÊNCIA DOMÉSTICA ?</h2>
-        <p class="violencia">
-          Violência doméstica é todo tipo de violência que é praticada entre os membros que habitam um ambiente familiar em comum.
-        </p>
-        <el-divider>
-          <font-awesome-icon class="icon" icon="heart" />
-        </el-divider>
-        <h2 class="existe-lei">EXISTE LEI ?</h2>
-
-        <p class="title-lei">
-          A Lei Maria da Penha, em vigor desde 2006. ela cria mecanismos para prevenir e coibir a violência doméstica e familiar contra a mulher
-        </p>
-
-        <p class="lei">A Lei Maria da Penha (11.340/16) é o instrumento principal no
-          enfrentamento à violência doméstica e familiar contra mulheres no
-          Brasil. Mais do que física, ela abrange abusos sexuais, psicológicos,
-          morais e patrimoniais entre a vítima e seu agressor – que não precisa
-          necessariamente ser cônjuge, basta que tenha algum tipo de relação
-          afetiva.</p>
-
-        <el-divider>
-          <font-awesome-icon class="icon" icon="heart" />
-        </el-divider>
+    <div class="grid">
+      <div class="feed">
+        <Feed limit="4"></Feed>
       </div>
-    </el-card>
-    
-    <el-card>
-      <div class="ciclos">
-        <CicloItem :key="ciclo.title" :icon="ciclo.icon" :text="ciclo.text" :title="ciclo.title" :index="index+1" v-for="(ciclo,index) in clicos">
+      <el-card class="area-info">
+        <div class="info">
+
+          <h2>O QUE É VIOLÊNCIA DOMÉSTICA ?</h2>
+          <p class="violencia">
+            Violência doméstica é todo tipo de violência que é praticada entre os membros que habitam um ambiente familiar em comum.
+          </p>
           <el-divider>
+            <font-awesome-icon class="icon" icon="heart" />
           </el-divider>
-        </CicloItem>
-      </div>
-    </el-card>
+          <h2 class="existe-lei">EXISTE LEI ?</h2>
 
-    <el-card>
-      <div class="info">
+          <p class="title-lei">
+            A Lei Maria da Penha, em vigor desde 2006. ela cria mecanismos para prevenir e coibir a violência doméstica e familiar contra a mulher
+          </p>
 
-        <h2>AVALIAÇÃO DE RISCO</h2>
+          <p class="lei">A Lei Maria da Penha (11.340/16) é o instrumento principal no
+            enfrentamento à violência doméstica e familiar contra mulheres no
+            Brasil. Mais do que física, ela abrange abusos sexuais, psicológicos,
+            morais e patrimoniais entre a vítima e seu agressor – que não precisa
+            necessariamente ser cônjuge, basta que tenha algum tipo de relação
+            afetiva.</p>
 
-        <p class="avaliacao-risco">
-          A avaliação de risco tem como objetivo prevenir a ocorrência ou o agravamento da violência doméstica e
-          familiar contra as mulheres.
-        </p>
+          <el-divider>
+            <font-awesome-icon class="icon" icon="heart" />
+          </el-divider>
+        </div>
+      </el-card>
 
-        <p class="avaliacao-risco">
-          A coleta sistematizada e padronizada de informa&ccedil;&otilde;es permite&nbsp;
+      <el-card class="area-ciclos">
+        <div class="ciclos">
+          <CicloItem :key="ciclo.title" :icon="ciclo.icon" :text="ciclo.text" :title="ciclo.title" :index="index+1" v-for="(ciclo,index) in clicos">
+            <el-divider>
+            </el-divider>
+          </CicloItem>
+        </div>
+      </el-card>
+
+      <el-card class="area-avaliacao">
+        <div class="info">
+
+          <h2>AVALIAÇÃO DE RISCO</h2>
+
+          <p class="avaliacao-risco">
+            A avaliação de risco tem como objetivo prevenir a ocorrência ou o agravamento da violência doméstica e
+            familiar contra as mulheres.
+          </p>
+
+          <p class="avaliacao-risco">
+            A coleta sistematizada e padronizada de informa&ccedil;&otilde;es permite&nbsp;
           <ul>
-              <li style="line-height: 1.5; text-align: justify;">Fundamentar pedidos de medidas protetivas de urg&ecirc;ncia previstas na Lei Maria da Penha contribuindo para a celeridade de seu deferimento;&nbsp;</li>
-              <li style="line-height: 1.5; text-align: justify;">Orientar a aplica&ccedil;&atilde;o das medidas de prote&ccedil;&atilde;o previstas no artigo 11&ordm; da Lei Maria da Penha;&nbsp;</li>
-              <li style="line-height: 1.5; text-align: justify;">Prevenir o agravamento da viol&ecirc;ncia para v&iacute;timas sobreviventes de feminic&iacute;dios e/ou v&iacute;timas indiretas&nbsp;</li>
-              <li style="line-height: 1.5; text-align: justify;">Organizar o encaminhamento e o acompanhamento das mulheres atrav&eacute;s da rede de servi&ccedil;os facilitando a comunica&ccedil;&atilde;o entre os profissionais com vistas a ampliar a prote&ccedil;&atilde;o para as mulheres.</li>
+            <li style="line-height: 1.5; text-align: justify;">Fundamentar pedidos de medidas protetivas de urg&ecirc;ncia previstas na Lei Maria da Penha contribuindo para a celeridade de seu deferimento;&nbsp;</li>
+            <li style="line-height: 1.5; text-align: justify;">Orientar a aplica&ccedil;&atilde;o das medidas de prote&ccedil;&atilde;o previstas no artigo 11&ordm; da Lei Maria da Penha;&nbsp;</li>
+            <li style="line-height: 1.5; text-align: justify;">Prevenir o agravamento da viol&ecirc;ncia para v&iacute;timas sobreviventes de feminic&iacute;dios e/ou v&iacute;timas indiretas&nbsp;</li>
+            <li style="line-height: 1.5; text-align: justify;">Organizar o encaminhamento e o acompanhamento das mulheres atrav&eacute;s da rede de servi&ccedil;os facilitando a comunica&ccedil;&atilde;o entre os profissionais com vistas a ampliar a prote&ccedil;&atilde;o para as mulheres.</li>
           </ul>
-        </p>
+          </p>
 
-        <el-button type="primary" size="small" @click="avaliacaoRisco">
-          REALIZAR A AVALIAÇÃO DE RISCO (GRATUITO)!
-        </el-button>
+          <el-button type="primary" size="small" @click="avaliacaoRisco">
+            REALIZAR A AVALIAÇÃO DE RISCO (GRATUITO)!
+          </el-button>
 
-        <el-divider>
-          <font-awesome-icon class="icon" icon="chart-line" />
-        </el-divider>
-      </div>
-    </el-card>
-
+          <el-divider>
+            <font-awesome-icon class="icon" icon="chart-line" />
+          </el-divider>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
 <script>
 import CicloItem from "../components/CicloItem.vue";
+import Feed from "../components/Feed.vue";
 export default {
   name: "Home",
   components: {
     CicloItem,
+    Feed
   },
   data() {
     return {
@@ -145,6 +150,21 @@ h2 {
   min-height: 500px;
   grid-gap: 20px;
   grid-row-gap: 55px;
+  grid-template-columns: 4fr 1fr;
+  grid-template-areas:
+    "feed feed"
+    "info info"
+    "ciclos ciclos"
+    "area-avaliacao area-avaliacao";
+}
+.area-info {
+  grid-area: info;
+}
+.area-ciclos {
+  grid-area: ciclos;
+}
+.area-avaliacao{
+  grid-area: area-avaliacao;
 }
 .info {
   display: flex;
@@ -209,6 +229,9 @@ h2 {
   grid-area: existe-lei;
 }
 .violencia {
-  grid-area: oque;
+  grid-area: violencia;
+}
+.feed {
+  grid-area: feed;
 }
 </style>

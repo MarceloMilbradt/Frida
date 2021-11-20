@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import 'firebase/auth'
 import "firebase/firestore";
+import "firebase/storage";
 
 var firebaseConfig = {
     apiKey: "AIzaSyCD7ZDoslb0BvgZYNI-G6hxez8VSpzchI8",
@@ -17,6 +18,7 @@ firebase.initializeApp(firebaseConfig);
 //utils
 const db = firebase.firestore()
 const auth = firebase.auth()
+const storage = firebase.storage().ref()
 
 //collection references
 const usuario = db.collection('usuario')
@@ -25,6 +27,7 @@ const denuncia = db.collection('denuncia')
 const ajuda = db.collection('ajuda')
 const log = db.collection('log')
 const denunciaAnonima = db.collection('denunciaAnonima')
+const posts = db.collection('posts')
 
 export {
     firebase,
@@ -35,5 +38,7 @@ export {
     denuncia,
     ajuda,
     log,
-    denunciaAnonima
+    denunciaAnonima,
+    storage,
+    posts
 }
