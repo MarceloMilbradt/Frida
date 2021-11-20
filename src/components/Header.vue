@@ -19,10 +19,10 @@
           <span class="menu-item-name">Home</span>
         </template>
       </el-menu-item>
-      <el-menu-item unique-opened class="menu-home" :index="2" @click="()=>gotoRoute('/')">
+      <el-menu-item unique-opened class="menu-home" :index="2" @click="()=>gotoRoute('/Feed')">
         <font-awesome-icon class="icon" icon="newspaper" />
         <template #title>
-          <span class="menu-item-name">Posts</span>
+          <span class="menu-item-name">Feed</span>
         </template>
       </el-menu-item>
       <el-menu-item class="menu-login" :index="3" @click="()=>gotoRoute('/login')">

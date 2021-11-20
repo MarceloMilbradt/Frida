@@ -173,6 +173,7 @@ h2 {
   padding: 0 20%;
 }
 .ciclos {
+  text-align: justify;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -23,8 +23,8 @@ export default {
     async find() {
       let id = this.$route.params.id;
       if (id) {
-        let dados = await controller.bucarPorId(id);
-        this.post = { ...dados, id };
+        let dados = await controller.bucarPorIdAnonimo(id);
+        this.post = { ...dados };
         this.id = id;
         this.srcList.push(this.post.miniatura);
       }

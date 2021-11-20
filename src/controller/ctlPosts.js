@@ -15,6 +15,10 @@ var listarTodosAnonimo = async limit => {
         return dados
 }
 var bucarPorId = async (id) => { 
+    const post= await repo.bucarPorId(posts, id)
+    return post;
+}
+var bucarPorIdAnonimo = async (id) => { 
     await loginAnonimo();
     const post= await repo.bucarPorId(posts, id)
     await logout();
@@ -47,5 +51,6 @@ export {
     alterar,
     excluir,
     upload,
-    listarTodosAnonimo
+    listarTodosAnonimo,
+    bucarPorIdAnonimo
 }

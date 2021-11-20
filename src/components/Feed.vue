@@ -7,7 +7,15 @@
         <span>{{post.titulo}}</span>
         <div class="bottom">
           <time class="time">{{ post.data}}</time>
-          <el-button  @click="()=>viewPost(post.id)" type="text" class="button">Veja mais</el-button>
+          <div v-if="$store.getters.getLogged">
+            <el-button type="danger" size="small" @click="DeletePost(post.id)">
+              <font-awesome-icon icon="trash-alt" />
+            </el-button>
+            <el-button type="primary" size="small" @click="EditPost(post.id)">
+              <font-awesome-icon icon="edit" />
+            </el-button>
+          </div>
+          <el-button v-else @click="()=>viewPost(post.id)" type="text" class="button">Veja mais</el-button>
         </div>
       </div>
     </el-card>
@@ -23,7 +31,7 @@ export default {
       dados: [],
     };
   },
-  props: ['limit'],
+  props: ["limit"],
   computed: {
     listFeed() {
       return this.dados.map((d) => {
@@ -34,11 +42,21 @@ export default {
   },
   methods: {
     async listarDados() {
-      this.dados = await controller.listarTodosAnonimo(this.limit);
+      if (!this.$store.getters.getLogged)
+        this.dados = await controller.listarTodosAnonimo(this.limit);
+      else this.dados = await controller.listarTodos();
     },
-    viewPost(id){
-      return this.$router.push({ name: "Post", params:{id} })
-    }
+    viewPost(id) {
+      return this.$router.push({ name: "Post", params: { id } });
+    },
+    async DeletePost(id) {
+      await controller.excluir(id);
+      this.dados = [];
+      await this.listarDados();
+    },
+    async EditPost(id) {
+      return this.$router.push({ name: "Posts", params: { id } });
+    },
   },
   async created() {
     this.listarDados();
@@ -50,12 +68,19 @@ export default {
 .post {
   text-align: left;
 }
+
 .feed {
   display: grid;
   gap: 10px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
-
+@media (max-width: 960px) {
+  .feed {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+}
+}
 .time {
   font-size: 13px;
   color: #999;
