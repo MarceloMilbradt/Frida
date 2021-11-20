@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     redirect() {
-      const urls = ["https://www.amazon.com.br/", "https://www.google.com/"];
+      const urls = ["https://g1.globo.com/", "https://www.google.com/", "https://www.youtube.com/results?search_query=petit+gateau"];
       let i = Math.floor(Math.random() * urls.length);
       window.location.href = urls[i];
     },
@@ -48,7 +48,7 @@ export default {
   mounted: function() {
     this.$nextTick(function() {
       setTimeout(() => (this.visible = true), 1000);
-      setTimeout(() => (this.visible = false), 6000);
+      setTimeout(() => (this.visible = false), 10000);
     });
   },
 };

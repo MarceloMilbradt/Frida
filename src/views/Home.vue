@@ -207,6 +207,7 @@ h2 {
   }
 }
 .ajuda {
+  background: #f54949;
   grid-area: ajuda;
   height: 80px;
 }
@@ -221,9 +222,12 @@ h2 {
 }
 .lei {
   grid-area: lei;
+  text-align: justify;
 }
 .title-lei {
   grid-area: title-lei;
+    text-align: justify;
+
 }
 .existe-lei {
   grid-area: existe-lei;

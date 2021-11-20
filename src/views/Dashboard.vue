@@ -24,7 +24,7 @@
         </div>
       </template>
 
-      <el-table :data="listAjudas" ref="table" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!" @row-click="expand">
+      <el-table :data="listAjudas" ref="table" style="width: 100%" empty-text="Nenhum pedido de ajuda novo!" @row-click="expand" stripe>
         <el-table-column type="expand">
           <template #default="scope">
               <CardAjuda v-model="scope.row" :min="true"/>

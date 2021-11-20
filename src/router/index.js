@@ -15,8 +15,8 @@ import CadastrarUsuario from "../views/CadastrarUsuario";
 import ListarLog from "../views/ListarLog";
 import Login from "../views/Login";
 import NotFound from "../views/NotFound";
-//import Logout from '../views/Logout'
 import Posts from "../views/Posts";
+//import Logout from '../views/Logout'
 import Feed from "../views/Feed";
 import Post from "../views/Post";
 
@@ -46,7 +46,7 @@ const routes = [
     },
   },
   {
-    path: "/ListarAjuda",
+    path: "/Ajudas",
     name: "Ajudas",
     component: ListarAjuda,
     meta: {
@@ -54,6 +54,8 @@ const routes = [
       requiresAuth: true,
       icon: "heart",
     },
+    //   { path: 'Ajuda/:id', component: Ajuda },
+    // ]
   },
   {
     path: "/Ajuda",
