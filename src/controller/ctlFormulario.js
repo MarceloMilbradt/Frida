@@ -1,5 +1,6 @@
 import * as repo from "./ctlRepositorioBase";
 import { avaliacao } from "./firebase";
+import * as db from "./firebase";
 const Swal = require('sweetalert2')
 
 repo.ativarLog('avaliacao', avaliacao);
@@ -7,54 +8,37 @@ var listarTodos = async () => repo.listarOrderBy(avaliacao, 'data', 'desc')
 var bucarPorId = async (id) => repo.bucarPorId(avaliacao, id)
 
 var incluir = (dados) => {
-    return repo.incluir(avaliacao, dados)
-        .then(() => {
-            if (dados.resultado.risco == 'E') {
-                Swal.fire({
-                    title: 'Está avaliação foi categorizada como risco Elevado',
-                    text: "Deseja fazer uma Denúncia de agressão ?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sim, fazer denúncia!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.href = '/Denuncia';
-                    }
-                })
-            }
-        })
+    return avaliacao
+        .add(dados)
+        .then((doc) => { repo.incluirLog(avaliacao, doc.id, 'Incluir') })
 }
 
 var alterar = (id, dados) => {
-    return repo.alterar(avaliacao, id, dados)
-        .then(() => {
-            if (dados.resultado.risco == 'E') {
-                Swal.fire({
-                    title: 'Está avaliação foi categorizada como risco Elevado',
-                    text: "Deseja fazer uma Denúncia de agressão ?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Sim, fazer denúncia!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.href = '/Denuncia';
-                    }
-                })
-            }
-        })
+    return avaliacao
+        .doc(id)
+        .update(dados)
+        .then(() => { repo.incluirLog(avaliacao, id, 'Alterar') })
 }
 
 var excluir = (id) => repo.excluir(avaliacao, id)
 
+var buscarPorCaso = async (idCaso) => {
+    return await avaliacao
+        .where("idCaso", "==", idCaso)
+        .get()
+        .then((snapshot) => {
+            const data = snapshot.docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            }));
+            return data[0];
+        });
+}
+
 export {
     listarTodos,
     bucarPorId,
+    buscarPorCaso,
     incluir,
     alterar,
     excluir

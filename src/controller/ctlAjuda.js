@@ -55,7 +55,7 @@ const buscarStatusAjuda = () => [
     },
     {
         value: 2,
-        descricao: "Descartado",
+        descricao: "Arquivado",
         icon: "ban",
         color: "red",
     },

@@ -118,10 +118,10 @@ export default {
   },
   methods: {
     helpme() {
-      this.$router.push({ name: "Pedir Ajuda!" });
+      this.$router.push({ name: "Pedir Ajuda!" }).then(() => window.scrollTo(0, 0));
     },
     avaliacaoRisco() {
-      this.$router.push({ name: "Avaliação de Risco" });
+      this.$router.push({ name: "Avaliação de Risco" }).then(() => window.scrollTo(0, 0));
     },
   },
 };

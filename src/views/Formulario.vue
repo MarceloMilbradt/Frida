@@ -5,40 +5,50 @@
   </h3>
 
   <el-form ref="form" :model="questions">
-    <el-form-item prop="nome">
+    <el-form-item v-if="isLogado == true"  prop="nome">
       <el-input v-model="form.nome" placeholder="Nome"></el-input>
     </el-form-item>
     <div v-bind:key="question.id" v-for="question in questions">
-      <Question v-model="question.answer" :alternatives="question.alternatives" :question="question" @change="changeAnswer" />
+      <Question v-model="question.answer" :alternatives="question.alternatives" :question="question" />
     </div>
   </el-form>
 
-  <el-card>
-    <h4>Resumo da Avaliação de Risco FRIDA</h4>
-    <p>
-      Abaixo é informada o totalizador de respostas agrupado por 
+  <el-button v-if="isLogado == true" class="botao-salvar" @click="onClick" type="success">Salvar</el-button>
+
+  <el-button v-if="isLogado == false" class="botao-salvar" type="success" @click="mostrarResultado">Mostrar Resultado</el-button>
+  <el-dialog v-model="dialogVisible" width="80%" title="Resumo da Avaliação de Risco FRIDA" center :show-close="false">
+    <p class="texto-dialog">
+      Abaixo é exibido o resultado do Grau de Risco detectado no Formulário de Avaliação FRIDA, 
+      esse resultado é obtido através das respostas
       "<b>Não</b>", 
       "<b>NS/NA</b> (Não se Aplica/Não Informado)"
       e "<b>Sim</b>"
-      informados no Formulário de Avaliação FRIDA, assim como o resultado do Grau de Risco detectado nesse formulário.
+      informadas no Formulário, cada uma tendo um peso diferente para o resultado final.
     </p>
-    <el-progress type="circle" :percentage="this.progresso.percNao" status="success">
-      <span class="percentage-label">Não</span>
-    </el-progress>
+    <p class="percentage-label"> Grau de Risco: <b>{{this.form.resultado.riscoDescricao}}</b></p>
+    
+    <el-divider class="divisor">
+      <el-progress v-if="this.form.resultado.risco == 'B'" type="circle" percentage="10" status="success">
+        <span class="percentage-label">Baixo</span>
+      </el-progress>
 
-    <el-progress type="circle" :percentage="this.progresso.percNSeNA" status="warning">
-      <span class="percentage-label">NS/NA</span>
-    </el-progress>
+      <el-progress v-if="this.form.resultado.risco == 'M'" type="circle" percentage="50" status="warning">
+        <span class="percentage-label">Médio</span>
+      </el-progress>
 
-    <el-progress type="circle" :percentage="this.progresso.percSim" status="exception">
-      <span class="percentage-label">Sim</span>
-    </el-progress>
-    <el-divider>
-      <p>Grau de Risco: <b>{{this.form.resultado.riscoDescricao}}</b></p>
+      <el-progress v-if="this.form.resultado.risco == 'E'" type="circle" percentage="100" status="exception">
+        <span class="percentage-label">Elevado</span>
+      </el-progress>
     </el-divider>
-  </el-card>
-
-  <el-button class="botao-salvar" @click="onClick" type="success">Salvar</el-button>
+    
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button v-if="isLogado == false" type="warning" @click="goToAjuda">Fazer Denúncia!</el-button>
+        <el-button v-if="isLogado == false" type="primary" @click="goToMenu">Voltar ao Menu</el-button>
+        <el-button v-if="isLogado == true" type="primary" @click="goToCasos">Voltar aos Casos</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -51,20 +61,22 @@ export default {
     Question,
   },
   methods: {
-    changeAnswer() {
-      this.montarGraficoProgresso();
+    goToAjuda() {
+        this.dialogVisible = false;
+        this.$router.push({ path: "Ajuda" }).then(() => window.scrollTo(0, 0));
     },
-    montarGraficoProgresso() {
-      this.montarFormulario();
-
-      var calculaPerc = (total) => {
-        return Number((total * 100 / 19).toFixed(2))
-      }
-
-      this.progresso = {
-        percNao: calculaPerc(this.form.resultado.totalNao),
-        percNSeNA: calculaPerc(this.form.resultado.totalNaoSabe + this.form.resultado.totalNaoAplica),
-        percSim: calculaPerc(this.form.resultado.totalSim),
+    goToMenu() {
+        this.dialogVisible = false;
+        this.$router.push({ name: "Home" }).then(() => window.scrollTo(0, 0));
+    },
+    goToCasos() {
+        this.dialogVisible = false;
+        this.$router.push({ name: "Casos" }).then(() => window.scrollTo(0, 0));
+    },
+    mostrarResultado() {
+      if (this.isFormularioValido()) {
+        this.montarFormulario();
+        this.dialogVisible = true;
       }
     },
     onClick() {
@@ -72,11 +84,11 @@ export default {
         this.montarFormulario();
         if (this.id) {
           controller.alterar(this.id, this.form).then(() => {
-            this.$router.push({ path: "ListarAvaliacao" });
+            this.dialogVisible = true;
           });
         } else {
           controller.incluir(this.form).then(() => {
-            this.$router.push({ path: "ListarAvaliacao" });
+            this.dialogVisible = true;
           });
         }
       }
@@ -154,8 +166,11 @@ export default {
   },
   data() {
     return {
+      dialogVisible: false,
+      isLogado: false,
       id: null,
       form: {
+        idCaso: "",
         nome: "",
         data: new Date(),
         resposta: {},
@@ -163,7 +178,6 @@ export default {
           riscoDescricao: 'Não Classificado',
         },
       },
-      progresso: {},
       items: [
         {
           to: "/",
@@ -282,17 +296,20 @@ export default {
   },
   async created() {
     try {
-      var id = this.$route.query.id;
-      if (id) {
-        var dados = await controller.bucarPorId(id);
-        this.form = dados;
-        this.id = id;
+      this.isLogado = this.$store.getters.getLogged;
 
+      this.form.idCaso = this.$route.query.idCaso;
+      this.form.nome = this.$route.query.vitima;
+      var dados = await controller.buscarPorCaso(this.form.idCaso);
+
+      console.log("dados", dados);
+      if (dados) {
+        this.id = dados.id;
+        this.form = dados;
         for (var [key, answer] of Object.entries(dados.resposta)) {
           var q_id = key.replace('r_', '') - 1;
           this.questions[q_id].answer = answer;
         }
-        this.montarGraficoProgresso();
       }
     }
     catch (ex) {
@@ -314,6 +331,10 @@ export default {
 </style>
 
 <style scoped>
+p {
+  text-align: center;
+}
+
 .percentage-value {
   display: block;
   margin-top: 10px;
@@ -333,5 +354,14 @@ export default {
 
 .botao-salvar {
   margin-top: 10px;
+}
+
+.texto-dialog {
+  margin-bottom: 20px;
+}
+
+.divisor {
+  margin-top: 90px;
+  margin-bottom: 60px;
 }
 </style>

@@ -141,6 +141,8 @@ var addNovoCampo = async (tabela, campo) => {
 }
 
 export {
+    incluirLog,
+    incluirLogOpExcluir,
     ativarLog,
     listarTodos,
     listarOrderBy,
