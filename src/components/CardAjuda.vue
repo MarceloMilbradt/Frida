@@ -85,7 +85,8 @@ export default {
       return formatDate(date);
     },
     change() {
-      controller.alterar(this.ajuda.id, this.ajuda);
+      var id = this.$route.query.id;
+      controller.alterar(id, this.ajuda);
     },
   },
 };

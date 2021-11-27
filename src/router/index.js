@@ -3,6 +3,7 @@ import Home from "../views/Home";
 import Dashboard from "../views/Dashboard";
 import Info from "../views/Info";
 import ListarAjuda from "../views/ListarAjuda";
+import MasterPage from "../views/MasterPage";
 import Ajuda from "../views/Ajuda";
 import ListarFormulario from "../views/ListarFormulario";
 import Formulario from "../views/Formulario";
@@ -54,6 +55,8 @@ const routes = [
       requiresAuth: true,
       icon: "heart",
     },
+    // children: [
+    //   { path: '', component: ListarAjuda },
     //   { path: 'Ajuda/:id', component: Ajuda },
     // ]
   },
@@ -179,12 +182,13 @@ const routes = [
     },
   },
   {
-    path: "/Posts",
-    name: "Posts",
+    path: "/Posts/:id?",
+    name: "CriarPosts",
     component: Posts,
     meta: {
       id:8,
       requiresAuth: true,
+      hideNavbar: true,
       icon: "clipboard-list",
     },
   },
@@ -206,7 +210,18 @@ const routes = [
     meta: {
       id:8,
       requiresAuth: false,
-      icon: "clipboard-list",
+      icon: "newspaper",
+    },
+  },
+  {
+    path: "/Feed/",
+    name: "Posts",
+    component: Feed,
+    meta: {
+      id:8,
+      quickAccess: true,
+      requiresAuth: true,
+      icon: "newspaper",
     },
   },
   {

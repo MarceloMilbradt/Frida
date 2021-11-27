@@ -1,4 +1,7 @@
 <template>
+  <div class="header" v-if="$store.getters.getLogged">
+    <el-button type="success" @click="handleAdd()">Incluir</el-button>
+  </div>
   <div class="feed">
     <el-card class="post" v-for="post in listFeed" :key="post.id" :body-style="{ padding: '0px' }">
       <!-- <img :src="" class="image" /> -->
@@ -55,7 +58,10 @@ export default {
       await this.listarDados();
     },
     async EditPost(id) {
-      return this.$router.push({ name: "Posts", params: { id } });
+      return this.$router.push({ name: "CriarPosts", params: { id } });
+    },
+    async NewPost() {
+      return this.$router.push({ name: "CriarPosts" });
     },
   },
   async created() {
@@ -65,6 +71,11 @@ export default {
 </script>
 
 <style scoped>
+.header {
+  margin: 1em 0;
+  text-align: right;
+}
+
 .post {
   text-align: left;
 }
@@ -76,10 +87,10 @@ export default {
 }
 @media (max-width: 960px) {
   .feed {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 1fr 1fr;
-}
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
 }
 .time {
   font-size: 13px;

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div style="margin-top: 15px;" >
+    <div style="margin-top: 15px;">
       <ais-instant-search :search-client="searchClient" index-name="frida_denuncias">
-        <StateRefresher :key="seachCacheKey"/>
+        <StateRefresher :key="seachCacheKey" />
 
         <div>
           <div class="menu-header">
@@ -10,7 +10,7 @@
             <ais-refinement-list attribute="tags" searchable>
               <template v-slot="{ items,isFromSearch, refine,searchForItems}">
                 <div class="search-info">
-                  <input placeholder="Pesquisar por Tag"  @input="searchForItems($event.currentTarget.value)">
+                  <input placeholder="Pesquisar por Tag" @input="searchForItems($event.currentTarget.value)">
                   <div v-if="isFromSearch && !items.length">Nenhum resultado.</div>
                   <div v-for="item in items" :key="item.value">
                     <el-checkbox @change="refine(item.value)">{{item.label}} <el-badge :value=" item.count" :max="99"></el-badge>
@@ -41,9 +41,20 @@
 
           <el-row>
             <el-col :span="8">
-                <el-select v-model="searchStatus" multiple collapse-tags @change="changeStatus">
-                  <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value"/>
-                </el-select>
+
+              <ais-menu-select attribute="status">
+                <!-- <el-select v-model="searchStatus" @change="changeStatus(refine)">
+                  <el-option v-for="s in statusEnum" :key="s.value" :label="s.descricao" :value="s.value" />
+                </el-select> -->
+                <template v-slot="{ items, refine }">
+                  <el-select v-model="searchStatus"  @change="refine(searchStatus)">
+                    <el-option :label="''" :value="''" />
+                    <el-option v-for="item in items" :label="buscaStatusPorId(item.value)" :key="item.value" :value="item.value" />
+                  </el-select>
+                </template>
+
+              </ais-menu-select>
+
             </el-col>
             <el-col :span="16">
               <ais-search-box>
@@ -56,13 +67,13 @@
                 </template>
               </ais-search-box>
             </el-col>
-        </el-row>
+          </el-row>
 
-        <ais-pagination class="pagination">
-          <template v-slot="{ nbHits,refine}">
-            <el-pagination layout="prev, pager, next" :page-size="20" :total="nbHits" background @current-change="(p)=>refine(p-1)"></el-pagination>
-          </template>
-        </ais-pagination>
+          <ais-pagination class="pagination">
+            <template v-slot="{ nbHits,refine}">
+              <el-pagination layout="prev, pager, next" :page-size="20" :total="nbHits" background @current-change="(p)=>refine(p-1)"></el-pagination>
+            </template>
+          </ais-pagination>
 
         </div>
 
@@ -168,11 +179,11 @@ import { client, doRefresh } from "../controller/Algolia";
 import StateRefresher from "../components/StateRefresher";
 export default {
   name: "Home",
-  components: {StateRefresher},
+  components: { StateRefresher },
   data() {
     return {
       search: "",
-      searchStatus: [],
+      searchStatus: 0,
       dados: [],
       select: "",
       input3: "",
@@ -180,7 +191,7 @@ export default {
     };
   },
   computed: {
-    statusEnum(){
+    statusEnum() {
       return controller.buscarStatusDenuncia();
     },
     searchClient() {
@@ -189,33 +200,41 @@ export default {
   },
   methods: {
     status(status) {
-      return this.statusEnum.find((s) => s.value === (status ?? 0));
+      return this.statusEnum.find((s) => s.value == (status ?? 0));
     },
     buscaStatusPorId(status) {
-      return this.statusEnum.find((s) => s.value === (status || 0)).descricao;
+      return this.statusEnum.find((s) => s.value == (status || 0))?.descricao;
     },
     handleAdd() {
       this.$router.push({ path: "Denuncia" });
     },
     handleEdit(id) {
-      this.$router.push({ name: "Denúncia", params: { id } }).then(() => window.scrollTo(0, 0));
+      this.$router
+        .push({ name: "Denúncia", params: { id } })
+        .then(() => window.scrollTo(0, 0));
     },
     async handleDelete(id) {
       controller.excluir(id).then(() => {
-        doRefresh(this.searchClient)
+        doRefresh(this.searchClient);
         this.seachCacheKey++;
       });
     },
     handleAvaliacao(id, vitima) {
-      this.$router.push({ name: "Avaliação de Risco", query: { idCaso: id, vitima: vitima } }).then(() => window.scrollTo(0, 0));
+      this.$router
+        .push({
+          name: "Avaliação de Risco",
+          query: { idCaso: id, vitima: vitima },
+        })
+        .then(() => window.scrollTo(0, 0));
     },
-    changeStatus() {
-      if (this.searchStatus.toString() === '')
-        this.searchStatus = [0];
+    changeStatus(refine) {
+      console.log(this.searchStatus);
+      console.log(refine);
+      refine(this.searchStatus);
     },
   },
   created() {
-    this.searchStatus = [0];
+    this.searchStatus = "";
     this.seachCacheKey++;
   },
 };
