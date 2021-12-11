@@ -14,7 +14,7 @@
       :width="200"
       trigger="manual"
       :visible="visible"
-      content="Clique para trocar de página!"
+      content="Clique para pedir ajuda!"
     >
       <template #reference>
         <el-button
@@ -39,9 +39,9 @@ export default {
   },
   methods: {
     redirect() {
-      const urls = ["https://g1.globo.com/", "https://www.google.com/", "https://www.youtube.com/results?search_query=petit+gateau"];
-      let i = Math.floor(Math.random() * urls.length);
-      window.location.href = urls[i];
+      // const urls = ["https://g1.globo.com/", "https://www.google.com/", "https://www.youtube.com/results?search_query=petit+gateau"];
+      // let i = Math.floor(Math.random() * urls.length);
+      window.location.href = "/Ajuda";
     },
   },
 
@@ -54,6 +54,9 @@ export default {
 };
 </script>
 <style scoped>
+p{
+  color: white;
+}
 a {
   color: #333;
 }
