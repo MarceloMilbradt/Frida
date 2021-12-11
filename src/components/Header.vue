@@ -1,7 +1,7 @@
 <template>
   <el-menu :class="(
       vertical ? 'el-menu-vertical el-menu-full-height' : 'el-menu-horizontal'
-    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="activeLink" :mode="vertical ? 'vertical' : 'horizontal'" background-color="#5D3FD3" text-color="#fff" active-text-color="#fff">
+    )+ ' menu-header-dark'" :collapse="vertical && isCollapse" :default-active="activeLink" :mode="vertical ? 'vertical' : 'horizontal'">
 
     <el-menu-item class="rotate-icon" v-if="vertical" @click="toggleExpand" :index="-2">
       <font-awesome-icon class="icon" :icon="!isCollapse ? 'angle-double-left':'angle-double-right'" />
@@ -103,7 +103,7 @@ header.el-header.head {
   width: 100%;
   z-index: 2;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  background-color: #5d3fd3;
+  background: var(--el-color-primary-header);
 }
 
 </style>
@@ -111,7 +111,7 @@ header.el-header.head {
 <style scoped>
 .menu-header-dark {
   margin-bottom: 2rem;
-  background: var(--default-dark-tone);
+  background: var(--el-color-primary-header);
   border-bottom: unset;
   box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);

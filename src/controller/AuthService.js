@@ -1,7 +1,6 @@
 import { firebase, ajuda } from "./firebase";
+import * as user from "./ctlUsuario";
 import router from "../router";
-
-import { bucarPorEmail } from "./ctlUsuario";
 
 const Swal = require("sweetalert2");
 
@@ -15,7 +14,9 @@ var config = {
   appId: "1:127916459378:web:546f32e5936d4e7b1e09eb",
 };
 
-const ativarRealTimeListener = () => {
+const ativarRealTimeListener = (logged) => {
+  if (!logged)
+    return false;
   ajuda.onSnapshot((snapshot) => {
     if (snapshot.docChanges().length == 1) { /*Não mostrar quando tiver listando*/
       var change = snapshot.docChanges()[0];
@@ -23,19 +24,19 @@ const ativarRealTimeListener = () => {
       if (change.type.toUpperCase() !== "ADDED")
         return;
 
-        Swal.fire({
-          title: "Atenção",
-          text: "Um novo pedido de ajuda foi feito!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Ver pedido de ajuda",
-          cancelButtonText: "Cancelar",
+      Swal.fire({
+        title: "Atenção",
+        text: "Um novo pedido de ajuda foi feito!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ver pedido de ajuda",
+        cancelButtonText: "Cancelar",
       }).then(async (result) => {
-          if (result.isConfirmed) {
-              router.push({ path:'/Ajuda', query: { id } });
-          }
+        if (result.isConfirmed) {
+          router.push({ path: '/Ajuda', query: { id } });
+        }
       })
 
     }
@@ -88,6 +89,7 @@ function mensagemLoginSucesso() {
     icon: "success",
     title: "Logado com sucesso!",
   });
+  
 }
 
 const resetSenha = (email) => {
@@ -148,6 +150,8 @@ const getLoginState = async () => {
     }
   });
 };
+
+
 
 const setWatcher = (fn) => {
   auth.onAuthStateChanged(fn);

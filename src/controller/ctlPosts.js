@@ -6,9 +6,7 @@ const Swal = require('sweetalert2')
 repo.ativarLog('posts', posts);
 var listarTodos = async () => repo.listarOrderBy(posts, 'data', 'desc')
 var listarTodosAnonimo = async limit => {
-    await loginAnonimo();
     let dados = await repo.listarOrderBy(posts, 'data', 'desc')
-    await logout();
     if (limit)
         return dados.splice(0, 4);
     else
@@ -19,9 +17,7 @@ var bucarPorId = async (id) => {
     return post;
 }
 var bucarPorIdAnonimo = async (id) => { 
-    await loginAnonimo();
     const post= await repo.bucarPorId(posts, id)
-    await logout();
     return post;
 }
 

@@ -2,9 +2,9 @@
   <div class="main-flex card" v-if="!$store.getters.getLogged">
     <div class="help-me-header">
       <div class="top-grid">
-        <p class="description">A violência doméstica não é um problema particular.<br>É uma realidade que atinge muitas pessoas<br>e deve ser enfrentada e denunciada!</p>
-        <h2 class="title">NÃO SE CALE!</h2>
-        <h4 class="subtitle">PEÇA AJUDA!</h4>
+        <p class="description shadow">A violência doméstica não é um problema particular.<br>É uma realidade que atinge muitas pessoas<br>e deve ser enfrentada e denunciada!</p>
+        <h2 class="title shadow">NÃO SE CALE!</h2>
+        <h4 class="subtitle shadow">PEÇA AJUDA!</h4>
         <el-button class="ajuda" type="danger" size="big" @click="helpme">
           ME AJUDE!
         </el-button>
@@ -220,19 +220,19 @@ h2 {
   width: 30em;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
+.shadow{
+    text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.5);
+}
 .title {
   grid-area: title;
   font-size: 42pt;
   margin: 0;
-  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
-    1px 1px 1px rgba(0, 0, 0, 0.5);
   color: white;
 }
 .subtitle {
   grid-area: subtitle;
   font-size: 16pt;
-  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
-    1px 1px 1px rgba(0, 0, 0, 0.5);
   color: white;
 }
 .lei {

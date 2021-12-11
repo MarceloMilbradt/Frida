@@ -64,7 +64,7 @@ export default {
   --el-color-primary-header: #4b218b;
   --default-dark-tone: #121212;
   --default-dark-tone-secondary: #cfcfcf;
-  --el-menu-item-font-color: #9d9fa1;
+  --el-menu-item-font-color: #cfcfcf;
 }
 body {
   margin: 0;
@@ -88,7 +88,12 @@ body {
   min-height: calc( 95vh - 20px); */
 }
 .el-menu-item.is-active {
-  background: var(--el-color-primary-light-1);
+  background: var(--el-color-primary);
+  color: white
+}
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus
+ {
+    color: white;
 }
 .el-menu-vertical .el-menu-item.is-active {
   background: var(--el-color-primary-light-1);
@@ -96,8 +101,12 @@ body {
 .el-menu-vertical .el-menu-item.is-active:hover {
   background-color: var(--el-menu-item-hover-fill);
 }
+.el-menu-vertical .el-menu-item,.el-menu--horizontal .el-menu-item
+{
+    --el-menu-item-font-color: #cfcfcf;
+}
 .el-menu-item:hover {
-  color: white;
+  color: var(--el-color-primary-header);
 }
 main {
   padding-left: 0.938em;
