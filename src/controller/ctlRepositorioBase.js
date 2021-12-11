@@ -8,14 +8,6 @@ var ativarLog = (nome, tabela) => {
 
 }
 
-// db.ajuda.onSnapshot((snapshot) => {
-//     if (snapshot.docChanges().length == 1) { /*Não mostrar quando tiver listando*/
-//         var change = snapshot.docChanges()[0];
-//         if (change.type.toUpperCase() === "ADDED")
-//             Swal.fire("Aviso!", "Um novo pedido de ajuda foi feito!", "warning");
-
-//     }
-// });
 
 
 var incluirLog = async (tabela, id, tipo) => {
@@ -148,5 +140,5 @@ export {
     incluir,
     alterar,
     excluir,
-    addNovoCampo
+    addNovoCampo,
 }

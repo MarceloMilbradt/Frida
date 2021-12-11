@@ -7,7 +7,7 @@ import Maska from 'maska';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import store from './store'
-import { setWatcher } from "./controller/AuthService";
+import { setWatcher,ativarRealTimeListener } from "./controller/AuthService";
 import InstantSearch from 'vue-instantsearch/vue3/es';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -57,6 +57,7 @@ setWatcher((usr) => {
         return
     app = createApp(App).component("font-awesome-icon", FontAwesomeIcon).use(Maska).use(InstantSearch).use(ElementPlus).use(router).use(store).use(library).use(VueSweetalert2)
     store.dispatch('stateChange', usr)
+    ativarRealTimeListener(store.getters.getLogged);
     router.beforeEach((to, from, next) => {
         const logged = store.getters.getLogged;
         if(to.params.id === ":id"){
