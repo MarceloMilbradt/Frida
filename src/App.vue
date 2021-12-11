@@ -5,10 +5,12 @@
         <Header :vertical="true" />
       </el-aside>
       <el-container>
-        <el-header v-if="!$store.getters.getLogged">
+        <el-header class="head" v-if="!$store.getters.getLogged">
           <Header />
         </el-header>
-        <el-main class="main">
+        <el-main :class="(
+          (isHome ? 'main home' : 'main other') + 
+          (this.$store.getters.getLogged ? ' plain' : ' colored'))">
           <router-view></router-view>
         </el-main>
         <el-footer>
@@ -37,6 +39,11 @@ export default {
       locale: locale,
     };
   },
+  computed: {
+    isHome() {
+      return this.$route.meta.home;
+    },
+  },
 };
 </script>
 
@@ -44,7 +51,16 @@ export default {
 </style>
 
 <style>
+.el-main.main.other {
+  padding: 1em;
+  padding-top: 10em;
+}
+.el-main.main.home.colored {
+  --default-color-bg-color: #fde2e2;
+  padding: 0px;
+}
 :root {
+  --default-color-bg-color: white;
   --el-color-primary-header: #4b218b;
   --default-dark-tone: #121212;
   --default-dark-tone-secondary: #cfcfcf;
@@ -64,7 +80,7 @@ body {
   /* padding-left: 0.938em; */
   padding-top: 0em;
   /* padding-right: 0.938em; */
-  background-color: white;
+  background-color: var(--default-color-bg-color);
   /* box-shadow: 0 2px 7px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
     0 1px 3px 0 rgba(0, 0, 0, 0.12);
   margin-top: 10px;
@@ -81,7 +97,7 @@ body {
   background-color: var(--el-menu-item-hover-fill);
 }
 .el-menu-item:hover {
-  color: var(--el-color-primary-light-1) !important;
+  color: white;
 }
 main {
   padding-left: 0.938em;
@@ -115,7 +131,7 @@ main {
 .main {
   min-width: 80vw;
   margin: 0 auto;
-  max-width: 80vw;
+  /* max-width: 80vw; */
 }
 @media (max-width: 800px) {
   .main {

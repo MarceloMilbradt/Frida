@@ -2,7 +2,7 @@
   <div class="header" v-if="$store.getters.getLogged">
     <el-button type="success" @click="handleAdd()">Incluir</el-button>
   </div>
-  <div class="feed">
+  <div :class="!isHome?'feed':'feed-flex'">
     <el-card class="post" v-for="post in listFeed" :key="post.id" :body-style="{ padding: '0px' }">
       <!-- <img :src="" class="image" /> -->
       <el-image style="width: 100%; height: 180px" :src="post.miniatura" :fit="'cover'"></el-image>
@@ -41,6 +41,9 @@ export default {
         d.data = formatRelativeDate(d.data);
         return d;
       });
+    },
+    isHome() {
+      return !this.$store.getters.getLogged && this.limit;
     },
   },
   methods: {
@@ -85,8 +88,16 @@ export default {
   gap: 10px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+.feed-flex {
+  display: flex;
+  gap: 3em
+}
+.feed-flex div {
+  flex: 1;
+}
 @media (max-width: 960px) {
-  .feed {
+  .feed,
+  .feed-flex {
     display: grid;
     gap: 10px;
     grid-template-columns: 1fr 1fr;

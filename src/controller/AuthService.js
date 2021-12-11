@@ -29,7 +29,7 @@ const generatePassword = () => {
 
 const auth = firebase.auth();
 
-const loginAnonimo = async () => auth.signInAnonymously();
+const loginAnonimo = async () => await auth.signInAnonymously();
 
 const createCredentials = async (email) => {
   const user = await secondaryApp

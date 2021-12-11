@@ -51,5 +51,6 @@ export default {
 }
 .title {
   min-width: 200px;
+  margin: 1em
 }
 </style>

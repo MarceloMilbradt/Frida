@@ -1,16 +1,16 @@
 <template>
   <div class="main-flex card" v-if="!$store.getters.getLogged">
-
-    <el-card>
+    <div class="help-me-header">
       <div class="top-grid">
+        <p class="description">A violência doméstica não é um problema particular.<br>É uma realidade que atinge muitas pessoas<br>e deve ser enfrentada e denunciada!</p>
         <h2 class="title">NÃO SE CALE!</h2>
         <h4 class="subtitle">PEÇA AJUDA!</h4>
         <el-button class="ajuda" type="danger" size="big" @click="helpme">
           ME AJUDE!
         </el-button>
-
       </div>
-    </el-card>
+      <img src="..\svg\Purple_ribbon.svg" style="height:35em">
+    </div>
     <div class="grid">
       <div class="feed">
         <Feed limit="4"></Feed>
@@ -46,6 +46,7 @@
 
       <el-card class="area-ciclos">
         <div class="ciclos">
+          <h2>O CLICLO DA VIOLÊNCIA DOMÉSTICA</h2>
           <CicloItem :key="ciclo.title" :icon="ciclo.icon" :text="ciclo.text" :title="ciclo.title" :index="index+1" v-for="(ciclo,index) in clicos">
             <el-divider>
             </el-divider>
@@ -93,7 +94,7 @@ export default {
   name: "Home",
   components: {
     CicloItem,
-    Feed
+    Feed,
   },
   data() {
     return {
@@ -118,16 +119,23 @@ export default {
   },
   methods: {
     helpme() {
-      this.$router.push({ name: "Pedir Ajuda!" }).then(() => window.scrollTo(0, 0));
+      this.$router
+        .push({ name: "Pedir Ajuda!" })
+        .then(() => window.scrollTo(0, 0));
     },
     avaliacaoRisco() {
-      this.$router.push({ name: "Avaliação de Risco" }).then(() => window.scrollTo(0, 0));
+      this.$router
+        .push({ name: "Avaliação de Risco" })
+        .then(() => window.scrollTo(0, 0));
     },
   },
 };
 </script>
 
 <style scoped>
+.el-card {
+  margin: 0 2em;
+}
 p,
 h2 {
   text-align: center;
@@ -163,7 +171,7 @@ h2 {
 .area-ciclos {
   grid-area: ciclos;
 }
-.area-avaliacao{
+.area-avaliacao {
   grid-area: area-avaliacao;
 }
 .info {
@@ -173,7 +181,7 @@ h2 {
   padding: 0 20%;
 }
 .ciclos {
-  text-align: justify;
+  text-align: left;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -183,9 +191,10 @@ h2 {
 .top-grid {
   display: flex;
   flex-direction: column;
-  padding: 10px 15em;
+  /* padding: 10px 15em; */
   gap: 0px;
   min-height: unset;
+  align-items: flex-start;
 }
 
 @media (max-width: 800px) {
@@ -200,9 +209,6 @@ h2 {
       "denuncia"
       "user";
   }
-  .title {
-    display: none;
-  }
   .acesso-rapido {
     display: none;
   }
@@ -211,15 +217,23 @@ h2 {
   background: #f54949;
   grid-area: ajuda;
   height: 80px;
+  width: 30em;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 .title {
   grid-area: title;
-  font-size: 36pt;
+  font-size: 42pt;
   margin: 0;
+  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.5);
+  color: white;
 }
 .subtitle {
   grid-area: subtitle;
   font-size: 16pt;
+  text-shadow: -1px -1px 1px rgba(255, 255, 255, 0.1),
+    1px 1px 1px rgba(0, 0, 0, 0.5);
+  color: white;
 }
 .lei {
   grid-area: lei;
@@ -227,8 +241,7 @@ h2 {
 }
 .title-lei {
   grid-area: title-lei;
-    text-align: justify;
-
+  text-align: justify;
 }
 .existe-lei {
   grid-area: existe-lei;
@@ -237,6 +250,24 @@ h2 {
   grid-area: violencia;
 }
 .feed {
+  margin: 0 2em;
   grid-area: feed;
+}
+.help-me-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background: #3f2a8f;
+  padding-top: 5em;
+  margin-bottom: 5em;
+  padding-bottom: 5em;
+  color: whitesmoke;
+  box-shadow: 0 10px 16px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
+  background-image: linear-gradient(to bottom right, #c9b0db, #864ead);
+}
+.description {
+  text-align: left;
+  font-size: 13pt;
 }
 </style>
