@@ -20,11 +20,9 @@ const listarUltimosN = async n => {
 
 
 const incluir = async function incluir(dados) {
-    await loginAnonimo();
     return denunciaAnonima
         .add(dados)
         .then(() => {
-            logout()
             Swal.fire("Salvo!", "A sua denuncia foi salvo com sucesso!", "success");
         })
         .catch((error) => {
