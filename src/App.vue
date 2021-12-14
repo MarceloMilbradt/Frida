@@ -54,6 +54,7 @@ export default {
 .el-main.main.other {
   padding: 1em;
   padding-top: 10em;
+  max-width: 80vw;
 }
 .el-main.main.home.colored {
   --default-color-bg-color: #fde2e2;

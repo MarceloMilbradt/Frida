@@ -1,6 +1,6 @@
 <template>
   <div class="header" v-if="$store.getters.getLogged">
-    <el-button type="success" @click="handleAdd()">Incluir</el-button>
+    <el-button type="success" @click="NewPost()">Incluir</el-button>
   </div>
   <div :class="!isHome?'feed':'feed-flex'">
     <el-card class="post" v-for="post in listFeed" :key="post.id" :body-style="{ padding: '0px' }">
